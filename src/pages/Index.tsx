@@ -101,10 +101,12 @@ const Index = () => {
                 </Button>
               </Link>
             ) : (
-              <Button size="lg" className="bg-blue-600 hover:bg-blue-700">
-                <Heart className="mr-2 h-4 w-4" />
-                Explore Your Dashboard
-              </Button>
+              <Link to="/dashboard">
+                <Button size="lg" className="bg-blue-600 hover:bg-blue-700">
+                  <Heart className="mr-2 h-4 w-4" />
+                  Explore Your Dashboard
+                </Button>
+              </Link>
             )}
           </div>
         </section>
