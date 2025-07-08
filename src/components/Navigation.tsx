@@ -30,7 +30,21 @@ const Navigation = () => {
             </Link>
           </div>
           
-          <div className="flex items-center space-x-4">
+          <div className="flex items-center space-x-6">
+            <div className="hidden md:flex items-center space-x-4">
+              <Link to="/" className="text-gray-700 hover:text-blue-600 font-medium">
+                Home
+              </Link>
+              <Link to="/events" className="text-gray-700 hover:text-blue-600 font-medium">
+                Events
+              </Link>
+              {user && (
+                <Link to="/dashboard" className="text-gray-700 hover:text-blue-600 font-medium">
+                  Dashboard
+                </Link>
+              )}
+            </div>
+            
             {user ? (
               <DropdownMenu>
                 <DropdownMenuTrigger asChild>
