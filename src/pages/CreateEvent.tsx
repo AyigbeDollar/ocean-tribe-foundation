@@ -9,13 +9,16 @@ import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Label } from "@/components/ui/label";
 import { useToast } from "@/hooks/use-toast";
-import { ArrowLeft, Calendar, MapPin, Recycle } from "lucide-react";
+import { ArrowLeft, Calendar, MapPin, Recycle, Upload, X } from "lucide-react";
 
 const CreateEvent = () => {
   const { user } = useAuth();
   const navigate = useNavigate();
   const { toast } = useToast();
   const [loading, setLoading] = useState(false);
+  const [uploadingImage, setUploadingImage] = useState(false);
+  const [selectedImage, setSelectedImage] = useState<File | null>(null);
+  const [imagePreview, setImagePreview] = useState<string | null>(null);
   const [formData, setFormData] = useState({
     title: '',
     description: '',
@@ -24,12 +27,48 @@ const CreateEvent = () => {
     recycling_impact_kg: ''
   });
 
+  const uploadImage = async (file: File): Promise<string | null> => {
+    try {
+      setUploadingImage(true);
+      const fileExt = file.name.split('.').pop();
+      const fileName = `${Date.now()}.${fileExt}`;
+      
+      const { error: uploadError } = await supabase.storage
+        .from('event-images')
+        .upload(fileName, file);
+
+      if (uploadError) throw uploadError;
+
+      const { data } = supabase.storage
+        .from('event-images')
+        .getPublicUrl(fileName);
+
+      return data.publicUrl;
+    } catch (error) {
+      console.error('Error uploading image:', error);
+      toast({
+        title: "Error",
+        description: "Failed to upload image",
+        variant: "destructive",
+      });
+      return null;
+    } finally {
+      setUploadingImage(false);
+    }
+  };
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!user) return;
 
     setLoading(true);
     try {
+      let imageUrl = null;
+      
+      if (selectedImage) {
+        imageUrl = await uploadImage(selectedImage);
+      }
+
       const { error } = await supabase
         .from('events')
         .insert({
@@ -38,6 +77,7 @@ const CreateEvent = () => {
           location: formData.location,
           event_date: formData.event_date,
           recycling_impact_kg: parseFloat(formData.recycling_impact_kg) || 0,
+          image_url: imageUrl,
           created_by: user.id
         });
 
@@ -67,6 +107,23 @@ const CreateEvent = () => {
       ...prev,
       [name]: value
     }));
+  };
+
+  const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (file) {
+      setSelectedImage(file);
+      const reader = new FileReader();
+      reader.onload = () => {
+        setImagePreview(reader.result as string);
+      };
+      reader.readAsDataURL(file);
+    }
+  };
+
+  const removeImage = () => {
+    setSelectedImage(null);
+    setImagePreview(null);
   };
 
   if (!user) {
@@ -180,6 +237,50 @@ const CreateEvent = () => {
                 <p className="text-sm text-gray-500">
                   Estimated amount of plastic waste to be collected/prevented
                 </p>
+              </div>
+
+              <div className="space-y-2">
+                <Label htmlFor="image">Event Image</Label>
+                <div className="space-y-3">
+                  {!imagePreview ? (
+                    <div className="border-2 border-dashed border-gray-300 rounded-lg p-6 text-center">
+                      <Upload className="mx-auto h-8 w-8 text-gray-400 mb-2" />
+                      <p className="text-sm text-gray-600 mb-2">Upload an image for your event</p>
+                      <input
+                        type="file"
+                        accept="image/*"
+                        onChange={handleImageChange}
+                        className="hidden"
+                        id="image-upload"
+                      />
+                      <Button
+                        type="button"
+                        variant="outline"
+                        onClick={() => document.getElementById('image-upload')?.click()}
+                        disabled={uploadingImage}
+                      >
+                        {uploadingImage ? 'Uploading...' : 'Choose Image'}
+                      </Button>
+                    </div>
+                  ) : (
+                    <div className="relative">
+                      <img
+                        src={imagePreview}
+                        alt="Event preview"
+                        className="w-full h-48 object-cover rounded-lg"
+                      />
+                      <Button
+                        type="button"
+                        variant="destructive"
+                        size="sm"
+                        onClick={removeImage}
+                        className="absolute top-2 right-2"
+                      >
+                        <X className="h-4 w-4" />
+                      </Button>
+                    </div>
+                  )}
+                </div>
               </div>
 
               <div className="flex gap-4 pt-4">

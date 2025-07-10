@@ -17,6 +17,7 @@ interface Event {
   event_date: string;
   participant_count: number;
   recycling_impact_kg: number;
+  image_url: string | null;
   created_by: string;
 }
 
@@ -183,7 +184,16 @@ const Events = () => {
 
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
           {events.map((event) => (
-            <Card key={event.id} className="hover:shadow-lg transition-shadow">
+            <Card key={event.id} className="hover:shadow-lg transition-shadow overflow-hidden">
+              {event.image_url && (
+                <div className="aspect-video w-full overflow-hidden">
+                  <img 
+                    src={event.image_url} 
+                    alt={event.title}
+                    className="w-full h-full object-cover"
+                  />
+                </div>
+              )}
               <CardHeader>
                 <div className="flex justify-between items-start">
                   <CardTitle className="text-xl">{event.title}</CardTitle>

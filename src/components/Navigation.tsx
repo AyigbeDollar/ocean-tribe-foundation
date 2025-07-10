@@ -38,6 +38,9 @@ const Navigation = () => {
               <Link to="/events" className="text-gray-700 hover:text-blue-600 font-medium">
                 Events
               </Link>
+              <Link to="/gallery" className="text-gray-700 hover:text-blue-600 font-medium">
+                Gallery
+              </Link>
               {user && (
                 <Link to="/dashboard" className="text-gray-700 hover:text-blue-600 font-medium">
                   Dashboard

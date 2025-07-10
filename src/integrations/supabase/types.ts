@@ -21,6 +21,7 @@ export type Database = {
           description: string | null
           event_date: string
           id: string
+          image_url: string | null
           location: string | null
           participant_count: number | null
           recycling_impact_kg: number | null
@@ -33,6 +34,7 @@ export type Database = {
           description?: string | null
           event_date: string
           id?: string
+          image_url?: string | null
           location?: string | null
           participant_count?: number | null
           recycling_impact_kg?: number | null
@@ -45,6 +47,7 @@ export type Database = {
           description?: string | null
           event_date?: string
           id?: string
+          image_url?: string | null
           location?: string | null
           participant_count?: number | null
           recycling_impact_kg?: number | null
@@ -52,6 +55,47 @@ export type Database = {
           updated_at?: string
         }
         Relationships: []
+      }
+      gallery: {
+        Row: {
+          created_at: string
+          description: string | null
+          event_id: string | null
+          id: string
+          image_url: string
+          title: string
+          updated_at: string
+          uploaded_by: string
+        }
+        Insert: {
+          created_at?: string
+          description?: string | null
+          event_id?: string | null
+          id?: string
+          image_url: string
+          title: string
+          updated_at?: string
+          uploaded_by: string
+        }
+        Update: {
+          created_at?: string
+          description?: string | null
+          event_id?: string | null
+          id?: string
+          image_url?: string
+          title?: string
+          updated_at?: string
+          uploaded_by?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "gallery_event_id_fkey"
+            columns: ["event_id"]
+            isOneToOne: false
+            referencedRelation: "events"
+            referencedColumns: ["id"]
+          },
+        ]
       }
       profiles: {
         Row: {
