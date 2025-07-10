@@ -3,7 +3,9 @@ import Navigation from "@/components/Navigation";
 import { useAuth } from "@/contexts/AuthContext";
 import { supabase } from "@/integrations/supabase/client";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { Waves, Users, Recycle, Heart, TrendingUp, Calendar } from "lucide-react";
+import { Button } from "@/components/ui/button";
+import { Waves, Users, Recycle, Heart, TrendingUp, Calendar, MapPin, ExternalLink } from "lucide-react";
+import { Link } from "react-router-dom";
 
 interface UserEvent {
   events: {
@@ -15,15 +17,27 @@ interface UserEvent {
   };
 }
 
+interface Event {
+  id: string;
+  title: string;
+  description: string;
+  location: string;
+  event_date: string;
+  participant_count: number;
+  recycling_impact_kg: number;
+}
+
 const Dashboard = () => {
   const { user } = useAuth();
   const [userEvents, setUserEvents] = useState<UserEvent[]>([]);
+  const [upcomingEvents, setUpcomingEvents] = useState<Event[]>([]);
   const [totalImpact, setTotalImpact] = useState({ events: 0, recycling: 0 });
 
   useEffect(() => {
     if (user) {
       fetchUserEvents();
     }
+    fetchUpcomingEvents();
   }, [user]);
 
   const fetchUserEvents = async () => {
@@ -59,6 +73,22 @@ const Dashboard = () => {
       });
     } catch (error) {
       console.error('Error fetching user events:', error);
+    }
+  };
+
+  const fetchUpcomingEvents = async () => {
+    try {
+      const { data, error } = await supabase
+        .from('events')
+        .select('*')
+        .gte('event_date', new Date().toISOString())
+        .order('event_date', { ascending: true })
+        .limit(3);
+
+      if (error) throw error;
+      setUpcomingEvents(data || []);
+    } catch (error) {
+      console.error('Error fetching upcoming events:', error);
     }
   };
 
@@ -167,26 +197,54 @@ const Dashboard = () => {
               </CardDescription>
             </CardHeader>
             <CardContent className="space-y-4">
-              <div className="flex items-start space-x-3">
-                <div className="w-2 h-2 bg-blue-600 rounded-full mt-2"></div>
-                <div>
-                  <p className="text-sm font-medium">Coastal Cleanup - Cape Coast</p>
-                  <p className="text-xs text-muted-foreground">This Saturday, 8:00 AM</p>
+              {upcomingEvents.length > 0 ? (
+                upcomingEvents.map((event, index) => (
+                  <div key={event.id} className="flex items-start justify-between">
+                    <div className="flex items-start space-x-3">
+                      <div className={`w-2 h-2 rounded-full mt-2 ${
+                        index === 0 ? 'bg-blue-600' : 
+                        index === 1 ? 'bg-green-600' : 'bg-orange-600'
+                      }`}></div>
+                      <div className="flex-1">
+                        <p className="text-sm font-medium">{event.title}</p>
+                        <div className="flex items-center space-x-1 text-xs text-muted-foreground">
+                          <Calendar className="h-3 w-3" />
+                          <span>{new Date(event.event_date).toLocaleDateString('en-US', {
+                            weekday: 'short',
+                            month: 'short',
+                            day: 'numeric',
+                            hour: '2-digit',
+                            minute: '2-digit'
+                          })}</span>
+                        </div>
+                        {event.location && (
+                          <div className="flex items-center space-x-1 text-xs text-muted-foreground mt-1">
+                            <MapPin className="h-3 w-3" />
+                            <span>{event.location}</span>
+                          </div>
+                        )}
+                      </div>
+                    </div>
+                    <Button variant="ghost" size="sm" asChild>
+                      <Link to={`/events`}>
+                        <ExternalLink className="h-3 w-3" />
+                      </Link>
+                    </Button>
+                  </div>
+                ))
+              ) : (
+                <div className="text-center py-4">
+                  <p className="text-sm text-muted-foreground">No upcoming events</p>
+                  <p className="text-xs text-muted-foreground">Check back later for new events!</p>
                 </div>
-              </div>
-              <div className="flex items-start space-x-3">
-                <div className="w-2 h-2 bg-green-600 rounded-full mt-2"></div>
-                <div>
-                  <p className="text-sm font-medium">Marine Life Photography Workshop</p>
-                  <p className="text-xs text-muted-foreground">Next Monday, 2:00 PM</p>
-                </div>
-              </div>
-              <div className="flex items-start space-x-3">
-                <div className="w-2 h-2 bg-orange-600 rounded-full mt-2"></div>
-                <div>
-                  <p className="text-sm font-medium">Ocean Conservation Webinar</p>
-                  <p className="text-xs text-muted-foreground">Next Friday, 6:00 PM</p>
-                </div>
+              )}
+              
+              <div className="pt-2 border-t">
+                <Button variant="outline" className="w-full" asChild>
+                  <Link to="/events">
+                    View All Events
+                  </Link>
+                </Button>
               </div>
             </CardContent>
           </Card>
