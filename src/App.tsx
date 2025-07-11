@@ -11,6 +11,7 @@ import Dashboard from "./pages/Dashboard";
 import Events from "./pages/Events";
 import Gallery from "./pages/Gallery";
 import CreateEvent from "./pages/CreateEvent";
+import EditEvent from "./pages/EditEvent";
 import NotFound from "./pages/NotFound";
 import ProtectedRoute from "./components/ProtectedRoute";
 
@@ -31,6 +32,11 @@ const App = () => (
             <Route path="/events/create" element={
               <ProtectedRoute>
                 <CreateEvent />
+              </ProtectedRoute>
+            } />
+            <Route path="/events/edit/:id" element={
+              <ProtectedRoute>
+                <EditEvent />
               </ProtectedRoute>
             } />
             <Route path="/dashboard" element={

@@ -6,7 +6,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { useToast } from "@/hooks/use-toast";
-import { Calendar, MapPin, Users, Recycle, Plus, Clock } from "lucide-react";
+import { Calendar, MapPin, Users, Recycle, Plus, Clock, Edit3 } from "lucide-react";
 import { Link } from "react-router-dom";
 
 interface Event {
@@ -230,7 +230,18 @@ const Events = () => {
                 </div>
                 
                 {user && (
-                  <div className="pt-4">
+                  <div className="pt-4 space-y-2">
+                    {user.id === event.created_by && (
+                      <Link to={`/events/edit/${event.id}`}>
+                        <Button 
+                          variant="outline"
+                          className="w-full"
+                        >
+                          <Edit3 className="mr-2 h-4 w-4" />
+                          Edit Event
+                        </Button>
+                      </Link>
+                    )}
                     {isUserJoined(event.id) ? (
                       <Button 
                         variant="outline" 
