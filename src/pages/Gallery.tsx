@@ -184,33 +184,35 @@ const Gallery = () => {
 
   if (loading) {
     return (
-      <div className="min-h-screen bg-gradient-to-b from-blue-50 to-white">
+      <div className="min-h-screen bg-gradient-wave animate-fade-in">
         <Navigation />
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-          <div className="text-center">Loading gallery...</div>
+          <div className="text-center">
+            <div className="animate-pulse">Loading gallery...</div>
+          </div>
         </div>
       </div>
     );
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-blue-50 to-white">
+    <div className="min-h-screen bg-gradient-wave animate-fade-in">
       <Navigation />
       
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-        <div className="flex justify-between items-center mb-8">
+        <div className="flex justify-between items-center mb-8 animate-scale-in">
           <div>
-            <h1 className="text-3xl font-bold text-gray-900 mb-2">
+            <h1 className="text-3xl font-bold text-foreground mb-2 animate-wave">
               Ocean Conservation Gallery
             </h1>
-            <p className="text-lg text-gray-600">
+            <p className="text-lg text-muted-foreground">
               Photos from our community events and conservation efforts
             </p>
           </div>
           {user && (
             <Dialog open={isUploadOpen} onOpenChange={setIsUploadOpen}>
               <DialogTrigger asChild>
-                <Button className="bg-blue-600 hover:bg-blue-700">
+                <Button variant="ocean" size="lg" className="animate-float">
                   <Plus className="mr-2 h-4 w-4" />
                   Add Photo
                 </Button>
@@ -280,7 +282,7 @@ const Gallery = () => {
                         />
                         <Button
                           type="button"
-                          variant="outline"
+                          variant="wave"
                           onClick={() => document.getElementById('photo-upload')?.click()}
                         >
                           Choose Photo
@@ -318,7 +320,8 @@ const Gallery = () => {
                     <Button 
                       type="submit" 
                       disabled={uploading || !selectedImage}
-                      className="flex-1 bg-blue-600 hover:bg-blue-700"
+                      variant="ocean"
+                      className="flex-1"
                     >
                       {uploading ? 'Uploading...' : 'Upload'}
                     </Button>
@@ -330,14 +333,14 @@ const Gallery = () => {
         </div>
 
         {images.length === 0 ? (
-          <div className="text-center py-12">
-            <ImageIcon className="h-12 w-12 text-gray-400 mx-auto mb-4" />
-            <h3 className="text-lg font-medium text-gray-900 mb-2">No photos yet</h3>
-            <p className="text-gray-600 mb-4">Be the first to share a photo from an ocean conservation event!</p>
+          <div className="text-center py-12 animate-fade-in">
+            <ImageIcon className="h-12 w-12 text-muted-foreground mx-auto mb-4 animate-bounce-gentle" />
+            <h3 className="text-lg font-medium text-foreground mb-2">No photos yet</h3>
+            <p className="text-muted-foreground mb-4">Be the first to share a photo from an ocean conservation event!</p>
             {user && (
               <Dialog open={isUploadOpen} onOpenChange={setIsUploadOpen}>
                 <DialogTrigger asChild>
-                  <Button className="bg-blue-600 hover:bg-blue-700">
+                  <Button variant="shimmer" size="lg">
                     <Plus className="mr-2 h-4 w-4" />
                     Add First Photo
                   </Button>
@@ -346,28 +349,35 @@ const Gallery = () => {
             )}
           </div>
         ) : (
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
-            {images.map((image) => (
-              <Card key={image.id} className="overflow-hidden hover:shadow-lg transition-shadow">
-                <div className="aspect-square relative">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 animate-fade-in">
+            {images.map((image, index) => (
+              <Card 
+                key={image.id} 
+                className="overflow-hidden group cursor-pointer"
+                style={{
+                  animationDelay: `${index * 0.1}s`
+                }}
+              >
+                <div className="aspect-square relative overflow-hidden">
                   <img
                     src={image.image_url}
                     alt={image.title}
-                    className="w-full h-full object-cover"
+                    className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
                   />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
                 </div>
                 <CardContent className="p-4">
-                  <h3 className="font-semibold text-sm mb-1">{image.title}</h3>
+                  <h3 className="font-semibold text-sm mb-1 text-foreground group-hover:text-primary transition-colors">{image.title}</h3>
                   {image.description && (
-                    <p className="text-xs text-gray-600 mb-2 line-clamp-2">{image.description}</p>
+                    <p className="text-xs text-muted-foreground mb-2 line-clamp-2">{image.description}</p>
                   )}
-                  <div className="flex items-center justify-between text-xs text-gray-500">
+                  <div className="flex items-center justify-between text-xs text-muted-foreground">
                     <div className="flex items-center">
                       <Calendar className="h-3 w-3 mr-1" />
                       {new Date(image.created_at).toLocaleDateString()}
                     </div>
                     {image.events && (
-                      <div className="text-blue-600 font-medium truncate ml-2">
+                      <div className="text-primary font-medium truncate ml-2">
                         {image.events.title}
                       </div>
                     )}
