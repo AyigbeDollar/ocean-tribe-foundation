@@ -25,8 +25,11 @@ const Navigation = () => {
         <div className="flex justify-between h-16">
           <div className="flex items-center">
             <Link to="/" className="flex items-center group">
-              <Waves className="h-8 w-8 text-primary mr-2 group-hover:animate-wave transition-all duration-300" />
-              <span className="text-xl font-bold text-foreground group-hover:text-primary transition-colors">Ocean Tribe Foundation</span>
+              <img 
+                src="/lovable-uploads/bed42293-035d-4e05-9ce5-6c97c1036cc4.png" 
+                alt="Ocean Tribe Foundation Logo" 
+                className="h-10 w-auto mr-3 group-hover:scale-105 transition-transform duration-300"
+              />
             </Link>
           </div>
           
