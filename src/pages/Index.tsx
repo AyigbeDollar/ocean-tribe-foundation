@@ -4,6 +4,7 @@ import { Button } from "@/components/ui/button";
 import { useAuth } from "@/contexts/AuthContext";
 import { Link } from "react-router-dom";
 import { Heart, Waves, Recycle, Users } from "lucide-react";
+import heroOceanScene from "@/assets/hero-ocean-scene.jpg";
 
 const Index = () => {
   const { user } = useAuth();
@@ -14,24 +15,32 @@ const Index = () => {
       
       <div className="flex flex-col">
         {/* Hero Section */}
-        <section className="relative bg-gradient-to-r from-blue-600 to-blue-800 text-white py-20">
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <section 
+          className="relative text-white py-32 min-h-[80vh] flex items-center"
+          style={{
+            backgroundImage: `linear-gradient(rgba(29, 78, 216, 0.4), rgba(59, 130, 246, 0.6)), url(${heroOceanScene})`,
+            backgroundSize: 'cover',
+            backgroundPosition: 'center',
+            backgroundAttachment: 'fixed'
+          }}
+        >
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
             <div className="text-center">
-              <h1 className="text-5xl md:text-6xl font-bold mb-6">
+              <h1 className="text-5xl md:text-6xl font-bold mb-6 drop-shadow-lg animate-fade-in">
                 Restoring the Ocean, Rebuilding the Future
               </h1>
-              <p className="text-xl md:text-2xl mb-8 max-w-3xl mx-auto">
+              <p className="text-xl md:text-2xl mb-8 max-w-3xl mx-auto drop-shadow-md animate-fade-in">
                 Ocean Tribe Foundation is a Ghana-based NGO dedicated to ocean restoration, 
                 waste management, and recycling. Join us in protecting our oceans and empowering coastal communities.
               </p>
               {!user ? (
                 <Link to="/auth">
-                  <Button size="lg" className="bg-white text-blue-600 hover:bg-gray-100">
+                  <Button size="lg" variant="ocean" className="animate-scale-in hover-scale">
                     Join Our Mission
                   </Button>
                 </Link>
               ) : (
-                <Button size="lg" className="bg-white text-blue-600 hover:bg-gray-100">
+                <Button size="lg" variant="ocean" className="animate-scale-in hover-scale">
                   Welcome back, {user.user_metadata?.full_name || 'Ocean Guardian'}!
                 </Button>
               )}
