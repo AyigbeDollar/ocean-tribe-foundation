@@ -10,6 +10,7 @@ import { Label } from "@/components/ui/label";
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
 import { useToast } from "@/hooks/use-toast";
 import { Upload, X, Image as ImageIcon, Calendar, User, Plus } from "lucide-react";
+import oceanBackground from "@/assets/ocean-plastic-waste.jpg";
 
 interface GalleryImage {
   id: string;
@@ -196,16 +197,24 @@ const Gallery = () => {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-wave animate-fade-in">
+    <div 
+      className="min-h-screen relative animate-fade-in"
+      style={{
+        backgroundImage: `linear-gradient(rgba(29, 78, 216, 0.85), rgba(59, 130, 246, 0.75)), url(${oceanBackground})`,
+        backgroundSize: 'cover',
+        backgroundPosition: 'center',
+        backgroundAttachment: 'fixed'
+      }}
+    >
       <Navigation />
       
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 relative z-10">
         <div className="flex justify-between items-center mb-8 animate-scale-in">
           <div>
-            <h1 className="text-3xl font-bold text-foreground mb-2 animate-wave">
+            <h1 className="text-3xl font-bold text-white mb-2 animate-wave">
               Ocean Conservation Gallery
             </h1>
-            <p className="text-lg text-muted-foreground">
+            <p className="text-lg text-white/90">
               Photos from our community events and conservation efforts
             </p>
           </div>
@@ -335,8 +344,8 @@ const Gallery = () => {
         {images.length === 0 ? (
           <div className="text-center py-12 animate-fade-in">
             <ImageIcon className="h-12 w-12 text-muted-foreground mx-auto mb-4 animate-bounce-gentle" />
-            <h3 className="text-lg font-medium text-foreground mb-2">No photos yet</h3>
-            <p className="text-muted-foreground mb-4">Be the first to share a photo from an ocean conservation event!</p>
+            <h3 className="text-lg font-medium text-white mb-2">No photos yet</h3>
+            <p className="text-white/80 mb-4">Be the first to share a photo from an ocean conservation event!</p>
             {user && (
               <Dialog open={isUploadOpen} onOpenChange={setIsUploadOpen}>
                 <DialogTrigger asChild>
