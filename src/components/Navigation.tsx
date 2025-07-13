@@ -53,6 +53,12 @@ const Navigation = () => {
               >
                 Gallery
               </Link>
+              <Link 
+                to="/contact" 
+                className="text-foreground hover:text-primary font-medium transition-all duration-300 hover:scale-105 relative after:absolute after:bottom-0 after:left-0 after:w-0 after:h-0.5 after:bg-primary after:transition-all after:duration-300 hover:after:w-full"
+              >
+                Contact
+              </Link>
               {user && (
                 <Link 
                   to="/dashboard" 
