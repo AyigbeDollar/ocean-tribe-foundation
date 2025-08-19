@@ -26,16 +26,26 @@ export const makeAdmin = async () => {
       return;
     }
     
-    // Check if user is already an admin
-    if (user.user_metadata?.role === 'admin') {
+    // Check if user is already an admin using database
+    const { data: isAlreadyAdmin, error: checkError } = await supabase.rpc('is_admin');
+    
+    if (checkError) {
+      console.error('Error checking admin status:', checkError);
+      return;
+    }
+    
+    if (isAlreadyAdmin) {
       console.log('User is already an admin');
       return;
     }
     
-    // Add admin role to user metadata
-    const { error } = await supabase.auth.updateUser({
-      data: { role: 'admin' }
-    });
+    // Add admin role to user_roles table
+    const { error } = await supabase
+      .from('user_roles')
+      .insert({
+        user_id: user.id,
+        role: 'admin'
+      });
     
     if (error) {
       console.error('Error adding admin role:', error);

@@ -65,7 +65,8 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
 
   const checkAdminStatus = async (userId: string) => {
     try {
-      const { data, error } = await supabase.auth.getUser();
+      // Use the database is_admin function to check admin status
+      const { data, error } = await supabase.rpc('is_admin', { user_id: userId });
       
       if (error) {
         console.error('Error checking admin status:', error);
@@ -73,9 +74,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
         return;
       }
       
-      // Check if user has admin role in metadata
-      const isUserAdmin = data.user?.user_metadata?.role === 'admin';
-      setIsAdmin(isUserAdmin);
+      setIsAdmin(data || false);
     } catch (error) {
       console.error('Error checking admin status:', error);
       setIsAdmin(false);
