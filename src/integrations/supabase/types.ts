@@ -95,6 +95,13 @@ export type Database = {
             referencedRelation: "events"
             referencedColumns: ["id"]
           },
+          {
+            foreignKeyName: "gallery_event_id_fkey"
+            columns: ["event_id"]
+            isOneToOne: false
+            referencedRelation: "events_public"
+            referencedColumns: ["id"]
+          },
         ]
       }
       profiles: {
@@ -148,6 +155,13 @@ export type Database = {
             referencedRelation: "events"
             referencedColumns: ["id"]
           },
+          {
+            foreignKeyName: "user_events_event_id_fkey"
+            columns: ["event_id"]
+            isOneToOne: false
+            referencedRelation: "events_public"
+            referencedColumns: ["id"]
+          },
         ]
       }
       user_roles: {
@@ -176,11 +190,112 @@ export type Database = {
       }
     }
     Views: {
-      [_ in never]: never
+      events_public: {
+        Row: {
+          created_at: string | null
+          description: string | null
+          event_date: string | null
+          id: string | null
+          image_url: string | null
+          location: string | null
+          participant_count: number | null
+          recycling_impact_kg: number | null
+          title: string | null
+          updated_at: string | null
+        }
+        Insert: {
+          created_at?: string | null
+          description?: string | null
+          event_date?: string | null
+          id?: string | null
+          image_url?: string | null
+          location?: string | null
+          participant_count?: number | null
+          recycling_impact_kg?: number | null
+          title?: string | null
+          updated_at?: string | null
+        }
+        Update: {
+          created_at?: string | null
+          description?: string | null
+          event_date?: string | null
+          id?: string | null
+          image_url?: string | null
+          location?: string | null
+          participant_count?: number | null
+          recycling_impact_kg?: number | null
+          title?: string | null
+          updated_at?: string | null
+        }
+        Relationships: []
+      }
+      gallery_public: {
+        Row: {
+          created_at: string | null
+          description: string | null
+          event_id: string | null
+          id: string | null
+          image_url: string | null
+          title: string | null
+          updated_at: string | null
+        }
+        Insert: {
+          created_at?: string | null
+          description?: string | null
+          event_id?: string | null
+          id?: string | null
+          image_url?: string | null
+          title?: string | null
+          updated_at?: string | null
+        }
+        Update: {
+          created_at?: string | null
+          description?: string | null
+          event_id?: string | null
+          id?: string | null
+          image_url?: string | null
+          title?: string | null
+          updated_at?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "gallery_event_id_fkey"
+            columns: ["event_id"]
+            isOneToOne: false
+            referencedRelation: "events"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "gallery_event_id_fkey"
+            columns: ["event_id"]
+            isOneToOne: false
+            referencedRelation: "events_public"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
     }
     Functions: {
+      get_user_roles_for_admin: {
+        Args: Record<PropertyKey, never>
+        Returns: {
+          created_at: string
+          id: string
+          role: string
+          updated_at: string
+          user_id: string
+        }[]
+      }
       is_admin: {
         Args: { user_id?: string }
+        Returns: boolean
+      }
+      user_owns_event: {
+        Args: { event_id: string }
+        Returns: boolean
+      }
+      user_owns_gallery_item: {
+        Args: { gallery_id: string }
         Returns: boolean
       }
     }
