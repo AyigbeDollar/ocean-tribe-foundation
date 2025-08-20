@@ -95,13 +95,6 @@ export type Database = {
             referencedRelation: "events"
             referencedColumns: ["id"]
           },
-          {
-            foreignKeyName: "gallery_event_id_fkey"
-            columns: ["event_id"]
-            isOneToOne: false
-            referencedRelation: "events_public"
-            referencedColumns: ["id"]
-          },
         ]
       }
       profiles: {
@@ -155,13 +148,6 @@ export type Database = {
             referencedRelation: "events"
             referencedColumns: ["id"]
           },
-          {
-            foreignKeyName: "user_events_event_id_fkey"
-            columns: ["event_id"]
-            isOneToOne: false
-            referencedRelation: "events_public"
-            referencedColumns: ["id"]
-          },
         ]
       }
       user_roles: {
@@ -190,92 +176,38 @@ export type Database = {
       }
     }
     Views: {
-      events_public: {
-        Row: {
-          created_at: string | null
-          description: string | null
-          event_date: string | null
-          id: string | null
-          image_url: string | null
-          location: string | null
-          participant_count: number | null
-          recycling_impact_kg: number | null
-          title: string | null
-          updated_at: string | null
-        }
-        Insert: {
-          created_at?: string | null
-          description?: string | null
-          event_date?: string | null
-          id?: string | null
-          image_url?: string | null
-          location?: string | null
-          participant_count?: number | null
-          recycling_impact_kg?: number | null
-          title?: string | null
-          updated_at?: string | null
-        }
-        Update: {
-          created_at?: string | null
-          description?: string | null
-          event_date?: string | null
-          id?: string | null
-          image_url?: string | null
-          location?: string | null
-          participant_count?: number | null
-          recycling_impact_kg?: number | null
-          title?: string | null
-          updated_at?: string | null
-        }
-        Relationships: []
-      }
-      gallery_public: {
-        Row: {
-          created_at: string | null
-          description: string | null
-          event_id: string | null
-          id: string | null
-          image_url: string | null
-          title: string | null
-          updated_at: string | null
-        }
-        Insert: {
-          created_at?: string | null
-          description?: string | null
-          event_id?: string | null
-          id?: string | null
-          image_url?: string | null
-          title?: string | null
-          updated_at?: string | null
-        }
-        Update: {
-          created_at?: string | null
-          description?: string | null
-          event_id?: string | null
-          id?: string | null
-          image_url?: string | null
-          title?: string | null
-          updated_at?: string | null
-        }
-        Relationships: [
-          {
-            foreignKeyName: "gallery_event_id_fkey"
-            columns: ["event_id"]
-            isOneToOne: false
-            referencedRelation: "events"
-            referencedColumns: ["id"]
-          },
-          {
-            foreignKeyName: "gallery_event_id_fkey"
-            columns: ["event_id"]
-            isOneToOne: false
-            referencedRelation: "events_public"
-            referencedColumns: ["id"]
-          },
-        ]
-      }
+      [_ in never]: never
     }
     Functions: {
+      get_events_safe: {
+        Args: Record<PropertyKey, never>
+        Returns: {
+          created_at: string
+          description: string
+          event_date: string
+          id: string
+          image_url: string
+          location: string
+          participant_count: number
+          recycling_impact_kg: number
+          title: string
+          updated_at: string
+          user_can_edit: boolean
+        }[]
+      }
+      get_gallery_safe: {
+        Args: Record<PropertyKey, never>
+        Returns: {
+          created_at: string
+          description: string
+          event_id: string
+          id: string
+          image_url: string
+          title: string
+          updated_at: string
+          user_can_edit: boolean
+        }[]
+      }
       get_user_roles_for_admin: {
         Args: Record<PropertyKey, never>
         Returns: {
