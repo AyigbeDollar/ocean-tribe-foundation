@@ -3,6 +3,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Settings, FileText, Image, Users, CreditCard, Handshake } from "lucide-react";
+import { Link } from "react-router-dom";
 
 const AdminDashboard = () => {
   const { user, signOut } = useAuth();
@@ -146,7 +147,9 @@ const AdminDashboard = () => {
               </CardDescription>
             </CardHeader>
             <CardContent>
-              <Button className="w-full">Manage Users</Button>
+              <Button asChild className="w-full">
+                <Link to="/admin/users">Manage Users</Link>
+              </Button>
             </CardContent>
           </Card>
         </div>
