@@ -28,9 +28,11 @@ const UserManagement = () => {
     try {
       setLoading(true);
       
-      // Fetch users from auth
-      const { data: authUsers, error: authError } = await supabase.auth.admin.listUsers();
-      if (authError) throw authError;
+      // Fetch users from profiles table
+      const { data: profiles, error: profilesError } = await supabase
+        .from('profiles')
+        .select('id, email, created_at');
+      if (profilesError) throw profilesError;
 
       // Fetch user roles
       const { data: userRoles, error: rolesError } = await supabase
@@ -39,12 +41,12 @@ const UserManagement = () => {
       if (rolesError) throw rolesError;
 
       // Combine the data
-      const usersWithRoles = authUsers.users.map(user => ({
-        id: user.id,
-        email: user.email || '',
-        created_at: user.created_at,
-        roles: userRoles?.filter(role => role.user_id === user.id).map(role => role.role) || []
-      }));
+      const usersWithRoles = profiles?.map(profile => ({
+        id: profile.id,
+        email: profile.email,
+        created_at: profile.created_at,
+        roles: userRoles?.filter(role => role.user_id === profile.id).map(role => role.role) || []
+      })) || [];
 
       setUsers(usersWithRoles);
     } catch (error: any) {
