@@ -31,7 +31,7 @@ const UserManagement = () => {
       // Fetch users from profiles table
       const { data: profiles, error: profilesError } = await supabase
         .from('profiles')
-        .select('id, email, created_at');
+        .select('id, full_name, created_at');
       if (profilesError) throw profilesError;
 
       // Fetch user roles
@@ -43,7 +43,7 @@ const UserManagement = () => {
       // Combine the data
       const usersWithRoles = profiles?.map(profile => ({
         id: profile.id,
-        email: profile.email,
+        email: profile.full_name || 'No email', // Use full_name as placeholder since we can't access auth.users directly
         created_at: profile.created_at,
         roles: userRoles?.filter(role => role.user_id === profile.id).map(role => role.role) || []
       })) || [];
