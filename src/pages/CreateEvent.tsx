@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Navigation from "@/components/Navigation";
 import { useAuth } from "@/contexts/AuthContext";
@@ -8,24 +8,63 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Label } from "@/components/ui/label";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { useToast } from "@/hooks/use-toast";
 import { ArrowLeft, Calendar, MapPin, Recycle, Upload, X } from "lucide-react";
 
+interface Community {
+  id: string;
+  name: string;
+}
+
 const CreateEvent = () => {
-  const { user } = useAuth();
+  const { user, isAdmin } = useAuth();
   const navigate = useNavigate();
   const { toast } = useToast();
   const [loading, setLoading] = useState(false);
   const [uploadingImage, setUploadingImage] = useState(false);
   const [selectedImage, setSelectedImage] = useState<File | null>(null);
   const [imagePreview, setImagePreview] = useState<string | null>(null);
+  const [communities, setCommunities] = useState<Community[]>([]);
   const [formData, setFormData] = useState({
     title: '',
     description: '',
     location: '',
     event_date: '',
-    recycling_impact_kg: ''
+    recycling_impact_kg: '',
+    community_id: ''
   });
+
+  useEffect(() => {
+    if (!user || !isAdmin) {
+      navigate('/');
+      return;
+    }
+    fetchCommunities();
+  }, [user, isAdmin, navigate]);
+
+  const fetchCommunities = async () => {
+    try {
+      const { data, error } = await supabase
+        .from('communities')
+        .select('id, name')
+        .order('name');
+
+      if (error) throw error;
+      setCommunities(data || []);
+    } catch (error) {
+      console.error('Error fetching communities:', error);
+      toast({
+        title: "Error",
+        description: "Failed to load communities",
+        variant: "destructive",
+      });
+    }
+  };
+
+  if (!user || !isAdmin) {
+    return null;
+  }
 
   const uploadImage = async (file: File): Promise<string | null> => {
     try {
@@ -61,6 +100,15 @@ const CreateEvent = () => {
     e.preventDefault();
     if (!user) return;
 
+    if (!formData.title || !formData.event_date || !formData.community_id) {
+      toast({
+        title: "Error",
+        description: "Title, event date, and community are required",
+        variant: "destructive",
+      });
+      return;
+    }
+
     setLoading(true);
     try {
       let imageUrl = null;
@@ -78,6 +126,7 @@ const CreateEvent = () => {
           event_date: formData.event_date,
           recycling_impact_kg: parseFloat(formData.recycling_impact_kg) || 0,
           image_url: imageUrl,
+          community_id: formData.community_id,
           created_by: user.id
         });
 
@@ -126,11 +175,6 @@ const CreateEvent = () => {
     setImagePreview(null);
   };
 
-  if (!user) {
-    navigate('/auth');
-    return null;
-  }
-
   return (
     <div className="min-h-screen bg-gradient-to-b from-blue-50 to-white">
       <Navigation />
@@ -163,6 +207,25 @@ const CreateEvent = () => {
           </CardHeader>
           <CardContent>
             <form onSubmit={handleSubmit} className="space-y-6">
+              <div className="space-y-2">
+                <Label htmlFor="community_id">Community *</Label>
+                <Select 
+                  value={formData.community_id} 
+                  onValueChange={(value) => setFormData(prev => ({ ...prev, community_id: value }))}
+                >
+                  <SelectTrigger>
+                    <SelectValue placeholder="Select a community" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    {communities.map((community) => (
+                      <SelectItem key={community.id} value={community.id}>
+                        {community.name}
+                      </SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
+              </div>
+
               <div className="space-y-2">
                 <Label htmlFor="title">Event Title *</Label>
                 <Input

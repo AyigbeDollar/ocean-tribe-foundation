@@ -11,8 +11,12 @@ import Dashboard from "./pages/Dashboard";
 import Events from "./pages/Events";
 import Gallery from "./pages/Gallery";
 import Contact from "./pages/Contact";
+import Communities from "./pages/Communities";
 import CreateEvent from "./pages/CreateEvent";
 import EditEvent from "./pages/EditEvent";
+import AdminCommunities from "./pages/AdminCommunities";
+import CreateCommunity from "./pages/CreateCommunity";
+import EditCommunity from "./pages/EditCommunity";
 import NotFound from "./pages/NotFound";
 import AdminDashboard from "./pages/AdminDashboard";
 import UserManagement from "./pages/UserManagement";
@@ -31,18 +35,19 @@ const App = () => (
           <Routes>
             <Route path="/" element={<Index />} />
             <Route path="/auth" element={<Auth />} />
+            <Route path="/communities" element={<Communities />} />
             <Route path="/events" element={<Events />} />
             <Route path="/gallery" element={<Gallery />} />
             <Route path="/contact" element={<Contact />} />
             <Route path="/events/create" element={
-              <ProtectedRoute>
+              <AdminRoute>
                 <CreateEvent />
-              </ProtectedRoute>
+              </AdminRoute>
             } />
             <Route path="/events/edit/:id" element={
-              <ProtectedRoute>
+              <AdminRoute>
                 <EditEvent />
-              </ProtectedRoute>
+              </AdminRoute>
             } />
             <Route path="/dashboard" element={
               <ProtectedRoute>
@@ -57,6 +62,21 @@ const App = () => (
             <Route path="/admin/users" element={
               <AdminRoute>
                 <UserManagement />
+              </AdminRoute>
+            } />
+            <Route path="/admin/communities" element={
+              <AdminRoute>
+                <AdminCommunities />
+              </AdminRoute>
+            } />
+            <Route path="/admin/communities/create" element={
+              <AdminRoute>
+                <CreateCommunity />
+              </AdminRoute>
+            } />
+            <Route path="/admin/communities/edit/:id" element={
+              <AdminRoute>
+                <EditCommunity />
               </AdminRoute>
             } />
             {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}

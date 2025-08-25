@@ -14,8 +14,45 @@ export type Database = {
   }
   public: {
     Tables: {
+      communities: {
+        Row: {
+          admin_created_by: string
+          created_at: string
+          description: string | null
+          id: string
+          image_url: string | null
+          location: string | null
+          member_count: number | null
+          name: string
+          updated_at: string
+        }
+        Insert: {
+          admin_created_by: string
+          created_at?: string
+          description?: string | null
+          id?: string
+          image_url?: string | null
+          location?: string | null
+          member_count?: number | null
+          name: string
+          updated_at?: string
+        }
+        Update: {
+          admin_created_by?: string
+          created_at?: string
+          description?: string | null
+          id?: string
+          image_url?: string | null
+          location?: string | null
+          member_count?: number | null
+          name?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
       events: {
         Row: {
+          community_id: string | null
           created_at: string
           created_by: string
           description: string | null
@@ -29,6 +66,7 @@ export type Database = {
           updated_at: string
         }
         Insert: {
+          community_id?: string | null
           created_at?: string
           created_by: string
           description?: string | null
@@ -42,6 +80,7 @@ export type Database = {
           updated_at?: string
         }
         Update: {
+          community_id?: string | null
           created_at?: string
           created_by?: string
           description?: string | null
@@ -54,7 +93,15 @@ export type Database = {
           title?: string
           updated_at?: string
         }
-        Relationships: []
+        Relationships: [
+          {
+            foreignKeyName: "events_community_id_fkey"
+            columns: ["community_id"]
+            isOneToOne: false
+            referencedRelation: "communities"
+            referencedColumns: ["id"]
+          },
+        ]
       }
       gallery: {
         Row: {
@@ -123,6 +170,35 @@ export type Database = {
           updated_at?: string
         }
         Relationships: []
+      }
+      user_communities: {
+        Row: {
+          community_id: string
+          id: string
+          joined_at: string
+          user_id: string
+        }
+        Insert: {
+          community_id: string
+          id?: string
+          joined_at?: string
+          user_id: string
+        }
+        Update: {
+          community_id?: string
+          id?: string
+          joined_at?: string
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "user_communities_community_id_fkey"
+            columns: ["community_id"]
+            isOneToOne: false
+            referencedRelation: "communities"
+            referencedColumns: ["id"]
+          },
+        ]
       }
       user_events: {
         Row: {

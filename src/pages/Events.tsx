@@ -19,6 +19,10 @@ interface Event {
   recycling_impact_kg: number;
   image_url: string | null;
   created_by: string;
+  community_id: string | null;
+  communities?: {
+    name: string;
+  };
 }
 
 interface UserEvent {
@@ -43,7 +47,12 @@ const Events = () => {
     try {
       const { data, error } = await supabase
         .from('events')
-        .select('*')
+        .select(`
+          *,
+          communities (
+            name
+          )
+        `)
         .order('event_date', { ascending: true });
 
       if (error) throw error;
@@ -172,14 +181,6 @@ const Events = () => {
               Join community events and make a difference for our oceans
             </p>
           </div>
-          {user && (
-            <Link to="/events/create">
-              <Button className="bg-blue-600 hover:bg-blue-700">
-                <Plus className="mr-2 h-4 w-4" />
-                Create Event
-              </Button>
-            </Link>
-          )}
         </div>
 
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
@@ -201,6 +202,11 @@ const Events = () => {
                     <Badge variant="secondary">Joined</Badge>
                   )}
                 </div>
+                {event.communities && (
+                  <Badge variant="outline" className="w-fit mb-2">
+                    {event.communities.name}
+                  </Badge>
+                )}
                 <CardDescription className="line-clamp-2">
                   {event.description}
                 </CardDescription>
@@ -231,17 +237,6 @@ const Events = () => {
                 
                 {user && (
                   <div className="pt-4 space-y-2">
-                    {user.id === event.created_by && (
-                      <Link to={`/events/edit/${event.id}`}>
-                        <Button 
-                          variant="outline"
-                          className="w-full"
-                        >
-                          <Edit3 className="mr-2 h-4 w-4" />
-                          Edit Event
-                        </Button>
-                      </Link>
-                    )}
                     {isUserJoined(event.id) ? (
                       <Button 
                         variant="outline" 
@@ -279,15 +274,12 @@ const Events = () => {
           <div className="text-center py-12">
             <Clock className="h-12 w-12 text-gray-400 mx-auto mb-4" />
             <h3 className="text-lg font-medium text-gray-900 mb-2">No events yet</h3>
-            <p className="text-gray-600 mb-4">Be the first to create an ocean conservation event!</p>
-            {user && (
-              <Link to="/events/create">
-                <Button className="bg-blue-600 hover:bg-blue-700">
-                  <Plus className="mr-2 h-4 w-4" />
-                  Create Event
-                </Button>
-              </Link>
-            )}
+            <p className="text-gray-600 mb-4">Join communities first to see their upcoming cleanup events.</p>
+            <Link to="/communities">
+              <Button className="bg-blue-600 hover:bg-blue-700">
+                Browse Communities
+              </Button>
+            </Link>
           </div>
         )}
       </div>
