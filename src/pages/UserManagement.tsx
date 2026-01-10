@@ -49,10 +49,11 @@ const UserManagement = () => {
       })) || [];
 
       setUsers(usersWithRoles);
-    } catch (error: any) {
+    } catch (error: unknown) {
+      const errorMessage = error instanceof Error ? error.message : 'Unknown error occurred';
       toast({
         title: "Error fetching users",
-        description: error.message,
+        description: errorMessage,
         variant: "destructive",
       });
     } finally {
@@ -87,10 +88,11 @@ const UserManagement = () => {
       }
       
       await fetchUsers();
-    } catch (error: any) {
+    } catch (error: unknown) {
+      const errorMessage = error instanceof Error ? error.message : 'Unknown error occurred';
       toast({
         title: "Error updating role",
-        description: error.message,
+        description: errorMessage,
         variant: "destructive",
       });
     }

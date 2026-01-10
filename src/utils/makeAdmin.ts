@@ -62,6 +62,6 @@ export const makeAdmin = async () => {
 
 // Make it available globally for console access
 if (typeof window !== 'undefined') {
-  (window as any).makeAdmin = makeAdmin;
+  (window as Record<string, unknown>).makeAdmin = makeAdmin;
   console.log('makeAdmin function is now available globally. Use: await makeAdmin()');
 }

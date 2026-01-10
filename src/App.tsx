@@ -9,7 +9,7 @@ import Index from "./pages/Index";
 import Auth from "./pages/Auth";
 import Dashboard from "./pages/Dashboard";
 import Events from "./pages/Events";
-import Gallery from "./pages/Gallery";
+
 import Contact from "./pages/Contact";
 import Communities from "./pages/Communities";
 import CreateEvent from "./pages/CreateEvent";
@@ -19,6 +19,8 @@ import CreateCommunity from "./pages/CreateCommunity";
 import EditCommunity from "./pages/EditCommunity";
 import NotFound from "./pages/NotFound";
 import AdminDashboard from "./pages/AdminDashboard";
+import AdminGallery from "./pages/AdminGallery";
+import AdminGalleryCleanup from "./pages/AdminGalleryCleanup";
 import UserManagement from "./pages/UserManagement";
 import ProtectedRoute from "./components/ProtectedRoute";
 import AdminRoute from "./components/AdminRoute";
@@ -37,7 +39,7 @@ const App = () => (
             <Route path="/auth" element={<Auth />} />
             <Route path="/communities" element={<Communities />} />
             <Route path="/events" element={<Events />} />
-            <Route path="/gallery" element={<Gallery />} />
+
             <Route path="/contact" element={<Contact />} />
             <Route path="/events/create" element={
               <AdminRoute>
@@ -57,6 +59,16 @@ const App = () => (
             <Route path="/admin" element={
               <AdminRoute>
                 <AdminDashboard />
+              </AdminRoute>
+            } />
+            <Route path="/admin/gallery" element={
+              <AdminRoute>
+                <AdminGallery />
+              </AdminRoute>
+            } />
+            <Route path="/admin/gallery/cleanup" element={
+              <AdminRoute>
+                <AdminGalleryCleanup />
               </AdminRoute>
             } />
             <Route path="/admin/users" element={

@@ -5,8 +5,9 @@ import { supabase } from "@/integrations/supabase/client";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
+import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { useToast } from "@/hooks/use-toast";
-import { Calendar, MapPin, Users, Recycle, Plus, Clock, Edit3 } from "lucide-react";
+import { Calendar, MapPin, Users, Recycle, Plus, Clock, Edit3, Trash2 } from "lucide-react";
 import { Link } from "react-router-dom";
 
 interface Event {
@@ -30,11 +31,13 @@ interface UserEvent {
 }
 
 const Events = () => {
-  const { user } = useAuth();
+  const { user, isAdmin } = useAuth();
   const { toast } = useToast();
   const [events, setEvents] = useState<Event[]>([]);
   const [userEvents, setUserEvents] = useState<UserEvent[]>([]);
   const [loading, setLoading] = useState(true);
+  const [deleteConfirmOpen, setDeleteConfirmOpen] = useState(false);
+  const [eventToDelete, setEventToDelete] = useState<string | null>(null);
 
   useEffect(() => {
     fetchEvents();
@@ -145,6 +148,50 @@ const Events = () => {
     }
   };
 
+  const confirmDeleteEvent = (eventId: string) => {
+    setEventToDelete(eventId);
+    setDeleteConfirmOpen(true);
+  };
+
+  const deleteEvent = async () => {
+    if (!isAdmin || !eventToDelete) return;
+
+    try {
+      // First delete all user_events for this event
+      const { error: userEventsError } = await supabase
+        .from('user_events')
+        .delete()
+        .eq('event_id', eventToDelete);
+
+      if (userEventsError) throw userEventsError;
+
+      // Then delete the event
+      const { error: eventError } = await supabase
+        .from('events')
+        .delete()
+        .eq('id', eventToDelete);
+
+      if (eventError) throw eventError;
+
+      toast({
+        title: "Success",
+        description: "Event deleted successfully",
+      });
+
+      fetchEvents();
+    } catch (error) {
+      console.error('Error deleting event:', error);
+      toast({
+        title: "Error",
+        description: "Failed to delete event",
+        variant: "destructive",
+      });
+    } finally {
+      setDeleteConfirmOpen(false);
+      setEventToDelete(null);
+    }
+  };
+
   const formatDate = (dateString: string) => {
     return new Date(dateString).toLocaleDateString('en-US', {
       weekday: 'long',
@@ -181,6 +228,14 @@ const Events = () => {
               Join community events and make a difference for our oceans
             </p>
           </div>
+          {isAdmin && (
+            <Button asChild className="bg-blue-600 hover:bg-blue-700">
+              <Link to="/events/create">
+                <Plus className="h-4 w-4 mr-2" />
+                Create Event
+              </Link>
+            </Button>
+          )}
         </div>
 
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
@@ -198,9 +253,14 @@ const Events = () => {
               <CardHeader>
                 <div className="flex justify-between items-start">
                   <CardTitle className="text-xl">{event.title}</CardTitle>
-                  {isUserJoined(event.id) && (
-                    <Badge variant="secondary">Joined</Badge>
-                  )}
+                  <div className="flex gap-2">
+                    {isUserJoined(event.id) && (
+                      <Badge variant="secondary">Joined</Badge>
+                    )}
+                    {isAdmin && event.created_by === user?.id && (
+                      <Badge variant="outline" className="text-xs">Created by you</Badge>
+                    )}
+                  </div>
                 </div>
                 {event.communities && (
                   <Badge variant="outline" className="w-fit mb-2">
@@ -255,6 +315,34 @@ const Events = () => {
                     )}
                   </div>
                 )}
+
+                {/* Admin Actions */}
+                {isAdmin && (
+                  <div className="pt-4 border-t border-gray-200">
+                    <div className="flex gap-2">
+                      <Button 
+                        asChild 
+                        variant="outline" 
+                        size="sm"
+                        className="flex-1"
+                      >
+                        <Link to={`/events/edit/${event.id}`}>
+                          <Edit3 className="h-4 w-4 mr-2" />
+                          Edit
+                        </Link>
+                      </Button>
+                      <Button 
+                        variant="destructive" 
+                        size="sm"
+                        onClick={() => confirmDeleteEvent(event.id)}
+                        className="flex-1"
+                      >
+                        <Trash2 className="h-4 w-4 mr-2" />
+                        Delete
+                      </Button>
+                    </div>
+                  </div>
+                )}
                 
                 {!user && (
                   <div className="pt-4">
@@ -283,6 +371,36 @@ const Events = () => {
           </div>
         )}
       </div>
+
+      {/* Delete Confirmation Dialog */}
+      <Dialog open={deleteConfirmOpen} onOpenChange={setDeleteConfirmOpen}>
+        <DialogContent className="sm:max-w-[425px]">
+          <DialogHeader>
+            <DialogTitle>Delete Event</DialogTitle>
+            <DialogDescription>
+              Are you sure you want to delete this event? This action cannot be undone and will remove all participant registrations.
+            </DialogDescription>
+          </DialogHeader>
+          <div className="flex gap-2 pt-4">
+            <Button
+              type="button"
+              variant="outline"
+              onClick={() => setDeleteConfirmOpen(false)}
+              className="flex-1"
+            >
+              Cancel
+            </Button>
+            <Button 
+              type="button" 
+              onClick={deleteEvent}
+              variant="destructive"
+              className="flex-1"
+            >
+              Delete Event
+            </Button>
+          </div>
+        </DialogContent>
+      </Dialog>
     </div>
   );
 };

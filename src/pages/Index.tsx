@@ -4,11 +4,17 @@ import { Button } from "@/components/ui/button";
 import { useAuth } from "@/contexts/AuthContext";
 import { Link } from "react-router-dom";
 import { Heart, Waves, Recycle, Users } from "lucide-react";
-import heroOceanScene from "@/assets/hero-ocean-scene.jpg";
+import Logo from "@/components/Logo";
+import { Carousel, CarouselContent, CarouselItem } from "@/components/ui/carousel";
+import Autoplay from "embla-carousel-autoplay";
+import Fade from "embla-carousel-fade";
+import { useEffect, useState } from "react";
+import { supabase } from "@/integrations/supabase/client";
+// Background image will be set via CSS
 
 const Index = () => {
   const { user } = useAuth();
-
+  
   return (
     <div className="min-h-screen bg-gradient-to-b from-blue-50 to-white">
       <Navigation />
@@ -16,16 +22,16 @@ const Index = () => {
       <div className="flex flex-col">
         {/* Hero Section */}
         <section 
-          className="relative text-white py-32 min-h-[80vh] flex items-center"
-          style={{
-            backgroundImage: `linear-gradient(rgba(29, 78, 216, 0.4), rgba(59, 130, 246, 0.6)), url(${heroOceanScene})`,
-            backgroundSize: 'cover',
-            backgroundPosition: 'center',
-            backgroundAttachment: 'fixed'
-          }}
+          className="relative text-white py-32 min-h-[80vh] flex items-center hero-bg"
         >
+          {/* Gradient overlay for readability */}
+          <div className="absolute inset-0 bg-gradient-to-br from-blue-900/60 via-sky-700/40 to-sky-500/30" />
+
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
             <div className="text-center">
+              <div className="flex justify-center mb-6">
+                <Logo size="xl" showText={false} className="drop-shadow-lg animate-fade-in" />
+              </div>
               <h1 className="text-5xl md:text-6xl font-bold mb-6 drop-shadow-lg animate-fade-in">
                 Restoring the Ocean, Rebuilding the Future
               </h1>
@@ -45,6 +51,24 @@ const Index = () => {
                 </Button>
               )}
             </div>
+          </div>
+        </section>
+
+        {/* Gallery Carousel (public view) */}
+        <section className="py-12">
+          <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+            <Carousel
+              className="w-full"
+              opts={{ loop: true, duration: 20, align: "start" }}
+              plugins={[
+                Autoplay({ delay: 3500, stopOnInteraction: false, stopOnMouseEnter: false }),
+                Fade(),
+              ]}
+           >
+              <CarouselContent className="relative">
+                <GallerySlides />
+              </CarouselContent>
+            </Carousel>
           </div>
         </section>
 
@@ -121,6 +145,68 @@ const Index = () => {
         </section>
       </div>
     </div>
+  );
+};
+
+const GallerySlides = () => {
+  const [items, setItems] = useState<Array<{ id: string; title: string; image_url: string }>>([]);
+  const [loading, setLoading] = useState<boolean>(false);
+
+  useEffect(() => {
+    const load = async () => {
+      try {
+        setLoading(true);
+        const { data, error } = await supabase
+          .from('gallery')
+          .select('id,title,image_url')
+          .order('created_at', { ascending: false })
+          .limit(20);
+        if (error) throw error;
+        setItems(data || []);
+      } catch (err) {
+        // Fail silently on homepage
+        console.error('Failed to load public gallery:', err);
+      } finally {
+        setLoading(false);
+      }
+    };
+    load();
+  }, []);
+
+  if (loading && items.length === 0) {
+    return (
+      <CarouselItem className="h-[360px] md:h-[480px] flex items-center justify-center">
+        <div className="text-gray-500">Loading gallery…</div>
+      </CarouselItem>
+    );
+  }
+
+  if (!loading && items.length === 0) {
+    return (
+      <CarouselItem className="h-[360px] md:h-[480px] flex items-center justify-center">
+        <div className="text-gray-500">No images yet</div>
+      </CarouselItem>
+    );
+  }
+
+  return (
+    <>
+      {items.map((item) => (
+        <CarouselItem key={item.id} className="relative h-[360px] md:h-[480px]">
+          <img
+            src={item.image_url}
+            alt={item.title}
+            className="absolute inset-0 w-full h-full object-cover rounded-lg"
+            loading="lazy"
+          />
+          {item.title ? (
+            <div className="absolute bottom-0 left-0 right-0 p-4 bg-gradient-to-t from-black/60 to-transparent text-white text-sm">
+              {item.title}
+            </div>
+          ) : null}
+        </CarouselItem>
+      ))}
+    </>
   );
 };
 

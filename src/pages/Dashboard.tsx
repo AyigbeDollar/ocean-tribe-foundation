@@ -32,10 +32,12 @@ const Dashboard = () => {
   const [userEvents, setUserEvents] = useState<UserEvent[]>([]);
   const [upcomingEvents, setUpcomingEvents] = useState<Event[]>([]);
   const [totalImpact, setTotalImpact] = useState({ events: 0, recycling: 0 });
+  const [userCommunities, setUserCommunities] = useState<number>(0);
 
   useEffect(() => {
     if (user) {
       fetchUserEvents();
+      fetchUserCommunities();
     }
     fetchUpcomingEvents();
   }, [user]);
@@ -73,6 +75,25 @@ const Dashboard = () => {
       });
     } catch (error) {
       console.error('Error fetching user events:', error);
+    }
+  };
+
+  const fetchUserCommunities = async () => {
+    if (!user) return;
+    
+    try {
+      const { data, error } = await supabase
+        .from('user_communities')
+        .select('community_id')
+        .eq('user_id', user.id);
+
+      if (error) throw error;
+      
+      // Count unique communities the user has joined
+      const uniqueCommunities = new Set(data?.map(uc => uc.community_id) || []);
+      setUserCommunities(uniqueCommunities.size);
+    } catch (error) {
+      console.error('Error fetching user communities:', error);
     }
   };
 
@@ -122,19 +143,21 @@ const Dashboard = () => {
             </CardContent>
           </Card>
 
-          <Card>
-            <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-              <CardTitle className="text-sm font-medium">
-                Community
-              </CardTitle>
-              <Users className="h-4 w-4 text-purple-600" />
-            </CardHeader>
-            <CardContent>
-              <div className="text-2xl font-bold">48</div>
-              <p className="text-xs text-muted-foreground">
-                Fellow ocean guardians connected
-              </p>
-            </CardContent>
+          <Card className="cursor-pointer hover:shadow-lg transition-shadow">
+            <Link to="/communities">
+              <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+                <CardTitle className="text-sm font-medium">
+                  Community
+                </CardTitle>
+                <Users className="h-4 w-4 text-purple-600" />
+              </CardHeader>
+              <CardContent>
+                <div className="text-2xl font-bold">{userCommunities}</div>
+                <p className="text-xs text-muted-foreground">
+                  Communities joined
+                </p>
+              </CardContent>
+            </Link>
           </Card>
 
           <Card>

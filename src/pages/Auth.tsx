@@ -7,7 +7,7 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { useToast } from '@/hooks/use-toast';
-import { Waves } from 'lucide-react';
+import Logo from '@/components/Logo';
 
 const Auth = () => {
   const [isLogin, setIsLogin] = useState(true);
@@ -32,18 +32,31 @@ const Auth = () => {
 
     try {
       if (isLogin) {
-        const { error } = await signIn(email, password);
-        if (error) {
-          if (error.message === 'Invalid login credentials') {
+        const result = await signIn(email, password);
+        if (result.error) {
+          // Handle specific error types
+          if (result.error.includes('Invalid login credentials') || result.error.includes('Invalid credentials')) {
             toast({
               title: "Login failed",
               description: "Invalid email or password. Please try again.",
               variant: "destructive",
             });
+          } else if (result.error.includes('Email not confirmed')) {
+            toast({
+              title: "Email not confirmed",
+              description: "Please check your email and click the confirmation link before signing in.",
+              variant: "destructive",
+            });
+          } else if (result.error.includes('fetch') || result.error.includes('network')) {
+            toast({
+              title: "Connection error",
+              description: "Unable to connect to the server. Please check your internet connection and try again.",
+              variant: "destructive",
+            });
           } else {
             toast({
               title: "Login failed",
-              description: error.message,
+              description: result.error,
               variant: "destructive",
             });
           }
@@ -54,18 +67,25 @@ const Auth = () => {
           });
         }
       } else {
-        const { error } = await signUp(email, password, fullName);
-        if (error) {
-          if (error.message === 'User already registered') {
+        const result = await signUp(email, password, fullName);
+        if (result.error) {
+          // Handle specific error types
+          if (result.error.includes('User already registered') || result.error.includes('already registered')) {
             toast({
               title: "Account exists",
               description: "An account with this email already exists. Please try logging in instead.",
               variant: "destructive",
             });
+          } else if (result.error.includes('fetch') || result.error.includes('network')) {
+            toast({
+              title: "Connection error",
+              description: "Unable to connect to the server. Please check your internet connection and try again.",
+              variant: "destructive",
+            });
           } else {
             toast({
               title: "Sign up failed",
-              description: error.message,
+              description: result.error,
               variant: "destructive",
             });
           }
@@ -76,12 +96,23 @@ const Auth = () => {
           });
         }
       }
-    } catch (error) {
+    } catch (error: any) {
+      console.error('Auth error:', error);
+      const errorMessage = error?.message || 'An unexpected error occurred';
+      
+      if (errorMessage.includes('fetch') || errorMessage.includes('network') || errorMessage.includes('Failed to fetch')) {
+        toast({
+          title: "Connection error",
+          description: "Unable to connect to the server. Please check your internet connection and try again.",
+          variant: "destructive",
+        });
+      } else {
       toast({
         title: "An error occurred",
-        description: "Please try again later.",
+          description: errorMessage,
         variant: "destructive",
       });
+      }
     } finally {
       setLoading(false);
     }
@@ -91,10 +122,10 @@ const Auth = () => {
     <div className="min-h-screen bg-gradient-to-b from-blue-50 to-white flex items-center justify-center p-4">
       <div className="w-full max-w-md">
         <div className="text-center mb-8">
-          <div className="flex items-center justify-center mb-4">
-            <Waves className="h-8 w-8 text-blue-600 mr-2" />
-            <h1 className="text-2xl font-bold text-gray-900">Ocean Tribe Foundation</h1>
+          <div className="flex justify-center mb-4">
+            <Logo size="lg" showText={false} />
           </div>
+          <h1 className="text-2xl font-bold text-gray-900">Ocean Tribe Foundation</h1>
           <p className="text-gray-600">Restoring the Ocean, Rebuilding the Future</p>
         </div>
 

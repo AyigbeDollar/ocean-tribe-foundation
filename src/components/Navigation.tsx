@@ -10,7 +10,8 @@ import {
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
 import { Link } from 'react-router-dom';
-import { Waves, LogOut, User, Settings } from 'lucide-react';
+import { LogOut, User, Settings } from 'lucide-react';
+import Logo from './Logo';
 
 const Navigation = () => {
   const { user, signOut, isAdmin } = useAuth();
@@ -24,12 +25,8 @@ const Navigation = () => {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between h-16">
           <div className="flex items-center">
-            <Link to="/" className="flex items-center group">
-              <img 
-                src="/lovable-uploads/bed42293-035d-4e05-9ce5-6c97c1036cc4.png" 
-                alt="Ocean Tribe Foundation Logo" 
-                className="h-10 w-auto mr-3 group-hover:scale-105 transition-transform duration-300"
-              />
+            <Link to="/" className="group">
+              <Logo size="md" className="group-hover:text-primary transition-colors duration-300" />
             </Link>
           </div>
           
@@ -53,12 +50,7 @@ const Navigation = () => {
               >
                 Events
               </Link>
-              <Link 
-                to="/gallery" 
-                className="text-foreground hover:text-primary font-medium transition-all duration-300 hover:scale-105 relative after:absolute after:bottom-0 after:left-0 after:w-0 after:h-0.5 after:bg-primary after:transition-all after:duration-300 hover:after:w-full"
-              >
-                Gallery
-              </Link>
+
               <Link 
                 to="/contact" 
                 className="text-foreground hover:text-primary font-medium transition-all duration-300 hover:scale-105 relative after:absolute after:bottom-0 after:left-0 after:w-0 after:h-0.5 after:bg-primary after:transition-all after:duration-300 hover:after:w-full"
