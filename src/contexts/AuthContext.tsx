@@ -101,9 +101,10 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
       }
       
       return { error: null };
-    } catch (error: any) {
+    } catch (error) {
       console.error('Sign up error:', error);
-      return { error: error?.message || 'Network error. Please check your connection and try again.' };
+      const message = error instanceof Error ? error.message : 'Network error. Please check your connection and try again.';
+      return { error: message };
     }
   };
 
@@ -119,9 +120,10 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
       }
       
       return { error: null };
-    } catch (error: any) {
+    } catch (error) {
       console.error('Sign in error:', error);
-      return { error: error?.message || 'Network error. Please check your connection and try again.' };
+      const message = error instanceof Error ? error.message : 'Network error. Please check your connection and try again.';
+      return { error: message };
     }
   };
 

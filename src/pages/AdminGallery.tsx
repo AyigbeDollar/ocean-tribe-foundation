@@ -110,13 +110,12 @@ const AdminGallery = () => {
         await fetchGallery();
       })();
     }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isAdmin, autoCleaned, items.length]);
 
   // Test function to diagnose bucket access
   const testBucketAccess = async () => {
     try {
-      console.log('Testing bucket access...');
-      
       // Test 1: List bucket
       const { data: files, error: listError } = await supabase.storage
         .from('gallery')
@@ -127,8 +126,6 @@ const AdminGallery = () => {
         toast.error(`Bucket access failed: ${listError.message}`);
         return;
       }
-      
-      console.log('✅ Bucket list successful');
       
       // Test 2: Try to upload a tiny test file
       const testContent = 'test';
@@ -144,8 +141,6 @@ const AdminGallery = () => {
         toast.error(`Upload test failed: ${uploadError.message}`);
         return;
       }
-      
-      console.log('✅ Upload test successful');
       
       // Clean up test file
       await supabase.storage.from('gallery').remove([testFileName]);
@@ -193,13 +188,6 @@ const AdminGallery = () => {
         const ext = processed.name.split('.').pop()?.toLowerCase() || 'jpg';
         const objectPath = `${user.id}/${Date.now()}-${Math.random().toString(36).slice(2)}.${ext}`;
         
-        console.log('Attempting to upload file:', {
-          fileName: processed.name,
-          fileSize: processed.size,
-          fileType: processed.type,
-          objectPath: objectPath
-        });
-        
         // First, test bucket access
         const { data: testList, error: testError } = await supabase.storage
           .from('gallery')
@@ -209,8 +197,6 @@ const AdminGallery = () => {
           console.error('Bucket access test failed:', testError);
           throw new Error(`Cannot access gallery bucket: ${testError.message}`);
         }
-        
-        console.log('Bucket access test successful');
         
         // Try to upload to storage with better error handling
         const { data: uploadData, error: uploadError } = await supabase.storage
@@ -278,13 +264,6 @@ const AdminGallery = () => {
       let errorMessage = 'Unknown error';
       if (error instanceof Error) {
         errorMessage = error.message;
-        
-        // Log additional details for debugging
-        console.log('Error details:', {
-          name: error.name,
-          message: error.message,
-          stack: error.stack
-        });
       }
       
       // Show user-friendly error message

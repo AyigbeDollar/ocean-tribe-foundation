@@ -1,6 +1,6 @@
 
 import React, { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useSearchParams } from 'react-router-dom';
 import { useAuth } from '@/contexts/AuthContext';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
@@ -10,7 +10,9 @@ import { useToast } from '@/hooks/use-toast';
 import Logo from '@/components/Logo';
 
 const Auth = () => {
-  const [isLogin, setIsLogin] = useState(true);
+  const [searchParams] = useSearchParams();
+  const isSignupParam = searchParams.get('mode') === 'signup' || searchParams.get('signup') === 'true';
+  const [isLogin, setIsLogin] = useState(!isSignupParam);
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [fullName, setFullName] = useState('');
@@ -19,6 +21,12 @@ const Auth = () => {
   const { signIn, signUp, user } = useAuth();
   const navigate = useNavigate();
   const { toast } = useToast();
+
+  useEffect(() => {
+    if (searchParams.get('mode') === 'signup' || searchParams.get('signup') === 'true') {
+      setIsLogin(false);
+    }
+  }, [searchParams]);
 
   useEffect(() => {
     if (user) {
@@ -96,9 +104,9 @@ const Auth = () => {
           });
         }
       }
-    } catch (error: any) {
+    } catch (error) {
       console.error('Auth error:', error);
-      const errorMessage = error?.message || 'An unexpected error occurred';
+      const errorMessage = error instanceof Error ? error.message : 'An unexpected error occurred';
       
       if (errorMessage.includes('fetch') || errorMessage.includes('network') || errorMessage.includes('Failed to fetch')) {
         toast({

@@ -32,6 +32,7 @@ const EditCommunity = () => {
     if (id) {
       fetchCommunity();
     }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [user, isAdmin, id, navigate]);
 
   const fetchCommunity = async () => {

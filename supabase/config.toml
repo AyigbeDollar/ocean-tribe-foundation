@@ -1,1 +1,15 @@
-project_id = "cevukbhcdneirtffoxnp"
+# NOTE: This must match the Supabase project the app actually uses
+# (see src/integrations/supabase/client.ts). It was previously pointing at an
+# old, deleted project (cevukbhcdneirtffoxnp).
+project_id = "tdvvvwgdabvdmeouonki"
+
+# Donation verification, called from the public donate flow (donors are not
+# logged in), so no Supabase JWT is required. Security comes from re-checking
+# the transaction against Paystack's verify endpoint with the secret key.
+[functions.verify-donation]
+verify_jwt = false
+
+# Paystack webhook receiver. Paystack cannot send a Supabase JWT; the request
+# is authenticated by its HMAC-SHA512 signature instead.
+[functions.paystack-webhook]
+verify_jwt = false

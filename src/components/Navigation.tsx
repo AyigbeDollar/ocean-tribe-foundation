@@ -10,8 +10,9 @@ import {
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
 import { Link } from 'react-router-dom';
-import { LogOut, User, Settings } from 'lucide-react';
+import { LogOut, User, Settings, Heart } from 'lucide-react';
 import Logo from './Logo';
+import DonateDialog from './DonateDialog';
 
 const Navigation = () => {
   const { user, signOut, isAdmin } = useAuth();
@@ -67,6 +68,15 @@ const Navigation = () => {
               )}
             </div>
             
+            <DonateDialog
+              trigger={
+                <Button variant="ocean" size="sm" className="hidden sm:inline-flex">
+                  <Heart className="mr-2 h-4 w-4" />
+                  Donate
+                </Button>
+              }
+            />
+
             {user ? (
               <DropdownMenu>
                 <DropdownMenuTrigger asChild>
@@ -106,7 +116,7 @@ const Navigation = () => {
               </DropdownMenu>
             ) : (
               <Link to="/auth">
-                <Button variant="ocean" className="animate-shimmer">
+                <Button variant="outline" className="animate-shimmer bg-transparent text-foreground hover:bg-accent border-primary/20">
                   <User className="mr-2 h-4 w-4" />
                   Sign In
                 </Button>

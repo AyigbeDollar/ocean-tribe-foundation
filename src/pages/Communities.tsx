@@ -35,6 +35,7 @@ const Communities = () => {
     if (user) {
       fetchUserCommunities();
     }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [user]);
 
   const fetchCommunities = async () => {

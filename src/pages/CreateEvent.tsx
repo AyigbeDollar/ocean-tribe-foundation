@@ -41,6 +41,7 @@ const CreateEvent = () => {
       return;
     }
     fetchCommunities();
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [user, isAdmin, navigate]);
 
   const fetchCommunities = async () => {

@@ -2,6 +2,7 @@ import Navigation from "@/components/Navigation";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Mail, Phone, Globe, Heart, Handshake, Users } from "lucide-react";
+import DonateDialog from "@/components/DonateDialog";
 
 const Contact = () => {
   return (
@@ -47,7 +48,9 @@ const Contact = () => {
                   Sustainable livelihood initiatives
                 </li>
               </ul>
-              <Button className="w-full">Contact Us to Donate</Button>
+              <DonateDialog
+                trigger={<Button className="w-full">Donate Now</Button>}
+              />
             </CardContent>
           </Card>
 
@@ -76,7 +79,11 @@ const Contact = () => {
                   Community outreach programs
                 </li>
               </ul>
-              <Button variant="secondary" className="w-full">Explore Partnerships</Button>
+              <Button variant="secondary" className="w-full" asChild>
+                <a href="mailto:oceantribefoundation@gmail.com?subject=Partnership%20Opportunity%20with%20Ocean%20Tribe">
+                  Explore Partnerships
+                </a>
+              </Button>
             </CardContent>
           </Card>
         </div>
@@ -97,10 +104,16 @@ const Contact = () => {
                   <Phone className="h-8 w-8 text-primary" />
                 </div>
                 <h3 className="font-semibold text-lg mb-3">Call Us</h3>
-                <div className="space-y-1 text-muted-foreground">
-                  <p>+233 243 110 019</p>
-                  <p>+233 504 991 227</p>
-                  <p>+233 544 297 508</p>
+                <div className="space-y-2 text-muted-foreground flex flex-col items-center">
+                  <a href="https://wa.me/233243110019" target="_blank" rel="noopener noreferrer" className="hover:text-primary transition-colors hover:underline">
+                    +233 243 110 019
+                  </a>
+                  <a href="https://wa.me/233504991227" target="_blank" rel="noopener noreferrer" className="hover:text-primary transition-colors hover:underline">
+                    +233 504 991 227
+                  </a>
+                  <a href="https://wa.me/233544297508" target="_blank" rel="noopener noreferrer" className="hover:text-primary transition-colors hover:underline">
+                    +233 544 297 508
+                  </a>
                 </div>
               </div>
 

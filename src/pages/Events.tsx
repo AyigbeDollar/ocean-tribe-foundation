@@ -44,6 +44,7 @@ const Events = () => {
     if (user) {
       fetchUserEvents();
     }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [user]);
 
   const fetchEvents = async () => {
