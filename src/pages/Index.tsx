@@ -64,8 +64,8 @@ const Index = () => {
                 variants={fadeUpVariant}
                 className="text-xl md:text-2xl mb-10 max-w-3xl mx-auto drop-shadow-lg text-blue-50"
               >
-                Ocean Tribe is a Ghana-based NGO dedicated to ocean restoration, 
-                waste management, and recycling. Join us in protecting our oceans and empowering coastal communities.
+                Ocean Tribe Foundation is a Ghanaian NGO tackling plastic pollution on the Accra coast through
+                beach cleanups, plastic recovery and ocean education in schools.
               </motion.p>
               <motion.div variants={fadeUpVariant} className="flex justify-center gap-4 flex-wrap">
                 {!user ? (
@@ -293,6 +293,48 @@ const Index = () => {
           </div>
         </section>
 
+        {/* Why it matters - keyword-rich intro linking to deeper pages */}
+        <section className="py-20 bg-white">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 grid lg:grid-cols-2 gap-12 items-center">
+            <div>
+              <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-6 tracking-tight">
+                Fighting plastic pollution on Ghana's coast
+              </h2>
+              <div className="space-y-4 text-lg text-gray-600 leading-relaxed">
+                <p>
+                  Ghana produces around 0.8 million tonnes of plastic waste a year, and about 30% of Greater Accra's
+                  waste is never collected. When it rains, that plastic flows through open gutters onto beaches like
+                  Teshie and Nungua and out into the Atlantic.
+                </p>
+                <p>
+                  We clean beaches with local communities, put plastic recovery bins and lessons into schools, and are
+                  building buy-back centres and trash booms so plastic is stopped at the source and becomes income for
+                  coastal families.
+                </p>
+              </div>
+              <div className="mt-8 flex flex-wrap gap-3">
+                <Link to="/programs">
+                  <Button variant="ocean">Our programs <ArrowRight className="ml-2 h-4 w-4" /></Button>
+                </Link>
+                <Link to="/impact">
+                  <Button variant="outline">Impact & strategic plan</Button>
+                </Link>
+                <Link to="/about">
+                  <Button variant="ghost">About us</Button>
+                </Link>
+              </div>
+            </div>
+            <img
+              src="/images/school-drop-plastics-bins.webp"
+              alt="Students and teachers with 'Drop Plastics Here' bins at a senior high school in Greater Accra"
+              loading="lazy"
+              width={1200}
+              height={900}
+              className="rounded-3xl shadow-xl w-full object-cover aspect-[4/3]"
+            />
+          </div>
+        </section>
+
         {/* Volunteer & Partner Section */}
         <section className="py-24 bg-blue-900 text-white relative overflow-hidden">
           {/* Decorative background elements */}
@@ -320,7 +362,7 @@ const Index = () => {
                   Whether you're interested in joining a local beach cleanup, helping with community education, 
                   or supporting our digital operations, your time and skills can make a real difference for our oceans.
                 </p>
-                <Link to="/auth?mode=signup">
+                <Link to="/get-involved">
                   <Button size="lg" className="bg-white text-blue-900 hover:bg-blue-50 transition-colors w-full sm:w-auto">
                     Become a Volunteer <ArrowRight className="ml-2 h-4 w-4" />
                   </Button>
@@ -337,7 +379,7 @@ const Index = () => {
                   We collaborate with businesses, schools, and other organizations to amplify our impact. 
                   Sponsor a cleanup, implement corporate sustainability initiatives, or fund critical restoration projects.
                 </p>
-                <Link to="/contact">
+                <Link to="/partner-with-us">
                   <Button size="lg" variant="outline" className="bg-transparent border-white text-white hover:bg-white hover:text-blue-600 transition-colors w-full sm:w-auto">
                     Explore Partnerships <ArrowRight className="ml-2 h-4 w-4" />
                   </Button>
@@ -416,14 +458,14 @@ const ActivitySlides = ({ category, delay, defaultImages }: ActivitySlidesProps)
           <CarouselItem key={item.id || idx} className="relative h-64 p-0">
             <img
               src={item.image_url}
-              alt={item.title}
+              alt={item.title.replace(/\bBech\b/i, "Beach")}
               className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 ease-out"
               loading="lazy"
             />
             {/* Dark gradient overlay for text readability */}
             <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/30 to-transparent flex flex-col justify-end p-4 z-10 pointer-events-none">
               <p className="text-white text-xs font-semibold drop-shadow line-clamp-1">
-                {item.title}
+                {item.title.replace(/\bBech\b/i, "Beach")}
               </p>
             </div>
             {/* Slide indicator pill */}

@@ -204,6 +204,12 @@ const Events = () => {
     });
   };
 
+  const startOfToday = new Date();
+  startOfToday.setHours(0, 0, 0, 0);
+  const isPastEvent = (date: string) => new Date(date) < startOfToday;
+  const upcomingEvents = events.filter((e) => !isPastEvent(e.event_date));
+  const pastEvents = events.filter((e) => isPastEvent(e.event_date)).reverse();
+
   if (loading) {
     return (
       <div className="min-h-screen bg-gradient-to-b from-blue-50 to-white">
@@ -220,13 +226,13 @@ const Events = () => {
       <Navigation />
       
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-        <div className="flex justify-between items-center mb-8">
+        <div className="flex flex-wrap gap-4 justify-between items-center mb-8">
           <div>
-            <h1 className="text-3xl font-bold text-gray-900 mb-2">
-              Ocean Conservation Events
+            <h1 className="text-3xl md:text-4xl font-bold text-gray-900 mb-2">
+              Beach Cleanup & Ocean Conservation Events
             </h1>
             <p className="text-lg text-gray-600">
-              Join community events and make a difference for our oceans
+              Join beach cleanups and conservation events in Teshie, Nungua and across Greater Accra
             </p>
           </div>
           {isAdmin && (
@@ -239,8 +245,24 @@ const Events = () => {
           )}
         </div>
 
+        {events.length > 0 && upcomingEvents.length === 0 && (
+          <div className="mb-10 rounded-2xl border border-blue-100 bg-white p-6 text-gray-700">
+            <p className="font-semibold text-gray-900 mb-1">No upcoming cleanups are scheduled right now.</p>
+            <p>
+              New dates are announced here first. <Link to="/get-involved" className="text-blue-700 underline">Sign up as a volunteer</Link> or{" "}
+              <Link to="/contact" className="text-blue-700 underline">contact us</Link> to organise a cleanup with your group.
+            </p>
+          </div>
+        )}
+
+        {[
+          { key: "upcoming", label: "Upcoming events", list: upcomingEvents },
+          { key: "past", label: "Past events", list: pastEvents },
+        ].map((group) => group.list.length > 0 && (
+        <section key={group.key} className="mb-12">
+        <h2 className="text-2xl font-bold text-gray-900 mb-5">{group.label}</h2>
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {events.map((event) => (
+          {group.list.map((event) => (
             <Card key={event.id} className="hover:shadow-lg transition-shadow overflow-hidden">
               {event.image_url && (
                 <div className="aspect-video w-full overflow-hidden">
@@ -284,10 +306,12 @@ const Events = () => {
                       {event.location}
                     </div>
                   )}
-                  <div className="flex items-center text-sm text-gray-600">
-                    <Users className="mr-2 h-4 w-4" />
-                    {event.participant_count} participants
-                  </div>
+                  {(event.participant_count ?? 0) > 0 && (
+                    <div className="flex items-center text-sm text-gray-600">
+                      <Users className="mr-2 h-4 w-4" />
+                      {event.participant_count} {event.participant_count === 1 ? "participant" : "participants"}
+                    </div>
+                  )}
                   {event.recycling_impact_kg > 0 && (
                     <div className="flex items-center text-sm text-gray-600">
                       <Recycle className="mr-2 h-4 w-4" />
@@ -296,7 +320,7 @@ const Events = () => {
                   )}
                 </div>
                 
-                {user && (
+                {user && !isPastEvent(event.event_date) && (
                   <div className="pt-4 space-y-2">
                     {isUserJoined(event.id) ? (
                       <Button 
@@ -345,7 +369,7 @@ const Events = () => {
                   </div>
                 )}
                 
-                {!user && (
+                {!user && !isPastEvent(event.event_date) && (
                   <div className="pt-4">
                     <Link to="/auth">
                       <Button className="w-full bg-blue-600 hover:bg-blue-700">
@@ -358,6 +382,8 @@ const Events = () => {
             </Card>
           ))}
         </div>
+        </section>
+        ))}
 
         {events.length === 0 && (
           <div className="text-center py-12">

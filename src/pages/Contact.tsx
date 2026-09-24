@@ -1,7 +1,8 @@
 import Navigation from "@/components/Navigation";
+import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { Mail, Phone, Globe, Heart, Handshake, Users } from "lucide-react";
+import { Mail, Phone, MapPin, Heart, Handshake, Users } from "lucide-react";
 import DonateDialog from "@/components/DonateDialog";
 
 const Contact = () => {
@@ -13,11 +14,11 @@ const Contact = () => {
         {/* Hero Section */}
         <div className="text-center mb-16">
           <h1 className="text-4xl md:text-5xl font-bold text-foreground mb-6">
-            Join Our Mission
+            Contact Ocean Tribe Foundation
           </h1>
           <p className="text-xl text-muted-foreground max-w-3xl mx-auto leading-relaxed">
-            Together, we can restore our oceans and build sustainable communities. 
-            Partner with us or support our cause to make a lasting impact.
+            Reach our team in Accra about volunteering, beach cleanup sponsorship, school programmes,
+            partnerships or donations. We usually reply within two working days.
           </p>
         </div>
 
@@ -80,9 +81,9 @@ const Contact = () => {
                 </li>
               </ul>
               <Button variant="secondary" className="w-full" asChild>
-                <a href="mailto:oceantribefoundation@gmail.com?subject=Partnership%20Opportunity%20with%20Ocean%20Tribe">
+                <Link to="/partner-with-us">
                   Explore Partnerships
-                </a>
+                </Link>
               </Button>
             </CardContent>
           </Card>
@@ -125,10 +126,10 @@ const Contact = () => {
                 <h3 className="font-semibold text-lg mb-3">Email Us</h3>
                 <p className="text-muted-foreground">
                   <a 
-                    href="mailto:oceantribefoundation@gmail.com" 
+                    href="mailto:info@oceantribefoundation.org" 
                     className="hover:text-primary transition-colors"
                   >
-                    oceantribefoundation@gmail.com
+                    info@oceantribefoundation.org
                   </a>
                 </p>
               </div>
@@ -136,18 +137,11 @@ const Contact = () => {
               {/* Website */}
               <div className="text-center">
                 <div className="bg-primary/10 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
-                  <Globe className="h-8 w-8 text-primary" />
+                  <MapPin className="h-8 w-8 text-primary" />
                 </div>
-                <h3 className="font-semibold text-lg mb-3">Visit Our Website</h3>
+                <h3 className="font-semibold text-lg mb-3">Where We Work</h3>
                 <p className="text-muted-foreground">
-                  <a 
-                    href="https://oceantribefoundation.org" 
-                    target="_blank" 
-                    rel="noopener noreferrer"
-                    className="hover:text-primary transition-colors"
-                  >
-                    oceantribefoundation.org
-                  </a>
+                  Teshie–Nungua coast, Greater Accra, Ghana
                 </p>
               </div>
             </div>
@@ -158,8 +152,7 @@ const Contact = () => {
               <h3 className="text-2xl font-semibold mb-3">Your Impact Matters</h3>
               <p className="text-muted-foreground text-lg max-w-2xl mx-auto">
                 Every donation and partnership helps us reach more communities, clean more coastlines, 
-                and create sustainable solutions for our ocean's future. Join thousands of supporters 
-                who are already making a difference.
+                and create sustainable solutions for our ocean's future.
               </p>
             </div>
           </CardContent>
