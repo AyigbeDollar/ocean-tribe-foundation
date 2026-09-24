@@ -1,0 +1,117 @@
+{
+  "siteUrl": "https://www.oceantribefoundation.org",
+  "siteName": "Ocean Tribe Foundation",
+  "defaultImage": "/og-image.jpg",
+  "routes": [
+    {
+      "path": "/",
+      "title": "Ocean Conservation NGO in Ghana | Ocean Tribe Foundation",
+      "description": "Ocean Tribe Foundation is a Ghanaian NGO fighting plastic pollution through beach cleanups in Accra, plastic recovery, school education and coastal restoration.",
+      "h1": "Restoring the Ocean, Rebuilding the Future",
+      "summary": "Ocean Tribe Foundation is a Ghana-based ocean conservation NGO running beach cleanups at Teshie, Nungua and Laboma, plastic recovery projects, and plastic waste education in schools across Greater Accra.",
+      "changefreq": "weekly",
+      "priority": "1.0",
+      "label": "Home"
+    },
+    {
+      "path": "/about",
+      "title": "About Us | Ghana Ocean Conservation NGO | Ocean Tribe",
+      "description": "Meet Ocean Tribe Foundation, a Ghanaian non-profit protecting Greater Accra's coastline through community-led beach cleanups, plastic recovery and education.",
+      "h1": "About Ocean Tribe Foundation",
+      "summary": "Our vision is to restore and protect Ghana's coastlines through community-driven conservation, circular economy initiatives and sustainable livelihoods.",
+      "changefreq": "monthly",
+      "priority": "0.9",
+      "label": "About"
+    },
+    {
+      "path": "/programs",
+      "title": "Our Programs: Beach Cleanups & Plastic Recovery in Ghana",
+      "description": "Beach cleanups in Accra, school plastic recovery bins, teacher training, plastic buy-back centres, trash booms and mangrove restoration along Ghana's coast.",
+      "h1": "Our Programs",
+      "summary": "Six connected programs tackle plastic pollution in Ghana: beach cleanups and waste data, school plastic education, plastic buy-back centres, trash booms at drainage points, sustainable fishing and mangrove restoration.",
+      "changefreq": "monthly",
+      "priority": "0.9",
+      "label": "Programs"
+    },
+    {
+      "path": "/impact",
+      "title": "Our Impact & 2025–2030 Strategic Plan | Ocean Tribe",
+      "description": "See what Ocean Tribe Foundation has delivered on Ghana's coast so far and our 2025–2030 plan to cut ocean plastic, create green jobs and restore mangroves.",
+      "h1": "Our Impact & Strategic Plan",
+      "summary": "From the first Laboma beach cleanup in 2025 to school plastic recovery programs in 2026, and a 2025–2030 roadmap for buy-back centres, biodiversity monitoring and mangrove restoration.",
+      "changefreq": "monthly",
+      "priority": "0.8",
+      "label": "Impact"
+    },
+    {
+      "path": "/get-involved",
+      "title": "Volunteer for Beach Cleanups in Accra | Ocean Tribe",
+      "description": "Volunteer with Ocean Tribe Foundation: join beach cleanups at Teshie and Nungua, support school plastic education, or help our team with media and data.",
+      "h1": "Volunteer for beach cleanups in Accra",
+      "summary": "Join a beach cleanup in Accra, volunteer at a school plastic education tour, or lend your digital, media or data skills to protect Ghana's ocean.",
+      "changefreq": "monthly",
+      "priority": "0.8",
+      "label": "Volunteer"
+    },
+    {
+      "path": "/partner-with-us",
+      "title": "Partner With Us: CSR & Sponsorship | Ocean Tribe Ghana",
+      "description": "Sponsor a beach cleanup, fund school plastic recovery bins or back trash booms and buy-back centres. CSR and ESG partnerships with Ocean Tribe in Ghana.",
+      "h1": "Partner with us to protect Ghana's ocean",
+      "summary": "Companies, schools and institutions partner with Ocean Tribe to sponsor cleanups, fund plastic recovery infrastructure and engage employees in ocean conservation in Ghana.",
+      "changefreq": "monthly",
+      "priority": "0.8",
+      "label": "Partner With Us"
+    },
+    {
+      "path": "/donate",
+      "title": "Donate to Protect Ghana's Ocean | Ocean Tribe Foundation",
+      "description": "Donate to Ocean Tribe Foundation by card, mobile money or bank transfer via Paystack. Your gift funds beach cleanups, school plastic bins and education.",
+      "h1": "Donate to protect Ghana's ocean",
+      "summary": "Every cedi funds beach cleanups, plastic recovery bins for schools, and ocean education for young people in Greater Accra. Secure donations by card, mobile money or bank transfer.",
+      "changefreq": "monthly",
+      "priority": "0.8",
+      "label": "Donate"
+    },
+    {
+      "path": "/gallery",
+      "title": "Photo Gallery: Beach Cleanups & School Tours | Ocean Tribe",
+      "description": "Photos from Ocean Tribe Foundation beach cleanups at Teshie, Nungua and Laboma, and plastic recovery school tours across Greater Accra, Ghana.",
+      "h1": "Our work in pictures",
+      "summary": "Photos from our beach cleanups, plastic recovery projects and school educational tours in Greater Accra.",
+      "changefreq": "weekly",
+      "priority": "0.7",
+      "label": "Gallery"
+    },
+    {
+      "path": "/events",
+      "title": "Beach Cleanup Events in Accra | Ocean Tribe Foundation",
+      "description": "Upcoming and past Ocean Tribe beach cleanups and conservation events in Teshie, Nungua and across Greater Accra. Sign up and join a cleanup.",
+      "h1": "Beach Cleanup & Ocean Conservation Events",
+      "summary": "Find upcoming beach cleanups and ocean conservation events in Greater Accra and sign up to take part.",
+      "changefreq": "weekly",
+      "priority": "0.8",
+      "label": "Events"
+    },
+    {
+      "path": "/communities",
+      "title": "Cleanup Communities & Partners | Ocean Tribe Foundation",
+      "description": "Join local cleanup communities working with Ocean Tribe Foundation along Ghana's coast, including Teshie, Mayekoo and the Ahaban Green Leaf Foundation.",
+      "h1": "Cleanup Communities",
+      "summary": "Local cleanup communities and partner groups that organise beach cleanups with Ocean Tribe Foundation in Greater Accra.",
+      "changefreq": "weekly",
+      "priority": "0.6",
+      "label": "Communities"
+    },
+    {
+      "path": "/contact",
+      "title": "Contact Ocean Tribe Foundation | Accra, Ghana",
+      "description": "Contact Ocean Tribe Foundation in Accra, Ghana by phone, WhatsApp or email about volunteering, partnerships, school programs and donations.",
+      "h1": "Contact Ocean Tribe Foundation",
+      "summary": "Call, WhatsApp or email Ocean Tribe Foundation about volunteering, partnerships, school programs and donations.",
+      "changefreq": "yearly",
+      "priority": "0.7",
+      "label": "Contact"
+    }
+  ]
+}
