@@ -17,12 +17,14 @@ const Logo: React.FC<LogoProps> = ({ size = 'md', showText = true, className = '
   return (
     <div className={`flex items-center ${className}`}>
       <img 
-        src="/OTF Logo.ico" 
+        src="/logo-192.png"
+        width={96}
+        height={96} 
         alt="Ocean Tribe Foundation Logo" 
-        className={`${sizeClasses[size]} transition-transform duration-300 hover:scale-105`}
+        className={`${sizeClasses[size]} h-auto transition-transform duration-300 hover:scale-105`}
       />
       {showText && (
-        <span className="text-xl font-bold text-foreground ml-3 transition-colors duration-300">
+        <span className="text-base sm:text-xl font-bold text-foreground ml-2 sm:ml-3 leading-tight transition-colors duration-300">
           Ocean Tribe Foundation
         </span>
       )}
