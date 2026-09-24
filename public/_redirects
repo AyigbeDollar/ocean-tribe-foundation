@@ -1,1 +1,7 @@
-/*    /index.html   200
+/volunteer        /get-involved  301
+/auth             /app.html      200
+/dashboard        /app.html      200
+/admin            /app.html      200
+/admin/*          /app.html      200
+/events/create    /app.html      200
+/events/edit/*    /app.html      200
