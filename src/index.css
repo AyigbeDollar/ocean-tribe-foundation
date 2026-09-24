@@ -140,7 +140,8 @@ All colors MUST be HSL.
 
 /* Hero background with underwater scene */
 .hero-bg {
-  background-image: url('/hero.png');
+  background-image: url('/hero.jpg');
+  background-image: image-set(url('/hero.webp') type('image/webp'), url('/hero.jpg') type('image/jpeg'));
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
