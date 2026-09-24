@@ -5,7 +5,4 @@
 [build.environment]
   NODE_VERSION = "20"
 
-[[redirects]]
-  from = "/*"
-  to = "/index.html"
-  status = 200
+# SPA fallbacks and redirects live in public/_redirects; unknown URLs get dist/404.html with a real 404.
