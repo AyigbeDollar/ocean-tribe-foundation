@@ -104,6 +104,47 @@
     if (a) window.dataLayer.push({ event: "glmis_click", location: a.getAttribute("data-track") || "inline", page: location.pathname });
   });
 
+  // Share bars: copy link (or the phone's native share sheet), with tracking for every channel.
+  function copy(text, btn, done) {
+    var ok = function () {
+      var label = btn.querySelector("span") || btn;
+      var old = label.textContent;
+      label.textContent = done || "Copied";
+      setTimeout(function () { label.textContent = old; }, 1800);
+    };
+    if (navigator.clipboard && navigator.clipboard.writeText) navigator.clipboard.writeText(text).then(ok, function () { window.prompt("Copy this:", text); });
+    else window.prompt("Copy this:", text);
+  }
+  document.querySelectorAll("[data-share]").forEach(function (bar) {
+    var btn = bar.querySelector("[data-copy-link]");
+    if (!btn) return;
+    btn.addEventListener("click", function () {
+      var url = bar.getAttribute("data-url"), title = bar.getAttribute("data-title");
+      window.dataLayer.push({ event: "share", method: navigator.share ? "native" : "copy", page: location.pathname });
+      if (navigator.share && window.matchMedia("(pointer: coarse)").matches) {
+        navigator.share({ title: title, text: title, url: url.replace("utm_source=copy", "utm_source=native") }).catch(function () {});
+      } else copy(url, btn, "Link copied");
+    });
+  });
+  document.addEventListener("click", function (e) {
+    var a = e.target.closest && e.target.closest("[data-track^='share_'], [data-track^='follow_']");
+    if (a) window.dataLayer.push({ event: a.getAttribute("data-track").split("_")[0], method: a.getAttribute("data-track").split("_")[1], page: location.pathname });
+    var c = e.target.closest && e.target.closest("[data-copy-text]");
+    if (c) { var ta = c.parentElement.querySelector("textarea"); if (ta) copy(ta.value, c, "Caption copied"); }
+  });
+
+  // Blog topic filters
+  var grid = document.querySelector("[data-post-grid]");
+  document.querySelectorAll("[data-filter]").forEach(function (b, _, all) {
+    b.addEventListener("click", function () {
+      var f = b.getAttribute("data-filter");
+      all.forEach(function (x) { x.setAttribute("aria-pressed", String(x === b)); });
+      if (grid) grid.querySelectorAll(".post-card").forEach(function (card) {
+        card.hidden = !(f === "all" || card.getAttribute("data-pillar") === f);
+      });
+    });
+  });
+
   // Contact form: compose an email (no backend required, works on any host).
   var form = document.querySelector("[data-contact-form]");
   if (form) {

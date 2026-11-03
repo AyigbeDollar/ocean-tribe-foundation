@@ -1,4 +1,5 @@
-/* Knowledge base for "Kofi", the Labour Department of Ghana help assistant.
+/* Knowledge base for "LD Assist", the Ghana Labour Department automated assistant.
+   Voice (Brand Guide v2.0): warm "Akwaaba", short plain answers, cite the Act, offer a next step.
    window.LD_KB: intents used by the local retrieval engine in chatbot.js.
    window.LD_KB_FACTS: compact fact sheet (kept in sync with api/chat.js).
    General guidance only. The Labour Act, 2003 (Act 651) and its regulations are authoritative. */
@@ -14,30 +15,30 @@
     /* ---------- Small talk ---------- */
     {
       id: "greeting",
-      q: ["hello", "hi there", "good morning", "akwaaba", "hey kofi", "how are you"],
-      k: ["hello", "hi", "hey", "good morning", "good afternoon", "good evening", "akwaaba", "maakye", "maaha", "maadwo", "ete sen", "chale", "charlie", "boss", "how far", "how are you", "kofi"],
-      a: "<p>Akwaaba! I am Kofi, the Labour Department help assistant. I can help you find a job on GLMIS, explain your rights at work (minimum wage, leave, notice, maternity) and show you how to get help from the Department.</p><p>What would you like to know?</p>",
+      q: ["hello", "hi there", "good morning", "akwaaba", "hey ld assist", "how are you"],
+      k: ["hello", "hi", "hey", "good morning", "good afternoon", "good evening", "akwaaba", "maakye", "maaha", "maadwo", "ete sen", "chale", "charlie", "boss", "how far", "how are you", "ld assist"],
+      a: "<p>Akwaaba! I'm LD Assist, the Labour Department's automated assistant. I can help you find work on GLMIS, explain your rights at work and show you where to get help.</p><p>What would you like to know?</p>",
       links: [GLMIS_JOBS, { href: "/workers-rights", label: "Workers' rights" }, { href: "/services", label: "Our services" }]
     },
     {
       id: "capabilities",
       q: ["what can you do", "what can you help me with", "how do you work", "who are you", "are you a robot", "help me"],
       k: ["what can you do", "help me", "who are you", "robot", "bot", "assistant", "options", "menu", "topics"],
-      a: "<p>I can answer common questions about:</p><ul><li>Finding work or hiring through <strong>GLMIS</strong>, Ghana's free jobs portal</li><li>Public Employment Centres and job counselling</li><li>Workers' rights: minimum wage, hours, leave, maternity, termination</li><li>Labour complaints, child labour and workplace injuries</li><li>Licensing private employment agencies and avoiding job scams</li></ul><p>I give general guidance, not legal advice.</p>",
+      a: "<p>I can answer common questions about:</p><ul><li>Finding work or hiring through <strong>GLMIS</strong>, Ghana's free jobs portal</li><li>Public Employment Centres and job counselling</li><li>Workers' rights: minimum wage, hours, leave, maternity, termination</li><li>Labour complaints, child labour and workplace injuries</li><li>Licensing private employment agencies and avoiding job scams</li></ul><p>I am an <strong>automated assistant</strong>, not a human officer. I give general guidance, not legal advice. Type <strong>officer</strong> to reach a person.</p>",
       links: [GLMIS, { href: "/faq", label: "FAQ" }, { href: "/contact", label: "Contact us" }]
     },
     {
       id: "thanks",
       q: ["thank you", "thanks a lot", "medaase", "that helps", "ok thanks"],
       k: ["thank", "thanks", "thank you", "medaase", "meda wo ase", "appreciate", "helpful", "great", "nice one", "ok"],
-      a: "<p>You are welcome! If you are looking for work, remember to register on GLMIS so employers can find you. Anything else I can help with?</p>",
+      a: "<p>You're welcome! Is there anything else I can help with? You can also call us free on 0800 600 300.</p>",
       links: [GLMIS_REG]
     },
     {
       id: "bye",
       q: ["bye", "goodbye", "see you", "later"],
       k: ["bye", "goodbye", "good bye", "see you", "later", "nantew yie", "gotta go", "cheers"],
-      a: "<p>Goodbye, and all the best! You can reopen this chat any time from the <strong>Ask Kofi</strong> button.</p>",
+      a: "<p>Goodbye, and all the best! You can reopen this chat any time from the <strong>Ask LD Assist</strong> button. You can also call us free on 0800 600 300.</p>",
       links: []
     },
 
@@ -302,17 +303,24 @@
       links: [{ href: "/about", label: "About us" }, { href: "/faq", label: "FAQ" }]
     },
     {
+      id: "news",
+      q: ["where can i read your news", "do you have a blog", "latest news from the labour department", "job fair news", "upcoming job fairs"],
+      k: ["news", "blog", "article", "articles", "update", "updates", "latest", "announcement", "job fair", "job fairs", "event", "events", "social media", "facebook", "whatsapp channel", "follow"],
+      a: "<p>Our <strong>News and guides</strong> page has plain-language guides on finding work, your rights and job fairs. You can share any guide straight to WhatsApp or Facebook.</p>",
+      links: [{ href: "/blog", label: "News and guides" }, GLMIS]
+    },
+    {
       id: "contact",
       q: ["how do i contact the labour department", "what are your office hours", "when are you open", "phone number of labour department", "where is your office"],
       k: ["contact", "phone", "call", "number", "email", "address", "location", "office hours", "open", "opening", "closing", "visit", "where", "reach", "saturday", "sunday", "weekend", "closed", "open on", "working days", "time"],
-      a: "<p>Our offices are open <strong>Monday to Friday, 8:00am to 5:00pm</strong> (closed on public holidays). There is a Labour Department office or Public Employment Centre in every region.</p><p>For the Ministry's toll-free lines, call <strong>0800 600 300</strong> or <strong>0800 600 400</strong>.</p>",
+      a: "<p>Our offices are open <strong>Monday to Friday, 8:00am to 5:00pm</strong> (closed on public holidays). There is a Labour Department office or Public Employment Centre in every region.</p><ul><li>Toll-free: <strong>0800 600 300</strong> or <strong>0800 600 400</strong></li><li>Mobile: <strong>050 499 1227</strong> or <strong>055 341 9567</strong></li><li>Email: <strong>info@labourdepartment.gov.gh</strong></li></ul>",
       links: [{ href: "/contact", label: "Contact details" }, GLMIS]
     }
   ];
 
   w.LD_KB_FALLBACK = {
     id: "fallback",
-    a: "<p>Sorry, I am not sure about that one. I can help with:</p><ul><li>Finding jobs or hiring on <strong>GLMIS</strong></li><li>Minimum wage, leave, hours and maternity rights</li><li>Termination and labour complaints</li><li>Child labour, workplace injury and agency licensing</li></ul><p>For anything else, contact your nearest Labour Department office (Mon to Fri, 8:00am to 5:00pm).</p>",
+    a: "<p>Sorry, I didn't quite get that. You can choose a topic below or type <strong>officer</strong> to reach a person.</p><p>I can help with jobs on GLMIS, your rights at work, workplace complaints, child labour, workplace injury and agency registration.</p>",
     links: [GLMIS, { href: "/faq", label: "FAQ" }, { href: "/contact", label: "Contact us" }]
   };
 
@@ -337,6 +345,7 @@
     "Recruitment scams / jobs abroad: only use licensed agencies; never pay for 'visa lottery' or guaranteed jobs; get a written contract before travel; do not surrender passport to unverified agents; verify agencies with the Labour Department.",
     "Trade unions: workers may form or join a union; punishing union membership is unfair.",
     "New Labour Bill: in progress, NOT yet law; would cover gig/platform and remote work. Act 651 still applies.",
-    "Site pages: /glmis, /services, /services#complaints, /services#agencies, /services#compensation, /workers-rights, /employers, /child-labour, /faq, /contact, /about."
+    "Contacts: info@labourdepartment.gov.gh; mobile 050 499 1227 / 055 341 9567. Website labourdepartment.gov.gh. Blog at /blog.",
+    "Site pages: /blog, /glmis, /services, /services#complaints, /services#agencies, /services#compensation, /workers-rights, /employers, /child-labour, /faq, /contact, /about."
   ].join("\n");
 })(window);

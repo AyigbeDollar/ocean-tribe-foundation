@@ -25,9 +25,10 @@ function init(host) {
   const group = new THREE.Group();
   scene.add(group);
 
-  const GREEN = new THREE.Color("#3fd18f");
-  const GOLD = new THREE.Color("#f2c230");
-  const RED = new THREE.Color("#e2384f");
+  const WHITE = new THREE.Color("#ffffff"); // Brand Guide v2.0 palette on brand blue
+  const GREEN = new THREE.Color("#00a35a");
+  const GOLD = new THREE.Color("#F9ED32");
+  const RED = new THREE.Color("#DD2A1B");
   const R = 2.6;
 
   // Fibonacci-sphere nodes
@@ -42,7 +43,7 @@ function init(host) {
     const v = new THREE.Vector3(Math.cos(th) * r, y, Math.sin(th) * r).multiplyScalar(R);
     pts.push(v);
     pos.set([v.x, v.y, v.z], i * 3);
-    const c = i % 17 === 0 ? GOLD : i % 41 === 0 ? RED : GREEN;
+    const c = i % 13 === 0 ? GOLD : i % 29 === 0 ? RED : i % 37 === 0 ? GREEN : WHITE;
     col.set([c.r, c.g, c.b], i * 3);
   }
   const dotGeo = new THREE.BufferGeometry();
@@ -54,13 +55,13 @@ function init(host) {
   // Faint wire shell for depth
   const shell = new THREE.Mesh(
     new THREE.IcosahedronGeometry(R * 0.985, 3),
-    new THREE.MeshBasicMaterial({ color: 0x1e8f62, wireframe: true, transparent: true, opacity: 0.08 })
+    new THREE.MeshBasicMaterial({ color: 0xffffff, wireframe: true, transparent: true, opacity: 0.06 })
   );
   group.add(shell);
 
   // Arcs between random node pairs
   const arcs = [];
-  const arcMat = new THREE.LineBasicMaterial({ color: 0x7fe0b4, transparent: true, opacity: 0.28 });
+  const arcMat = new THREE.LineBasicMaterial({ color: 0xc9cff5, transparent: true, opacity: 0.32 });
   const pulseGeo = new THREE.SphereGeometry(0.045, 10, 10);
   const pulseMat = new THREE.MeshBasicMaterial({ color: GOLD });
   for (let i = 0; i < 26; i++) {
@@ -92,7 +93,7 @@ function init(host) {
   for (let i = 0; i < dustN; i++) dust.set([(Math.random() - 0.5) * 30, (Math.random() - 0.5) * 18, -4 - Math.random() * 10], i * 3);
   const dustGeo = new THREE.BufferGeometry();
   dustGeo.setAttribute("position", new THREE.BufferAttribute(dust, 3));
-  scene.add(new THREE.Points(dustGeo, new THREE.PointsMaterial({ size: 0.03, color: 0x9fd9bd, transparent: true, opacity: 0.5 })));
+  scene.add(new THREE.Points(dustGeo, new THREE.PointsMaterial({ size: 0.03, color: 0xd6daf0, transparent: true, opacity: 0.45 })));
 
   group.rotation.z = 0.32; // Earth-like tilt
 

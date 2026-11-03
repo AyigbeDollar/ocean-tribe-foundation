@@ -2,17 +2,17 @@
 
 Generated from `static/js/knowledge.js` by `node scripts/export-kb.mjs`. Edit answers in `knowledge.js` (and the fact sheet in `api/chat.js` if AI mode is on), then re-run this script.
 
-40 topics. For each topic: the example questions it is trained on, the answer Kofi gives, and the buttons shown under the answer.
+41 topics. For each topic: the example questions it is trained on, the answer Kofi gives, and the buttons shown under the answer.
 
 ## Small talk
 
 ### 1. Hello
 
-**Example questions:** "hello", "hi there", "good morning", "akwaaba", "hey kofi", "how are you"
+**Example questions:** "hello", "hi there", "good morning", "akwaaba", "hey ld assist", "how are you"
 
 **Answer:**
 
-Akwaaba! I am Kofi, the Labour Department help assistant. I can help you find a job on GLMIS, explain your rights at work (minimum wage, leave, notice, maternity) and show you how to get help from the Department.
+Akwaaba! I'm LD Assist, the Labour Department's automated assistant. I can help you find work on GLMIS, explain your rights at work and show you where to get help.
 
 What would you like to know?
 
@@ -32,7 +32,7 @@ I can answer common questions about:
 - Labour complaints, child labour and workplace injuries
 - Licensing private employment agencies and avoiding job scams
 
-I give general guidance, not legal advice.
+I am an **automated assistant**, not a human officer. I give general guidance, not legal advice. Type **officer** to reach a person.
 
 **Buttons:** [Open GLMIS](https://glmis.gov.gh) | FAQ (`/faq`) | Contact us (`/contact`)
 
@@ -42,7 +42,7 @@ I give general guidance, not legal advice.
 
 **Answer:**
 
-You are welcome! If you are looking for work, remember to register on GLMIS so employers can find you. Anything else I can help with?
+You're welcome! Is there anything else I can help with? You can also call us free on 0800 600 300.
 
 **Buttons:** [Register on GLMIS](https://glmis.gov.gh)
 
@@ -52,7 +52,7 @@ You are welcome! If you are looking for work, remember to register on GLMIS so e
 
 **Answer:**
 
-Goodbye, and all the best! You can reopen this chat any time from the **Ask Kofi** button.
+Goodbye, and all the best! You can reopen this chat any time from the **Ask LD Assist** button. You can also call us free on 0800 600 300.
 
 
 ## Jobs and GLMIS
@@ -559,20 +559,29 @@ A **new Labour Bill** is being developed to update the Labour Act, including pro
 
 Our offices are open **Monday to Friday, 8:00am to 5:00pm** (closed on public holidays). There is a Labour Department office or Public Employment Centre in every region.
 
-For the Ministry's toll-free lines, call **0800 600 300** or **0800 600 400**.
+- Toll-free: **0800 600 300** or **0800 600 400**
+- Mobile: **050 499 1227** or **055 341 9567**
+- Email: **info@labourdepartment.gov.gh**
 
 **Buttons:** Contact details (`/contact`) | [Open GLMIS](https://glmis.gov.gh)
 
+## Other
+
+### 41. Where can i read your news
+
+**Example questions:** "where can i read your news", "do you have a blog", "latest news from the labour department", "job fair news", "upcoming job fairs"
+
+**Answer:**
+
+Our **News and guides** page has plain-language guides on finding work, your rights and job fairs. You can share any guide straight to WhatsApp or Facebook.
+
+**Buttons:** News and guides (`/blog`) | [Open GLMIS](https://glmis.gov.gh)
+
 ## When Kofi does not understand
 
-Sorry, I am not sure about that one. I can help with:
+Sorry, I didn't quite get that. You can choose a topic below or type **officer** to reach a person.
 
-- Finding jobs or hiring on **GLMIS**
-- Minimum wage, leave, hours and maternity rights
-- Termination and labour complaints
-- Child labour, workplace injury and agency licensing
-
-For anything else, contact your nearest Labour Department office (Mon to Fri, 8:00am to 5:00pm).
+I can help with jobs on GLMIS, your rights at work, workplace complaints, child labour, workplace injury and agency registration.
 
 **Buttons:** [Open GLMIS](https://glmis.gov.gh) | FAQ (`/faq`) | Contact us (`/contact`)
 
@@ -600,4 +609,5 @@ When `ANTHROPIC_API_KEY` is set, the AI is given these facts and told to stay wi
 - Recruitment scams / jobs abroad: only use licensed agencies; never pay for 'visa lottery' or guaranteed jobs; get a written contract before travel; do not surrender passport to unverified agents; verify agencies with the Labour Department.
 - Trade unions: workers may form or join a union; punishing union membership is unfair.
 - New Labour Bill: in progress, NOT yet law; would cover gig/platform and remote work. Act 651 still applies.
-- Site pages: /glmis, /services, /services#complaints, /services#agencies, /services#compensation, /workers-rights, /employers, /child-labour, /faq, /contact, /about.
+- Contacts: info@labourdepartment.gov.gh; mobile 050 499 1227 / 055 341 9567. Website labourdepartment.gov.gh. Blog at /blog.
+- Site pages: /blog, /glmis, /services, /services#complaints, /services#agencies, /services#compensation, /workers-rights, /employers, /child-labour, /faq, /contact, /about.

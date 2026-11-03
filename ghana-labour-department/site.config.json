@@ -1,0 +1,20 @@
+{
+  "_comment": "Central settings for the site build. Add the official social media URLs here (Brand Guide p.29 lists them as '[insert official handles]'). Any platform left empty is hidden automatically; the share buttons, RSS feed and social kit work without them.",
+  "siteUrl": "https://labour-department-ghana.vercel.app",
+  "productionDomain": "https://labourdepartment.gov.gh",
+  "glmisUrl": "https://glmis.gov.gh",
+  "email": "info@labourdepartment.gov.gh",
+  "prEmail": "prunit@labourdepartment.gov.gh",
+  "tollFree": ["0800 600 300", "0800 600 400"],
+  "mobile": ["050 499 1227", "055 341 9567"],
+  "hashtag": "#GhanaLabourDepartment",
+  "social": {
+    "facebook": "",
+    "x": "",
+    "linkedin": "",
+    "instagram": "",
+    "tiktok": "",
+    "youtube": "",
+    "whatsappChannel": ""
+  }
+}

@@ -1,4 +1,4 @@
-/* "Kofi", the Labour Department of Ghana chat assistant.
+/* "LD Assist", the Ghana Labour Department automated assistant (Brand Guide v2.0, chatbot guide).
    Vanilla JS, no dependencies. Tries the optional AI backend (POST /api/chat);
    if that is unavailable, answers from the local knowledge base (knowledge.js)
    so the widget always works on any static host. */
@@ -225,8 +225,8 @@
   var input = form && form.querySelector("input");
   if (!panel || !log || !form || !input) return;
 
-  var STORE_KEY = "ld-kofi-chat-v1";
-  var AI_KEY = "ld-kofi-ai-off";
+  var STORE_KEY = "ld-assist-chat-v2";
+  var AI_KEY = "ld-assist-ai-off";
   var GLMIS_URL = "https://glmis.gov.gh";
   var JOB_RE = /\b(job|jobs|work|vacanc|cv|resume|unemploy|hire|hiring|recruit|career|employ|hustle)/i;
   var CHIPS = [
@@ -240,10 +240,28 @@
   var WELCOME = {
     who: "bot",
     welcome: true,
-    html: "<p>Akwaaba! I am <strong>Kofi</strong>, the Labour Department help assistant.</p>" +
-      "<p>Ask me about jobs on GLMIS, your rights at work, complaints, child labour or agency licensing. Pick a topic below or type your question.</p>",
+    html: "<p>Akwaaba! I'm <strong>LD Assist</strong>, the Labour Department's automated assistant. How can I help?</p>" +
+      "<p>Pick a topic below or type your question. To reach a person, type <strong>officer</strong>.</p>",
     links: [{ href: GLMIS_URL, label: "Search jobs on GLMIS", glmis: true }]
   };
+
+  // Urgent safety script (chatbot guide p.23): shown before anything else, never sent to the AI.
+  var SAFETY_RE = /\b(traffick\w*|forc(?:e|ed|es|ing)\b[^.?!]{0,30}\bwork\w*|(?:took|taken|seized|holding|kept)\b[^.?!]{0,20}\bpassport|slave\w*|kidnap\w*|locked (?:in|up)|beat(?:s|en|ing)? me|beating|threat\w*|kill (?:me|myself)|suicid\w*|self[- ]harm|hurt myself|in danger|immediate danger|abus(?:e|ed|ing)|rape\w*|held against)\b/i;
+  var SAFETY = {
+    who: "bot",
+    html: "<p><strong>This sounds serious, and I want you to get help quickly.</strong> If anyone is in immediate danger, call the police on <strong>191</strong> or <strong>18555</strong>.</p>" +
+      "<p>You can also call us free on <strong>0800 600 300</strong> during working hours.</p>",
+    links: [{ href: "tel:191", label: "Call police 191" }, { href: "tel:0800600300", label: "Call 0800 600 300" }, { href: "/child-labour", label: "Report child labour" }]
+  };
+  // Hand over to a person (chatbot guide p.23): on request, or after two missed answers in a row.
+  var HUMAN_RE = /^(?:officer|human|person|agent|real person|talk to (?:a |an )?(?:person|human|officer|someone)|speak to (?:a |an )?(?:person|human|officer|someone)|customer care)\b/i;
+  var HANDOVER = {
+    who: "bot",
+    html: "<p>I'll point you to a person. A Labour Officer can help you by phone or at your nearest office.</p>" +
+      "<ul><li>Call free on <strong>0800 600 300</strong> or <strong>0800 600 400</strong>, Monday to Friday, 8:00 am to 5:00 pm</li><li>Visit your nearest Public Employment Centre (PEC)</li><li>Email <strong>info@labourdepartment.gov.gh</strong></li></ul>",
+    links: [{ href: "tel:0800600300", label: "Call 0800 600 300" }, { href: "/contact", label: "Find a PEC" }]
+  };
+  var misses = 0;
 
   var state = load();
   var rendered = false;
@@ -331,6 +349,18 @@
         box.innerHTML = m.links.map(function (l) { return anchor(esc(l.href), esc(l.label), l.glmis); }).join("");
         el.appendChild(box);
       }
+      if (!m.welcome) {
+        var fb = d.createElement("div");
+        fb.className = "msg-feedback";
+        fb.innerHTML = '<button type="button" data-v="up" aria-label="This answer helped" aria-pressed="false"><svg width="16" height="16" aria-hidden="true"><use href="/img/icons.svg#thumbup"/></svg></button>' +
+          '<button type="button" data-v="down" aria-label="This answer did not help" aria-pressed="false"><svg width="16" height="16" aria-hidden="true"><use href="/img/icons.svg#thumbdown"/></svg></button>';
+        fb.addEventListener("click", function (e) {
+          var b = e.target.closest("button"); if (!b) return;
+          fb.querySelectorAll("button").forEach(function (x) { x.setAttribute("aria-pressed", String(x === b)); });
+          track({ event: "chat_feedback", chat_feedback: b.getAttribute("data-v"), chat_source: m.src || "local" });
+        });
+        el.appendChild(fb);
+      }
     }
     log.appendChild(el);
     scrollDown();
@@ -366,7 +396,7 @@
     var t = d.createElement("div");
     t.className = "msg msg-bot typing";
     t.setAttribute("role", "status");
-    t.setAttribute("aria-label", "Kofi is typing");
+    t.setAttribute("aria-label", "LD Assist is typing");
     t.innerHTML = "<i></i><i></i><i></i>";
     log.appendChild(t);
     scrollDown();
@@ -447,6 +477,13 @@
   function answer(q, source) {
     var prev = lastUserText();
     push({ who: "user", text: q });
+    if (SAFETY_RE.test(q) || HUMAN_RE.test(q)) {
+      var script = SAFETY_RE.test(q) ? SAFETY : HANDOVER;
+      return sleep(350).then(function () {
+        push({ who: "bot", html: script.html, links: script.links, src: "script" });
+        track({ event: "chat_question", chat_intent: script === SAFETY ? "safety_script" : "handover", chat_trigger: source || "typed" });
+      });
+    }
     var local = match(q, prev);
     var started = Date.now();
     var minDelay = 400 + Math.floor(Math.random() * 300);
@@ -462,6 +499,8 @@
           msg = { who: "bot", html: mdToHtml(reply), text: reply.slice(0, 1000), links: withGlmis(related, q), src: "ai" };
         } else {
           var it = local.intent;
+          misses = local.id === "fallback" ? misses + 1 : 0;
+          if (misses >= 2) { misses = 0; it = { a: "<p>Sorry, I'm still not getting it.</p>" + HANDOVER.html, links: HANDOVER.links }; }
           msg = { who: "bot", html: it.a, links: withGlmis(it.links, q), src: "local" };
         }
         push(msg);
