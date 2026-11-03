@@ -1,0 +1,9 @@
+{
+  "name": "labour-department-ghana",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "description": "Public website and chatbot for the Labour Department of Ghana",
+  "scripts": { "build": "node build.mjs" },
+  "engines": { "node": ">=18" }
+}
