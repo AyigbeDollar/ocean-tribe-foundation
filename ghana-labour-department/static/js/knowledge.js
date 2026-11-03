@@ -120,7 +120,7 @@
       id: "unpaid_salary",
       q: ["my employer has not paid my salary", "my boss is not paying me", "salary arrears", "they owe me money for work", "pay day passed and no salary", "employer deducting my pay"],
       k: ["not paid", "not paying", "unpaid", "owe", "owing", "arrears", "salary", "pay day", "payday", "late salary", "deduction", "deductions", "withheld", "chop my money"],
-      a: "<p>Your employer must pay your wages in full and on time, as agreed in your contract. If wages are unpaid or wrongly deducted:</p><ul><li>Raise it with your employer in writing first and keep copies</li><li>If it is not resolved, report to the nearest <strong>Labour Department office</strong> for mediation</li><li>You can then take the matter to the <strong>National Labour Commission</strong></li></ul>",
+      a: "<p>Your employer must pay your wages in full and on time, as agreed in your contract. If wages are unpaid or wrongly deducted:</p><ul><li>Raise it with your employer in writing first and keep copies</li><li>If it is not resolved, report to the nearest <strong>Labour Department office</strong> for mediation</li><li>The Labour Officer will invite your employer and help you both reach a settlement</li></ul>",
       links: [{ href: "/services#complaints", label: "File a complaint" }, { href: "/contact", label: "Find an office" }]
     },
     {
@@ -178,22 +178,15 @@
       id: "unfair_termination",
       q: ["my boss sacked me without notice", "i was fired unfairly", "unfair dismissal", "they sacked me because i am pregnant", "dismissed for joining a union", "wrongful termination"],
       k: ["sack", "sacked", "fire", "fired", "dismiss", "dismissed", "dismissal", "unfair", "wrongful", "unfairly", "laid off", "layoff", "redundant", "redundancy", "lost my job", "kicked out", "chased me"],
-      a: "<p>Termination is <strong>unfair</strong> if it is for reasons such as pregnancy, union membership, filing a complaint, illness, or without a valid reason and fair procedure.</p><ul><li>Write down what happened and keep your contract, payslips and letters</li><li>Report to the nearest <strong>Labour Department office</strong> for advice and mediation</li><li>You can file a complaint with the <strong>National Labour Commission</strong></li></ul><p>Meanwhile, keep your job search going on GLMIS.</p>",
+      a: "<p>Termination is <strong>unfair</strong> if it is for reasons such as pregnancy, union membership, filing a complaint, illness, or without a valid reason and fair procedure.</p><ul><li>Write down what happened and keep your contract, payslips and letters</li><li>Report to the nearest <strong>Labour Department office</strong> for advice and mediation</li><li>A Labour Officer will mediate between you and your employer for free</li></ul><p>Meanwhile, keep your job search going on GLMIS.</p>",
       links: [{ href: "/services#complaints", label: "File a complaint" }, GLMIS_JOBS]
     },
     {
       id: "complaint",
       q: ["how do i file a labour complaint", "where do i report my employer", "i want to report my company", "how to make a complaint against my boss", "labour dispute"],
       k: ["complaint", "complain", "report employer", "report my", "report", "dispute", "grievance", "mediation", "petition", "case", "file"],
-      a: "<p>How to resolve a workplace problem:</p><ul><li><strong>1.</strong> Raise it with your employer or supervisor, in writing if possible</li><li><strong>2.</strong> If unresolved, go to the nearest <strong>Labour Department office</strong> or Public Employment Centre for advice and mediation</li><li><strong>3.</strong> If still unresolved, take it to the <strong>National Labour Commission</strong></li><li><strong>4.</strong> Finally, the courts</li></ul><p>Bring your contract, payslips and any letters.</p>",
+      a: "<p>How to resolve a workplace problem:</p><ul><li><strong>1.</strong> Raise it with your employer or supervisor, in writing if possible</li><li><strong>2.</strong> If unresolved, go to the nearest <strong>Labour Department office</strong> or Public Employment Centre for advice and mediation</li><li><strong>3.</strong> If no agreement is reached, the Labour Officer will advise you on your further options under the law</li></ul><p>Bring your contract, payslips and any letters.</p>",
       links: [{ href: "/services#complaints", label: "Complaint steps" }, { href: "/contact", label: "Find an office" }]
-    },
-    {
-      id: "nlc",
-      q: ["what is the national labour commission", "how do i go to the nlc", "nlc case"],
-      k: ["nlc", "national labour commission", "labour commission", "commission", "tribunal", "court", "lawyer", "sue"],
-      a: "<p>The <strong>National Labour Commission (NLC)</strong> is an independent body that settles labour disputes, including unfair termination, through mediation and arbitration.</p><p>Many disputes can be solved earlier with help from the Labour Department, so start at your nearest office.</p>",
-      links: [{ href: "/services#complaints", label: "Complaint steps" }, { href: "/contact", label: "Contact us" }]
     },
 
     /* ---------- Child labour ---------- */
@@ -319,7 +312,7 @@
 
   w.LD_KB_FALLBACK = {
     id: "fallback",
-    a: "<p>Sorry, I am not sure about that one. I can help with:</p><ul><li>Finding jobs or hiring on <strong>GLMIS</strong></li><li>Minimum wage, leave, hours and maternity rights</li><li>Termination, complaints and the NLC</li><li>Child labour, workplace injury and agency licensing</li></ul><p>For anything else, contact your nearest Labour Department office (Mon to Fri, 8:00am to 5:00pm).</p>",
+    a: "<p>Sorry, I am not sure about that one. I can help with:</p><ul><li>Finding jobs or hiring on <strong>GLMIS</strong></li><li>Minimum wage, leave, hours and maternity rights</li><li>Termination and labour complaints</li><li>Child labour, workplace injury and agency licensing</li></ul><p>For anything else, contact your nearest Labour Department office (Mon to Fri, 8:00am to 5:00pm).</p>",
     links: [GLMIS, { href: "/faq", label: "FAQ" }, { href: "/contact", label: "Contact us" }]
   };
 
@@ -335,8 +328,8 @@
     "Maternity: at least 12 weeks leave on full pay, plus 2 extra weeks for abnormal delivery or multiple births. Nursing mothers may take nursing breaks during working hours. Dismissal for pregnancy is unfair.",
     "Written terms: for work of 6 months or more, employer gives written statement of main terms within 2 months.",
     "Termination notice (or pay in lieu): contract 3 years or more: 1 month; under 3 years: 2 weeks; week-to-week: 7 days.",
-    "Unfair termination: e.g. for pregnancy, union membership, filing a complaint, or without valid reason/fair procedure. Complaint to the National Labour Commission (NLC); act promptly.",
-    "Complaints process: 1) raise with employer, in writing; 2) nearest Labour Department office or PEC for advice and mediation; 3) National Labour Commission; 4) courts.",
+    "Unfair termination: e.g. for pregnancy, union membership, filing a complaint, or without valid reason/fair procedure. Report to the nearest Labour Department office for free mediation; act promptly.",
+    "Complaints process: 1) raise with employer, in writing; 2) nearest Labour Department office or PEC for advice and free mediation; 3) if no agreement, the Labour Officer advises on further options.",
     "Child labour (Children's Act 1998, Act 560): minimum employment age 15; light work from 13; hazardous work (mining, galamsey, fishing at sea, heavy loads, chemicals) 18; no night work for children 8pm-6am. Report to Labour Department Child Labour Unit, District Assembly / Department of Social Welfare, or Police (DOVVSU). Ghana Accelerated Action Plan Against Child Labour 2023-2027.",
     "Workmen's compensation (Workmen's Compensation Law 1987, PNDCL 187): employer reports work accident to Labour Department; worker gets medical assessment; Department assesses claim; employer or its insurer pays.",
     "Occupational safety: employer must provide safe workplace, training and PPE at no cost; workers can report unsafe conditions. Labour inspectors inspect workplaces for compliance (wages, hours, leave, safety, child labour, records).",
