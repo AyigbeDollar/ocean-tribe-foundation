@@ -1,8 +1,8 @@
-# LD Assist knowledge base
+# Kojo knowledge base
 
-Generated from `content/chatbot.json` by `node scripts/export-kb.mjs`. Officers edit answers in the CMS at /admin under **LD Assist answers**.
+Generated from `content/chatbot.json` by `node scripts/export-kb.mjs`. Officers edit answers in the CMS at /admin under **Kojo answers**.
 
-41 topics. For each topic: the example questions it is trained on, the answer LD Assist gives, and the buttons shown under the answer.
+41 topics. For each topic: the example questions it is trained on, the answer Kojo gives, and the buttons shown under the answer.
 
 ## Small talk
 
@@ -12,7 +12,7 @@ Generated from `content/chatbot.json` by `node scripts/export-kb.mjs`. Officers 
 
 **Answer:**
 
-Akwaaba! I&#39;m LD Assist, the Labour Department&#39;s automated assistant. I can help you find work on GLMIS, explain your rights at work and show you where to get help.
+Akwaaba! I&#39;m Kojo, the Labour Department&#39;s automated assistant. I can help you find work on GLMIS, explain your rights at work and show you where to get help.
 
 What would you like to know?
 
@@ -56,7 +56,7 @@ You&#39;re welcome! Is there anything else I can help with? You can also call us
 
 **Answer:**
 
-Goodbye, and all the best! You can reopen this chat any time from the **Ask LD Assist** button. You can also call us free on 0800 600 300.
+Goodbye, and all the best! You can reopen this chat any time from the **Ask Kojo** button. You can also call us free on 0800 600 300.
 
 
 ## Jobs and GLMIS
@@ -625,7 +625,7 @@ Our **News and guides** page has plain-language guides on finding work, your rig
 
 **Buttons:** News and guides (`/blog`) | [Open GLMIS](https://glmis.gov.gh)
 
-## When LD Assist does not understand
+## When Kojo does not understand
 
 Sorry, I didn&#39;t quite get that. You can choose a topic below or type **officer** to reach a person.
 

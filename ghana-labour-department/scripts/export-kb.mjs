@@ -1,4 +1,4 @@
-// Exports the LD Assist knowledge base to KNOWLEDGE_BASE.md for PRU review.
+// Exports the Kojo knowledge base to KNOWLEDGE_BASE.md for PRU review.
 // Run after a build: node build.mjs && node scripts/export-kb.mjs
 import { readFileSync, writeFileSync } from "node:fs";
 import vm from "node:vm";
@@ -29,7 +29,7 @@ const used = new Set(groups.flatMap((g) => g[1]));
 const extra = window.LD_KB.filter((i) => !used.has(i.id)).map((i) => i.id);
 if (extra.length) groups.push(["Other", extra]);
 
-let out = `# LD Assist knowledge base\n\nGenerated from \`content/chatbot.json\` by \`node scripts/export-kb.mjs\`. Officers edit answers in the CMS at /admin under **LD Assist answers**.\n\n${window.LD_KB.length} topics. For each topic: the example questions it is trained on, the answer LD Assist gives, and the buttons shown under the answer.\n`;
+let out = `# Kojo knowledge base\n\nGenerated from \`content/chatbot.json\` by \`node scripts/export-kb.mjs\`. Officers edit answers in the CMS at /admin under **Kojo answers**.\n\n${window.LD_KB.length} topics. For each topic: the example questions it is trained on, the answer Kojo gives, and the buttons shown under the answer.\n`;
 let n = 0;
 for (const [title, ids] of groups) {
   out += `\n## ${title}\n`;
@@ -41,7 +41,7 @@ for (const [title, ids] of groups) {
     if (it.links?.length) out += `**Buttons:** ${it.links.map(link).join(" | ")}\n`;
   }
 }
-out += `\n## When LD Assist does not understand\n\n${md(window.LD_KB_FALLBACK.a)}\n\n**Buttons:** ${window.LD_KB_FALLBACK.links.map(link).join(" | ")}\n`;
+out += `\n## When Kojo does not understand\n\n${md(window.LD_KB_FALLBACK.a)}\n\n**Buttons:** ${window.LD_KB_FALLBACK.links.map(link).join(" | ")}\n`;
 out += `\n## Fact sheet used in AI mode\n\nWhen \`ANTHROPIC_API_KEY\` is set, the AI is given these facts and told to stay within them:\n\n${window.LD_KB_FACTS.split("\n").map((l) => "- " + l).join("\n")}\n`;
 writeFileSync(new URL("../KNOWLEDGE_BASE.md", import.meta.url), out);
 console.log(`Wrote KNOWLEDGE_BASE.md (${n} topics)`);

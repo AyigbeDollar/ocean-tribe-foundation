@@ -64,9 +64,9 @@
 
   <header class="site-header" data-header>
     <div class="container header-inner">
-      <a class="brand" href="/" aria-label="Ghana Labour Department, home">
+      <a class="brand" href="/" aria-label="Labour Department, Ghana, home">
         <img class="brand-logo" src="/img/ld-logo-160.png" alt="" width="80" height="80">
-        <span class="brand-text"><strong>Ghana Labour Department</strong><small>Ministry of Labour, Jobs and Employment</small></span>
+        <span class="brand-text"><strong>Labour Department, Ghana</strong><small>Ministry of Labour, Jobs and Employment</small></span>
       </a>
       <nav class="main-nav" aria-label="Main">
         <ul id="nav-list">{{nav}}</ul>
@@ -76,7 +76,7 @@
           <svg class="i-sun" width="20" height="20" aria-hidden="true"><use href="/img/icons.svg#sun"/></svg>
           <svg class="i-moon" width="20" height="20" aria-hidden="true"><use href="/img/icons.svg#moon"/></svg>
         </button>
-        <a class="btn btn-yellow btn-sm hide-sm" href="{{glmisUrl}}" target="_blank" rel="noopener" data-track="glmis_header">Register on GLMIS</a>
+        <a class="btn btn-yellow btn-sm hide-sm" href="{{glmis.register}}" target="_blank" rel="noopener" data-track="glmis_header">Register on GLMIS</a>
         <button class="icon-btn menu-btn" type="button" aria-controls="nav-list" aria-expanded="false" data-menu-toggle aria-label="Open menu">
           <svg width="22" height="22" aria-hidden="true"><use href="/img/icons.svg#menu"/></svg>
         </button>
@@ -94,10 +94,10 @@
       <div class="footer-brand">
         <a class="brand" href="/">
           <img class="brand-logo" src="/img/ld-logo-160.png" alt="Ghana Labour Department logo" width="80" height="80">
-          <span class="brand-text"><strong>Ghana Labour Department</strong><small>Ministry of Labour, Jobs and Employment</small></span>
+          <span class="brand-text"><strong>Labour Department, Ghana</strong><small>Ministry of Labour, Jobs and Employment</small></span>
         </a>
         <p>We protect workers' rights, promote fair labour practices and connect job seekers with opportunities across Ghana.</p>
-        <a class="btn btn-yellow" href="{{glmisUrl}}" target="_blank" rel="noopener" data-track="glmis_footer">Register on GLMIS</a>
+        <a class="btn btn-yellow" href="{{glmis.register}}" target="_blank" rel="noopener" data-track="glmis_footer">Register on GLMIS</a>
         {{footerSocial}}
       </div>
       <div>
@@ -136,17 +136,17 @@
     <div class="flag-stripe footer-stripe" aria-hidden="true"><span></span><span></span><span></span></div>
   </footer>
 
-  <!-- LD Assist: automated assistant (Chatbot guide, Brand Guide v2.0) -->
+  <!-- Kojo: automated assistant (Chatbot guide, Brand Guide v2.0) -->
   <div class="chat" data-chat>
-    <button class="chat-launcher" type="button" aria-label="Ask LD Assist" data-chat-open aria-controls="chat-panel" aria-expanded="false">
+    <button class="chat-launcher" type="button" aria-label="Ask Kojo" data-chat-open aria-controls="chat-panel" aria-expanded="false">
       <img src="/img/ld-logo-160.png" alt="" width="38" height="38">
-      <span>Ask LD Assist</span>
+      <span>Ask Kojo</span>
     </button>
     <section class="chat-panel" id="chat-panel" role="dialog" aria-modal="false" aria-labelledby="chat-title" hidden>
       <header class="chat-head">
         <img class="chat-avatar" src="/img/ld-logo-160.png" alt="" width="42" height="42">
         <div>
-          <h2 id="chat-title">LD Assist</h2>
+          <h2 id="chat-title">Kojo</h2>
           <p>Automated assistant, Ghana Labour Department</p>
         </div>
         <button class="icon-btn" type="button" data-chat-close aria-label="Close chat">

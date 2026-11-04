@@ -3,8 +3,8 @@
     "answer": "Sorry, I didn't quite get that. You can choose a topic below or type **officer** to reach a person.\n\nI can help with jobs on GLMIS, your rights at work, workplace complaints, child labour, workplace injury and agency registration.",
     "links": [
       {
-        "label": "Open GLMIS",
-        "url": "https://glmis.gov.gh",
+        "label": "Create a GLMIS profile",
+        "url": "https://www.glmis.gov.gh/Identity/Account/Register",
         "glmis": true
       },
       {
@@ -24,7 +24,7 @@
     "Parent ministry: Ministry of Labour, Jobs and Employment. Toll-free 0800 600 300 / 0800 600 400. Website melr.gov.gh.",
     "Chief Labour Officer: Braimah Ibrahim Dawuda.",
     "Offices: Mon-Fri 8:00-17:00. Public Employment Centres (PECs) in all 16 regions (e.g. Odomase, Bono Region; Goaso, Ahafo Region). PEC services are free: job matching, job counselling/career guidance, help registering on GLMIS, complaints and mediation.",
-    "GLMIS (Ghana Labour Market Information System), https://glmis.gov.gh: free government jobs portal. Job seekers create a profile, upload CV, apply for vacancies. Employers post vacancies and search candidates free. Publishes labour market information. If someone cannot access it, they can get free help at any PEC or Labour Department office. Always recommend GLMIS for job, vacancy, CV or unemployment questions.",
+    "GLMIS (Ghana Labour Market Information System), https://www.glmis.gov.gh: free government jobs portal. Job seekers create a profile, upload CV, apply for vacancies. Employers post vacancies and search candidates free. Publishes labour market information. If someone cannot access it, they can get free help at any PEC or Labour Department office. Always recommend GLMIS for job, vacancy, CV or unemployment questions.",
     "Minimum wage: National Daily Minimum Wage {{minWageYear}} is GH¢{{minWage}}/day, effective {{minWageEffective}} ({{prevMinWageYear}}: GH¢{{prevMinWage}}). Set by the National Tripartite Committee.",
     "Annual leave: at least 15 working days with full pay after 12 months continuous service (s.20 Act 651).",
     "Hours: normal maximum 8 hours/day, 40 hours/week. Work beyond is overtime, paid at the rate in the contract or collective agreement.",
@@ -51,7 +51,7 @@
         "hi there",
         "good morning",
         "akwaaba",
-        "hey ld assist",
+        "hey kojo",
         "how are you"
       ],
       "keywords": [
@@ -71,13 +71,14 @@
         "boss",
         "how far",
         "how are you",
+        "kojo",
         "ld assist"
       ],
-      "answer": "Akwaaba! I'm LD Assist, the Labour Department's automated assistant. I can help you find work on GLMIS, explain your rights at work and show you where to get help.\n\nWhat would you like to know?",
+      "answer": "Akwaaba! I'm Kojo, the Labour Department's automated assistant. I can help you find work on GLMIS, explain your rights at work and show you where to get help.\n\nWhat would you like to know?",
       "links": [
         {
           "label": "Search jobs on GLMIS",
-          "url": "https://glmis.gov.gh",
+          "url": "https://www.glmis.gov.gh/Jobs/Joblistings",
           "glmis": true
         },
         {
@@ -116,8 +117,8 @@
       "answer": "I can answer common questions about:\n\n-   Finding work or hiring through **GLMIS**, Ghana's free jobs portal\n-   Public Employment Centres and job counselling\n-   Workers' rights: minimum wage, hours, leave, maternity, termination\n-   Labour complaints, child labour and workplace injuries\n-   Licensing private employment agencies and avoiding job scams\n\nI am an **automated assistant**, not a human officer. I give general guidance, not legal advice. Type **officer** to reach a person.",
       "links": [
         {
-          "label": "Open GLMIS",
-          "url": "https://glmis.gov.gh",
+          "label": "Create a GLMIS profile",
+          "url": "https://www.glmis.gov.gh/Identity/Account/Register",
           "glmis": true
         },
         {
@@ -157,7 +158,7 @@
       "links": [
         {
           "label": "Register on GLMIS",
-          "url": "https://glmis.gov.gh",
+          "url": "https://www.glmis.gov.gh/Identity/Account/Register",
           "glmis": true
         }
       ]
@@ -180,7 +181,7 @@
         "gotta go",
         "cheers"
       ],
-      "answer": "Goodbye, and all the best! You can reopen this chat any time from the **Ask LD Assist** button. You can also call us free on 0800 600 300.",
+      "answer": "Goodbye, and all the best! You can reopen this chat any time from the **Ask Kojo** button. You can also call us free on 0800 600 300.",
       "links": []
     },
     {
@@ -203,8 +204,8 @@
       "answer": "**GLMIS** (Ghana Labour Market Information System) is the government's free online jobs platform. It connects job seekers with employers across Ghana and publishes labour market information.\n\n-   Job seekers create a profile, upload a CV and apply for vacancies\n-   Employers post vacancies and search for candidates\n-   Anyone can view labour market data and trends",
       "links": [
         {
-          "label": "Open GLMIS",
-          "url": "https://glmis.gov.gh",
+          "label": "Create a GLMIS profile",
+          "url": "https://www.glmis.gov.gh/Identity/Account/Register",
           "glmis": true
         },
         {
@@ -264,11 +265,11 @@
         "create glmis account",
         "sign up on glmis"
       ],
-      "answer": "The fastest way is to **register on GLMIS**, Ghana's free government jobs portal:\n\n-   Go to glmis.gov.gh and create a job seeker account\n-   Complete your profile, skills and upload your CV\n-   Search and apply for vacancies, and let employers find you\n\nYou can also visit a **Public Employment Centre** in your region for free job matching and counselling.",
+      "answer": "The fastest way is to **register on GLMIS**, Ghana's free government jobs portal:\n\n-   Open the [GLMIS sign-up page](https://www.glmis.gov.gh/Identity/Account/Register) and create a job seeker account\n-   Complete your profile, skills and upload your CV\n-   Search and apply for vacancies, and let employers find you\n\nYou can also visit a **Public Employment Centre** in your region for free job matching and counselling.",
       "links": [
         {
           "label": "Register on GLMIS",
-          "url": "https://glmis.gov.gh",
+          "url": "https://www.glmis.gov.gh/Identity/Account/Register",
           "glmis": true
         },
         {
@@ -315,11 +316,16 @@
         "workers for my",
         "staff"
       ],
-      "answer": "Employers can recruit for free on **GLMIS**:\n\n-   Create an employer account on glmis.gov.gh\n-   Post your vacancy with the job description and requirements\n-   Search job seeker profiles and shortlist candidates\n\nThe Public Employment Centre in your region can also help match you with suitable candidates.",
+      "answer": "Employers can recruit for free on **GLMIS**:\n\n-   Create an employer account on the [GLMIS company sign-up page](https://www.glmis.gov.gh/Identity/Account/RegisterCompany)\n-   Post your vacancy with the job description and requirements\n-   Search job seeker profiles and shortlist candidates\n\nThe Public Employment Centre in your region can also help match you with suitable candidates.",
       "links": [
         {
+          "label": "Register your company",
+          "url": "https://www.glmis.gov.gh/Identity/Account/RegisterCompany",
+          "glmis": true
+        },
+        {
           "label": "Post a vacancy on GLMIS",
-          "url": "https://glmis.gov.gh",
+          "url": "https://www.glmis.gov.gh/Identity/Account/Login",
           "glmis": true
         },
         {
@@ -351,7 +357,7 @@
       "links": [
         {
           "label": "Register on GLMIS",
-          "url": "https://glmis.gov.gh",
+          "url": "https://www.glmis.gov.gh/Identity/Account/Register",
           "glmis": true
         },
         {
@@ -394,8 +400,8 @@
       "answer": "If you have trouble with GLMIS:\n\n-   Use the password reset option on the GLMIS login page\n-   Try another browser or device, or a different network\n-   Visit your nearest **Public Employment Centre** or Labour Department office. Staff can help you register and update your profile for free",
       "links": [
         {
-          "label": "Open GLMIS",
-          "url": "https://glmis.gov.gh",
+          "label": "Get GLMIS help",
+          "url": "https://www.glmis.gov.gh/Support",
           "glmis": true
         },
         {
@@ -432,8 +438,8 @@
       "answer": "Labour market information (vacancy trends, in-demand skills and related data) is published on **GLMIS**. It is useful for job seekers choosing a career, employers planning hiring and researchers.\n\nFor official national employment statistics you can also check the Ghana Statistical Service.",
       "links": [
         {
-          "label": "Open GLMIS",
-          "url": "https://glmis.gov.gh",
+          "label": "GLMIS labour statistics",
+          "url": "https://www.glmis.gov.gh",
           "glmis": true
         },
         {
@@ -467,7 +473,7 @@
       "links": [
         {
           "label": "Register on GLMIS",
-          "url": "https://glmis.gov.gh",
+          "url": "https://www.glmis.gov.gh/Identity/Account/Register",
           "glmis": true
         },
         {
@@ -517,8 +523,8 @@
           "glmis": false
         },
         {
-          "label": "Open GLMIS",
-          "url": "https://glmis.gov.gh",
+          "label": "Public Employment Centres on GLMIS",
+          "url": "https://www.glmis.gov.gh/employmentagencies",
           "glmis": true
         }
       ]
@@ -545,13 +551,18 @@
       "answer": "Yes. Our Public Employment Centres offer **free job counselling**: help choosing a career, matching your skills to available work and preparing for interviews.\n\nRegister on GLMIS too, so you see current vacancies.",
       "links": [
         {
+          "label": "Book counselling on GLMIS",
+          "url": "https://www.glmis.gov.gh/CounsellingRequest",
+          "glmis": true
+        },
+        {
           "label": "Employment services",
           "url": "/services",
           "glmis": false
         },
         {
           "label": "Register on GLMIS",
-          "url": "https://glmis.gov.gh",
+          "url": "https://www.glmis.gov.gh/Identity/Account/Register",
           "glmis": true
         }
       ]
@@ -905,7 +916,7 @@
         },
         {
           "label": "Search jobs on GLMIS",
-          "url": "https://glmis.gov.gh",
+          "url": "https://www.glmis.gov.gh/Jobs/Joblistings",
           "glmis": true
         }
       ]
@@ -1105,6 +1116,11 @@
       "answer": "Under the **Workmen's Compensation Law, 1987 (PNDCL 187)**, a worker injured (or the family of a worker killed) in a work accident may be compensated:\n\n-   The employer must report the accident to the **Labour Department**\n-   The worker has a medical assessment of the injury\n-   The Department assesses the claim and the **employer or its insurer pays**\n\nGet medical care first, then contact your nearest office.",
       "links": [
         {
+          "label": "Report an accident on GLMIS",
+          "url": "https://www.glmis.gov.gh/accidents",
+          "glmis": true
+        },
+        {
           "label": "Compensation claims",
           "url": "/services#compensation",
           "glmis": false
@@ -1143,6 +1159,11 @@
       ],
       "answer": "Employers must provide a **safe and healthy workplace**: safe equipment, training, and protective equipment (PPE) where needed, at no cost to the worker.\n\nA worker may report unsafe conditions to the Labour Department, and should not be punished for doing so.",
       "links": [
+        {
+          "label": "Report an accident on GLMIS",
+          "url": "https://www.glmis.gov.gh/accidents",
+          "glmis": true
+        },
         {
           "label": "Employer duties",
           "url": "/employers",
@@ -1212,7 +1233,7 @@
         },
         {
           "label": "Post a vacancy on GLMIS",
-          "url": "https://glmis.gov.gh",
+          "url": "https://www.glmis.gov.gh/Identity/Account/Login",
           "glmis": true
         }
       ]
@@ -1329,7 +1350,7 @@
         },
         {
           "label": "Search jobs on GLMIS",
-          "url": "https://glmis.gov.gh",
+          "url": "https://www.glmis.gov.gh/Jobs/Joblistings",
           "glmis": true
         },
         {
@@ -1373,7 +1394,7 @@
         },
         {
           "label": "Search jobs on GLMIS",
-          "url": "https://glmis.gov.gh",
+          "url": "https://www.glmis.gov.gh/Jobs/Joblistings",
           "glmis": true
         }
       ]
@@ -1430,8 +1451,8 @@
           "glmis": false
         },
         {
-          "label": "Open GLMIS",
-          "url": "https://glmis.gov.gh",
+          "label": "Create a GLMIS profile",
+          "url": "https://www.glmis.gov.gh/Identity/Account/Register",
           "glmis": true
         }
       ]
@@ -1540,8 +1561,8 @@
           "glmis": false
         },
         {
-          "label": "Open GLMIS",
-          "url": "https://glmis.gov.gh",
+          "label": "Create a GLMIS profile",
+          "url": "https://www.glmis.gov.gh/Identity/Account/Register",
           "glmis": true
         }
       ]
@@ -1586,8 +1607,8 @@
           "glmis": false
         },
         {
-          "label": "Open GLMIS",
-          "url": "https://glmis.gov.gh",
+          "label": "Create a GLMIS profile",
+          "url": "https://www.glmis.gov.gh/Identity/Account/Register",
           "glmis": true
         }
       ]

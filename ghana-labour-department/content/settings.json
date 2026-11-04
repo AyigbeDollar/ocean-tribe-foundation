@@ -1,7 +1,7 @@
 {
   "siteUrl": "https://labour-department-ghana.vercel.app",
   "productionDomain": "https://labourdepartment.gov.gh",
-  "glmisUrl": "https://glmis.gov.gh",
+  "glmisUrl": "https://www.glmis.gov.gh",
   "email": "info@labourdepartment.gov.gh",
   "prEmail": "prunit@labourdepartment.gov.gh",
   "tollFree": [
@@ -31,5 +31,17 @@
     "tiktok": "",
     "youtube": "",
     "whatsappChannel": ""
+  },
+  "glmisLinks": {
+    "home": "https://www.glmis.gov.gh",
+    "register": "https://www.glmis.gov.gh/Identity/Account/Register",
+    "employer": "https://www.glmis.gov.gh/Identity/Account/RegisterCompany",
+    "login": "https://www.glmis.gov.gh/Identity/Account/Login",
+    "jobs": "https://www.glmis.gov.gh/Jobs/Joblistings",
+    "counselling": "https://www.glmis.gov.gh/CounsellingRequest",
+    "accidents": "https://www.glmis.gov.gh/accidents",
+    "agencies": "https://www.glmis.gov.gh/employmentagencies",
+    "trainingProviders": "https://www.glmis.gov.gh/trainingproviders/index",
+    "support": "https://www.glmis.gov.gh/Support"
   }
 }

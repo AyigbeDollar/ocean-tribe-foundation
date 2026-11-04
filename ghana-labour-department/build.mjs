@@ -6,7 +6,7 @@
 // - content/announcement.json-> optional site-wide notice bar
 // - content/leadership.json  -> Chief Labour Officer name, photo and profile
 // - content/faqs.json        -> the FAQ page and its structured data
-// - content/chatbot.json     -> LD Assist answers (dist/js/knowledge.js) and the AI fact sheet
+// - content/chatbot.json     -> Kojo answers (dist/js/knowledge.js) and the AI fact sheet
 // - src/pages/*.html         -> page layouts; src/layout.html is the shared shell
 // - static/                  -> copied as-is; remote-assets.json photos fetched when not stored locally
 import { readFileSync, writeFileSync, readdirSync, mkdirSync, cpSync, rmSync, existsSync } from "node:fs";
@@ -48,7 +48,8 @@ const W = config.minimumWage || {};
 const TOKENS = {
   "{{minWage}}": W.amount, "{{minWageYear}}": W.year, "{{minWageEffective}}": W.effective,
   "{{prevMinWage}}": W.previousAmount, "{{prevMinWageYear}}": W.previousYear, "{{minWageIncrease}}": W.increase,
-  "{{officeHours}}": config.officeHours, "{{prEmail}}": config.prEmail,
+  "{{officeHours}}": config.officeHours,
+  ...Object.fromEntries(Object.entries(config.glmisLinks || {}).map(([k, v]) => [`{{glmis.${k}}}`, v])), "{{prEmail}}": config.prEmail,
   "{{cloName}}": esc(leadership.name), "{{cloTitle}}": esc(leadership.title),
   "{{cloPhoto}}": esc(leadership.photo || "/img/chief-labour-officer-placeholder.svg"), "{{cloPhotoAlt}}": esc(leadership.photoAlt || leadership.name),
   "{{cloIntro}}": esc(leadership.homeIntro), "{{cloBio}}": md(leadership.bio),
@@ -252,8 +253,8 @@ ${posts.map((p, i) => postCard(p, i === 0)).join("\n")}
 
 // Blog posts
 const CTA = {
-  "Find work": { h: "Ready to find work?", p: "Create your free GLMIS profile, or visit your nearest Public Employment Centre for help.", btn: `<a class="btn btn-yellow" href="${config.glmisUrl}" target="_blank" rel="noopener" data-track="glmis_post_cta">Register on GLMIS</a><a class="btn btn-light" href="/contact">Find a PEC</a>` },
-  "Know your rights": { h: "Need help with a workplace issue?", p: "Report it to your nearest Labour Department office. Our help is free. Call 0800 600 300 or ask LD Assist.", btn: `<a class="btn btn-red" href="/services#complaints">Report an issue</a><button class="btn btn-light" type="button" data-chat-ask="I have a problem at work. What should I do?">Ask LD Assist</button>` },
+  "Find work": { h: "Ready to find work?", p: "Create your free GLMIS profile, or visit your nearest Public Employment Centre for help.", btn: `<a class="btn btn-yellow" href="${config.glmisLinks.register}" target="_blank" rel="noopener" data-track="glmis_post_cta">Register on GLMIS</a><a class="btn btn-light" href="/contact">Find a PEC</a>` },
+  "Know your rights": { h: "Need help with a workplace issue?", p: "Report it to your nearest Labour Department office. Our help is free. Call 0800 600 300 or ask Kojo.", btn: `<a class="btn btn-red" href="/services#complaints">Report an issue</a><button class="btn btn-light" type="button" data-chat-ask="I have a problem at work. What should I do?">Ask Kojo</button>` },
 };
 for (const p of posts) {
   const cta = CTA[p.pillar] || CTA["Find work"];
@@ -307,12 +308,12 @@ ${p.body}
       <div class="aside-card glmis">
         <h2>Looking for work?</h2>
         <p>Register free on the Ghana Labour Market Information System and get matched to vacancies.</p>
-        <a class="btn btn-yellow btn-sm" href="${config.glmisUrl}" target="_blank" rel="noopener" data-track="glmis_post_aside">Register on GLMIS</a>
+        <a class="btn btn-yellow btn-sm" href="${config.glmisLinks.register}" target="_blank" rel="noopener" data-track="glmis_post_aside">Register on GLMIS</a>
       </div>
       <div class="aside-card">
         <h2>Have a question?</h2>
-        <p>LD Assist answers common questions any time. You can also call free on 0800 600 300.</p>
-        <button class="btn btn-primary btn-sm" type="button" data-chat-ask="${esc(p.faq?.[0]?.q || "How can the Labour Department help me?")}">Ask LD Assist</button>
+        <p>Kojo answers common questions any time. You can also call free on 0800 600 300.</p>
+        <button class="btn btn-primary btn-sm" type="button" data-chat-ask="${esc(p.faq?.[0]?.q || "How can the Labour Department help me?")}">Ask Kojo</button>
       </div>
       ${config.social?.whatsappChannel ? `<div class="aside-card"><h2>Get vacancies on WhatsApp</h2><p>Follow our WhatsApp Channel for vacancies and urgent notices.</p><a class="btn btn-primary btn-sm" href="${esc(config.social.whatsappChannel)}" target="_blank" rel="noopener" data-track="follow_whatsappChannel">Follow the channel</a></div>` : ""}
     </aside>
@@ -388,7 +389,7 @@ ${posts.map((p) => `<article class="card" style="display:grid;gap:18px">
   });
 }
 
-// ---------- LD Assist knowledge base (content/chatbot.json -> /js/knowledge.js) ----------
+// ---------- Kojo knowledge base (content/chatbot.json -> /js/knowledge.js) ----------
 const kbLink = (l) => ({ href: l.url, label: l.label, ...(l.glmis || /glmis\.gov\.gh/.test(l.url) ? { glmis: true } : {}) });
 const kb = (chatbot.intents || []).filter((i) => i.id && i.answer).map((i) => ({
   id: i.id, q: i.questions || [], k: (i.keywords || []).map((x) => String(x).toLowerCase()),

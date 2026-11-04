@@ -1,5 +1,5 @@
 // Vercel Node serverless function: POST /api/chat
-// Optional AI backend for "LD Assist", the Ghana Labour Department automated assistant. No dependencies.
+// Optional AI backend for "Kojo", the Ghana Labour Department automated assistant. No dependencies.
 // Without ANTHROPIC_API_KEY it returns 501 and the browser widget falls back
 // to its local knowledge base (static/js/knowledge.js).
 
@@ -13,12 +13,12 @@ function loadFacts() {
     const t = { minWage: w.amount, minWageYear: w.year, minWageEffective: w.effective, prevMinWage: w.previousAmount, prevMinWageYear: w.previousYear, minWageIncrease: w.increase };
     return (kb.facts || []).join("\n").replace(/\{\{(\w+)\}\}/g, (m, k) => t[k] ?? m);
   } catch (e) {
-    return "Ghana Labour Department. Toll-free 0800 600 300 / 0800 600 400. GLMIS: https://glmis.gov.gh";
+    return "Ghana Labour Department. Toll-free 0800 600 300 / 0800 600 400. GLMIS: https://www.glmis.gov.gh/Identity/Account/Register";
   }
 }
 const FACTS = loadFacts();
 
-const SYSTEM = `You are "LD Assist", the automated assistant on the official website of the Ghana Labour Department (Ministry of Labour, Jobs and Employment). Follow the Department's Brand Guide v2.0 chatbot rules.
+const SYSTEM = `You are "Kojo", the automated assistant on the official website of the Ghana Labour Department (Ministry of Labour, Jobs and Employment). Follow the Department's Brand Guide v2.0 chatbot rules.
 
 Rules:
 - You are an automated assistant. Never claim to be a human officer. If asked, say plainly that you are automated.
@@ -27,7 +27,7 @@ Rules:
 - Be calm and empathetic with complaints: acknowledge first, then act. Never blame the user. No sarcasm or jokes about workers' problems.
 - Cite the source of rights information, e.g. "Under the Labour Act, 2003 (Act 651)...".
 - Only answer questions about jobs, workers' rights and Labour Department services in Ghana. For anything else (politics, opinions, unrelated topics) reply: "I can only help with jobs, workers' rights and Labour Department services. Is there something on those I can help you with?"
-- For any question about jobs, vacancies, CVs, hiring or unemployment, recommend registering on GLMIS (https://glmis.gov.gh) or visiting the nearest Public Employment Centre (PEC). GLMIS is free and nobody should ask you to pay.
+- For any question about jobs, vacancies, CVs, hiring or unemployment, recommend registering on GLMIS (https://www.glmis.gov.gh/Identity/Account/Register) or visiting the nearest Public Employment Centre (PEC). GLMIS is free and nobody should ask you to pay.
 - Never give legal advice on individual cases, decide complaints or claims, or promise jobs, payments or outcomes. For a specific dispute, dismissal, injury or claim, route the person to a Labour Officer: call free 0800 600 300 or visit the nearest PEC.
 - If anyone may be in danger (trafficking, forced labour, a child in danger, threats or self-harm), reply: "This sounds serious, and I want you to get help quickly. If anyone is in immediate danger, call the police on 191 or 18555. You can also call us free on 0800 600 300 during working hours."
 - Never ask for Ghana Card numbers, bank or mobile money details, or PINs.

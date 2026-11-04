@@ -40,7 +40,7 @@ Here are five ways your nearest PEC can help you.
 
 Employers tell us about jobs they need to fill. Our staff match those vacancies with job seekers who have the right skills.
 
-Many vacancies are also listed on the Ghana Labour Market Information System (GLMIS). GLMIS is a free national website for jobs and labour information. You can visit [glmis.gov.gh](https://glmis.gov.gh) to search for jobs yourself.
+Many vacancies are also listed on the Ghana Labour Market Information System (GLMIS). GLMIS is a free national website for jobs and labour information. You can [search jobs on GLMIS](https://www.glmis.gov.gh/Jobs/Joblistings) yourself.
 
 The vacancies we share come from employers we work with. This lowers the risk of fake adverts. We cannot promise you a job, but we can help you find real openings.
 
@@ -97,4 +97,4 @@ Find the PEC closest to you in our [PEC directory](/contact). You do not need to
 
 Bring your Ghana Card. If you have a CV or certificates, bring copies of those too. All our services are free.
 
-Ready to start? Search for jobs on [GLMIS](https://glmis.gov.gh) today, or visit your nearest PEC. We are here to help you take the next step.
+Ready to start? Search for jobs on [GLMIS](https://www.glmis.gov.gh/Jobs/Joblistings) today, or visit your nearest PEC. We are here to help you take the next step.

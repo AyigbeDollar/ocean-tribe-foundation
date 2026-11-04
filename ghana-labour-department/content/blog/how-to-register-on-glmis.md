@@ -48,7 +48,7 @@ Do not worry if you do not have a CV yet. You can still create a profile. Staff 
 
 ## How to register: step by step
 
-1.  Go to [glmis.gov.gh](https://glmis.gov.gh) on your phone or computer.
+1.  Open the [GLMIS sign-up page](https://www.glmis.gov.gh/Identity/Account/Register) on your phone or computer.
 2.  Choose the option for job seekers.
 3.  Sign up with your details and your phone number. Keep your login details safe.
 4.  Complete your profile. Add your qualifications, skills, work experience and the jobs you would like.
@@ -87,10 +87,10 @@ Job seekers across Ghana can then find your vacancy and apply. Our PEC staff can
 
 Posting on GLMIS also helps the country. It gives policymakers better information about which skills employers need. That helps training providers plan the right courses.
 
-Visit [glmis.gov.gh](https://glmis.gov.gh) to get started, or contact your nearest PEC for help.
+Visit the [GLMIS sign-up page](https://www.glmis.gov.gh/Identity/Account/Register) to get started, or contact your nearest PEC for help.
 
 ## Take the first step today
 
 Registering takes a little time, but it puts your skills in front of employers. We cannot promise you a job. But a complete GLMIS profile helps you get ready for the right one.
 
-Go to [glmis.gov.gh](https://glmis.gov.gh) and create your profile today. If you get stuck, we are here to help.
+Go to the [GLMIS sign-up page](https://www.glmis.gov.gh/Identity/Account/Register) and create your profile today. If you get stuck, we are here to help.

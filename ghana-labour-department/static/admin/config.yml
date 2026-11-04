@@ -115,7 +115,7 @@ collections:
           - label: Minimum wage
             name: minimumWage
             widget: object
-            hint: "Updates every page, FAQ and LD Assist answer that mentions the minimum wage."
+            hint: "Updates every page, FAQ and Kojo answer that mentions the minimum wage."
             fields:
               - { label: "Daily amount (GH¢)", name: amount, widget: string, hint: "e.g. 21.77" }
               - { label: Year, name: year, widget: string }
@@ -177,7 +177,7 @@ collections:
 
   # ------------------------------------------------------------------ Chatbot
   - name: chatbot
-    label: LD Assist answers
+    label: Kojo answers
     description: "The approved knowledge base for the chatbot (Chatbot guide, Brand Guide pages 20 to 23). Answers: three sentences or fewer, then a next step."
     editor: { preview: false }
     files:
@@ -203,7 +203,7 @@ collections:
                   - { label: Label, name: label, widget: string }
                   - { label: "Link address", name: url, widget: string }
                   - { label: "GLMIS button (yellow)", name: glmis, widget: boolean, default: false, required: false }
-          - label: "When LD Assist does not understand"
+          - label: "When Kojo does not understand"
             name: fallback
             widget: object
             fields:

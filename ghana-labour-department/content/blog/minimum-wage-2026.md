@@ -92,10 +92,10 @@ If you employ staff, check your payroll now. From 1 January 2026, every worker m
 
 Paying the minimum wage is the law. It also builds trust with your workers. If you have questions about your duties, contact your nearest Labour Department office. Our Labour Officers can explain what the Labour Act, 2003 (Act 651) requires.
 
-Looking for staff? You can post vacancies free on the Ghana Labour Market Information System (GLMIS) at [glmis.gov.gh](https://glmis.gov.gh).
+Looking for staff? You can post vacancies free on the Ghana Labour Market Information System (GLMIS) ([register your company](https://www.glmis.gov.gh/Identity/Account/RegisterCompany), then [sign in to post a vacancy](https://www.glmis.gov.gh/Identity/Account/Login)).
 
 ## Know your other rights
 
 The minimum wage is one of many rights you have at work. Read more about [your rights at work](/workers-rights), including working hours and leave.
 
-Looking for a new job? Search for vacancies on [GLMIS](https://glmis.gov.gh), or read our guide on [how your nearest PEC can help](/blog/public-employment-centre-services).
+Looking for a new job? Search for vacancies on [GLMIS](https://www.glmis.gov.gh/Jobs/Joblistings), or read our guide on [how your nearest PEC can help](/blog/public-employment-centre-services).

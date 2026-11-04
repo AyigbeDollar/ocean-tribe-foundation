@@ -88,7 +88,7 @@ Your report helps us warn others. You can also read more about [your rights at w
 
 You do not need to pay anyone to find work. Genuine local vacancies are listed free on the Ghana Labour Market Information System (GLMIS).
 
-Visit [glmis.gov.gh](https://glmis.gov.gh) to create a profile and search for jobs. Our guide on [how to register on GLMIS](/blog/how-to-register-on-glmis) shows you how, step by step.
+[Create a free GLMIS profile](https://www.glmis.gov.gh/Identity/Account/Register) and [search verified vacancies](https://www.glmis.gov.gh/Jobs/Joblistings). Our guide on [how to register on GLMIS](/blog/how-to-register-on-glmis) shows you how, step by step.
 
 You can also visit your nearest Public Employment Centre (PEC) for free help. Read about the [five ways your PEC can help](/blog/public-employment-centre-services).
 

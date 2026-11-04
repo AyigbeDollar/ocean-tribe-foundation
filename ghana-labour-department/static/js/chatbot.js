@@ -1,4 +1,4 @@
-/* "LD Assist", the Ghana Labour Department automated assistant (Brand Guide v2.0, chatbot guide).
+/* "Kojo", the Ghana Labour Department automated assistant (Brand Guide v2.0, chatbot guide).
    Vanilla JS, no dependencies. Tries the optional AI backend (POST /api/chat);
    if that is unavailable, answers from the local knowledge base (knowledge.js)
    so the widget always works on any static host. */
@@ -227,7 +227,8 @@
 
   var STORE_KEY = "ld-assist-chat-v2";
   var AI_KEY = "ld-assist-ai-off";
-  var GLMIS_URL = "https://glmis.gov.gh";
+  var GLMIS_URL = "https://www.glmis.gov.gh/Identity/Account/Register";
+  var GLMIS_JOBS = "https://www.glmis.gov.gh/Jobs/Joblistings";
   var JOB_RE = /\b(job|jobs|work|vacanc|cv|resume|unemploy|hire|hiring|recruit|career|employ|hustle)/i;
   var CHIPS = [
     ["Find a job on GLMIS", "How do I find a job on GLMIS?"],
@@ -240,9 +241,9 @@
   var WELCOME = {
     who: "bot",
     welcome: true,
-    html: "<p>Akwaaba! I'm <strong>LD Assist</strong>, the Labour Department's automated assistant. How can I help?</p>" +
+    html: "<p>Akwaaba! I'm <strong>Kojo</strong>, the Labour Department's automated assistant. How can I help?</p>" +
       "<p>Pick a topic below or type your question. To reach a person, type <strong>officer</strong>.</p>",
-    links: [{ href: GLMIS_URL, label: "Search jobs on GLMIS", glmis: true }]
+    links: [{ href: GLMIS_JOBS, label: "Search jobs on GLMIS", glmis: true }]
   };
 
   // Urgent safety script (chatbot guide p.23): shown before anything else, never sent to the AI.
@@ -396,7 +397,7 @@
     var t = d.createElement("div");
     t.className = "msg msg-bot typing";
     t.setAttribute("role", "status");
-    t.setAttribute("aria-label", "LD Assist is typing");
+    t.setAttribute("aria-label", "Kojo is typing");
     t.innerHTML = "<i></i><i></i><i></i>";
     log.appendChild(t);
     scrollDown();
@@ -446,7 +447,7 @@
   function withGlmis(links, q) {
     links = (links || []).slice();
     if (JOB_RE.test(q) && !links.some(function (l) { return isGlmis(l.href); })) {
-      links.unshift({ href: GLMIS_URL, label: "Search jobs on GLMIS", glmis: true });
+      links.unshift({ href: GLMIS_JOBS, label: "Search jobs on GLMIS", glmis: true });
     }
     return links.slice(0, 4);
   }

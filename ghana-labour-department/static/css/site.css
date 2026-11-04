@@ -491,7 +491,7 @@ tbody tr:nth-child(even) td { background: var(--panel); }
   @keyframes rise { from { opacity: 0; transform: translateY(28px); } to { opacity: 1; transform: none; } }
 }
 
-/* Chat widget (LD Assist): blue header and user bubbles, light blue-grey bot bubbles, red buttons */
+/* Chat widget (Kojo): blue header and user bubbles, light blue-grey bot bubbles, red buttons */
 .chat { position: fixed; right: 20px; bottom: 20px; z-index: 60; font-size: 15.5px; }
 .chat-launcher {
   display: inline-flex; align-items: center; gap: 10px; padding: 10px 20px 10px 10px; border-radius: 999px; border: 0; cursor: pointer;

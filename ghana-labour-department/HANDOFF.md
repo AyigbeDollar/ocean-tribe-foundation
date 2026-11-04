@@ -30,7 +30,7 @@ This folder holds the full source of the Ghana Labour Department website. Use th
   - Blog, with four launch posts
   - Social media kit at `/social-kit`
 - **Design:** premium 3D: a deep-blue gradient hero, frosted-glass panels and tilted 3D photo frames. It uses the brand colours, the official logo and self-hosted Montserrat. Pages work on phones down to 320px wide, in light and dark mode.
-- **LD Assist chatbot:**
+- **Kojo chatbot:**
   - Answers come from an approved knowledge base in `content/chatbot.json`.
   - It has an urgent safety script and hands over to a person when someone types "officer".
   - Users can rate answers with thumbs up or down.
