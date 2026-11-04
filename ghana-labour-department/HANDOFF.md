@@ -1,0 +1,82 @@
+# Handoff: Ghana Labour Department website
+
+This folder holds the full source of the Ghana Labour Department website. Use this brief to continue the work in Claude Cowork, or with any developer.
+
+## Where things stand
+
+| Item | Value |
+|---|---|
+| Live site | https://labour-department-ghana.vercel.app |
+| Content manager | https://labour-department-ghana.vercel.app/admin (sign-in not yet configured, see below) |
+| GitHub repository | `AyigbeDollar/ocean-tribe-foundation`, folder `ghana-labour-department/` |
+| Working branch | `claude/ghana-labour-website-chatbot-rndaol` |
+| Vercel project | `labour-department-ghana` (team "brightselormelikem-9138's projects"), root directory `ghana-labour-department` |
+| Build | `npm install && node build.mjs` produces `dist/` |
+| Brand reference | Ghana Labour Department Media, Communications & Digital Brand Guide v2.0 |
+
+## What is built
+
+- **Pages:**
+  - Home, with the WebGL 3D globe hero
+  - About and Management (the Chief Labour Officer, Braimah Ibrahim Dawuda, is the only person shown)
+  - Services
+  - Workers' Rights
+  - Employers
+  - GLMIS Jobs
+  - Child Labour, including the Child Labour Unit
+  - FAQs
+  - Contact, with all 16 regional Public Employment Centres
+  - Privacy
+  - Blog, with four launch posts
+  - Social media kit at `/social-kit`
+- **Design:** premium 3D: a deep-blue gradient hero, frosted-glass panels and tilted 3D photo frames. It uses the brand colours, the official logo and self-hosted Montserrat. Pages work on phones down to 320px wide, in light and dark mode.
+- **LD Assist chatbot:**
+  - Answers come from an approved knowledge base in `content/chatbot.json`.
+  - It has an urgent safety script and hands over to a person when someone types "officer".
+  - Users can rate answers with thumbs up or down.
+  - Optional AI mode switches on when `ANTHROPIC_API_KEY` is set in Vercel.
+- **SEO:**
+  - Titles, descriptions and Open Graph images on every page, with branded share images for posts
+  - JSON-LD structured data: government organisation, breadcrumbs, FAQ pages, how-to steps and blog posts
+  - A sitemap, robots.txt, and RSS and JSON feeds
+- **Traffic to GLMIS:** "Register on GLMIS" calls to action across the site and in chatbot answers. Shares, GLMIS clicks and chat events are pushed to `window.dataLayer`. All share links carry UTM tags.
+- **Content manager (Decap CMS at `/admin`):** officers can edit:
+  - blog posts
+  - the announcement bar
+  - contacts and social links
+  - minimum wage figures, which update every page, FAQ and chatbot answer
+  - leadership details
+  - FAQs
+  - chatbot answers
+
+  Changes go through an approval workflow with Draft, In review and Ready stages.
+
+## Outstanding tasks, in priority order
+
+1. **Turn on CMS sign-in:**
+   - Create a GitHub OAuth App with the callback `https://labour-department-ghana.vercel.app/api/callback`.
+   - Add `GITHUB_CLIENT_ID` and `GITHUB_CLIENT_SECRET` to the Vercel project's environment variables, then redeploy.
+   - Invite officers to the repository with Write access.
+2. **Production branch:** CMS commits go to `claude/ghana-labour-website-chatbot-rndaol` (set in `static/admin/config.yml`). Either set that branch as the Production Branch in Vercel → Settings → Git, or merge it into `main` and change `backend.branch` to `main`.
+3. **Chief Labour Officer portrait:** upload the official photo in the CMS under Site content → Leadership. A branded placeholder shows until then.
+4. **Real photography:** the site uses photorealistic AI-generated images of fictional people, listed in `remote-assets.json`. Replace them with real, consented Department photos through the CMS or in `static/img/photos/`.
+5. **Social media handles:** add the official accounts in the CMS under Site content. Then connect `/rss.xml` to Meta Business Suite, Buffer or Zapier to auto-post new articles.
+6. **Analytics:** add a Google Tag Manager or GA4 snippet to `src/layout.html`.
+7. **Domain:** point `labourdepartment.gov.gh` at the Vercel project and update `siteUrl` in `content/settings.json`.
+8. **PRU sign-off:**
+   - Fact-check the four launch blog posts.
+   - Confirm the emergency numbers 191 and 18555 used in the chatbot's safety script.
+   - Register the chatbot's data processing with the Data Protection Commission (Act 843).
+   - Review `KNOWLEDGE_BASE.md`.
+
+## Content rules agreed with the client
+
+- Do not mention the National Labour Commission or Labour Compliance Officers anywhere.
+- About and Management shows only the Chief Labour Officer's image.
+- No em dashes or en dashes in visible text.
+- Never show an identifiable child in a child labour context.
+- Use official names on first mention: "Ghana Labour Department", "Ghana Labour Market Information System (GLMIS)" and "Public Employment Centre (PEC)".
+
+## Ready-to-paste first message for Cowork
+
+> I'm continuing work on the Ghana Labour Department website. The project folder is open; read HANDOFF.md and README.md first. The live site is https://labour-department-ghana.vercel.app, the code is in GitHub at AyigbeDollar/ocean-tribe-foundation (folder ghana-labour-department, branch claude/ghana-labour-website-chatbot-rndaol), and it deploys on Vercel as the project labour-department-ghana. Start with the outstanding tasks in HANDOFF.md, beginning with turning on CMS sign-in. Follow the content rules listed there and the Brand Guide v2.0.
