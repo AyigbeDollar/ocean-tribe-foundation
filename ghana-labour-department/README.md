@@ -10,25 +10,56 @@ The design follows the **Media, Communications & Digital Brand Guide v2.0**:
 
 The site has no framework and no npm dependencies, so any web team can take it over and host it anywhere.
 
+## Content manager (CMS) for officers
+
+Officers update the site in a web editor at **/admin**, built on Decap CMS. They don't need to touch any code. From there they can:
+- **News and guides:** write, schedule, edit and hide blog posts, with the brand guide checklist built into each field.
+- **Announcement bar:** switch on a site-wide notice, such as a job fair, a scam alert or office closure.
+- **Contacts, figures and social media:** edit phone numbers, emails, office hours and social media links. Changing the **minimum wage** here updates every page, FAQ and LD Assist answer that mentions it.
+- **Leadership:** change the Chief Labour Officer's name and profile, and upload the official portrait.
+- **FAQs:** add, edit and reorder questions. Google's structured data updates automatically.
+- **LD Assist answers:** edit the chatbot's approved answers, keywords and buttons.
+- **Photos:** upload images. They are stored in `static/img/uploads/`.
+
+**How publishing works:** each change goes through the guide's approval workflow, with columns for Draft, In review and Ready. An officer drafts, the PRU reviews, and an authorised officer presses **Publish**. Publishing commits the change to GitHub, and Vercel rebuilds the site in about a minute.
+
+### One-time setup (about 10 minutes)
+
+1. **Create a GitHub OAuth App** under GitHub → Settings → Developer settings → OAuth Apps → New:
+   - Homepage URL: `https://labour-department-ghana.vercel.app`
+   - Authorization callback URL: `https://labour-department-ghana.vercel.app/api/callback`
+2. **Add the app's credentials in Vercel:** in the project's environment variables, add `GITHUB_CLIENT_ID` and `GITHUB_CLIENT_SECRET`, then redeploy.
+3. **Give each officer access:** invite them as collaborators with **Write** access to the GitHub repository. Each officer signs in at `/admin` with their own GitHub account, so every change is attributed to a named officer (Brand Guide p.26).
+4. **Check the branch:** `static/admin/config.yml` → `backend.branch` must be the branch Vercel deploys to production. It is set to the current working branch. After merging into `main`, change it to `main`, or set this branch as the Production Branch in Vercel → Settings → Git.
+
+**Local editing without GitHub:** run `npx decap-server` and `npx serve dist`, then open `http://localhost:3000/admin`.
+
 ## Structure
 
 ```
-build.mjs             Static site builder (Node 18+). Run: node build.mjs
-site.config.json      Social media links, contacts, GLMIS URL, hashtag. Edit this first
+content/              Everything officers edit in the CMS
+  blog/*.md           Blog posts (Markdown with front matter)
+  settings.json       Contacts, social links, minimum wage figures
+  announcement.json   Site-wide notice bar
+  leadership.json     Chief Labour Officer details and portrait
+  faqs.json           FAQ page
+  chatbot.json        LD Assist knowledge base and AI fact sheet
+static/admin/         The CMS (Decap CMS 3.17.1, self-hosted) and its config.yml
+build.mjs             Static site builder. Run: npm install && node build.mjs
 src/layout.html       Shared page shell: SEO tags, header, footer, LD Assist widget
-src/pages/*.html      One file per page. A <!--meta {...}--> JSON header sets title, description and JSON-LD
-src/blog/*.html       Blog posts (see "Publishing a blog post")
-static/               Copied as-is: css/, js/, img/, fonts/, manifest
-  js/knowledge.js     LD Assist knowledge base (approved answers)
-  js/chatbot.js       LD Assist engine: works offline, upgrades to AI when /api/chat is available
-  img/og/             Branded 1200x630 share images, one per post
-api/chat.js           Optional AI endpoint (Vercel). Needs ANTHROPIC_API_KEY
-scripts/og-cards.mjs  Generates the branded share images (needs Playwright locally)
-scripts/export-kb.mjs Exports the chatbot knowledge base to KNOWLEDGE_BASE.md for review
-dist/                 Build output (generated, not committed)
+src/pages/*.html      Page layouts. {{tokens}} such as {{minWage}} come from content/
+static/               CSS, JS, images, fonts, copied as-is
+api/chat.js           Optional AI endpoint for LD Assist (needs ANTHROPIC_API_KEY)
+api/auth.js, callback.js  GitHub sign-in for the CMS (needs GITHUB_CLIENT_ID and SECRET)
+remote-assets.json    Photos downloaded at build time if not in static/img/photos/
+scripts/              og-cards.mjs (share images) and export-kb.mjs (knowledge base review file)
 ```
 
 ## Build and preview
+
+```bash
+npm install
+```
 
 ```bash
 node build.mjs
@@ -38,35 +69,9 @@ node build.mjs
 npx serve dist
 ```
 
-## Publishing a blog post
-
-Follow the Blogging guide (Brand Guide pages 24 to 27).
-
-1. Copy an existing file in `src/blog/` and rename it to the slug, for example `report-unpaid-wages.html`.
-2. Edit the meta block at the top:
-   - **title:** 50 to 65 characters, sentence case.
-   - **description:** 140 to 155 characters.
-   - **pillar:** Find work, Know your rights, Impact stories or Labour market insight.
-   - **tag:** one theme hashtag.
-   - **legal:** the legal basis box text, for rights posts.
-   - **faq:** three questions and answers.
-   - **social:** one caption each for Facebook, X, LinkedIn and WhatsApp.
-3. Write the body using H2 subheadings every 150 to 250 words, short paragraphs and numbered steps.
-4. Run `node scripts/og-cards.mjs` to create the branded share image, then commit and push. Vercel publishes automatically.
-5. Open `/social-kit` on the live site. Copy the ready-made captions, which already include tracked links and hashtags, into each platform.
-
-The build creates these automatically:
-- the blog index with topic filters
-- article and FAQ structured data for Google
-- "Last reviewed" dates
-- related posts
-- share buttons
-- the sitemap entry
-- the RSS and JSON feeds
-
 ## Connecting social media
 
-1. **Add the official accounts:** put the Facebook, X, LinkedIn, Instagram, TikTok, YouTube and WhatsApp Channel URLs in `site.config.json`. They then appear in the footer, the "Stay connected" sections and the WhatsApp follow card on every post. They are also added to the Department's structured data for Google.
+1. **Add the official accounts:** in the CMS, under Site content → Contacts, figures and social media, add the Facebook, X, LinkedIn, Instagram, TikTok, YouTube and WhatsApp Channel addresses. They then appear in the footer, the "Stay connected" sections and the WhatsApp follow card on every post. They are also added to the Department's structured data for Google.
 2. **Auto-post new articles:** connect `https://<domain>/rss.xml` to Meta Business Suite, Buffer, Zapier, Make or IFTTT. New posts are then shared to Facebook, X and LinkedIn automatically. Each item already carries the approved caption, hashtags and share image. `feed.json` also has a separate caption for each platform under `_social`.
 3. **Measure traffic:** every share and feed link carries UTM tags (`utm_source=whatsapp|facebook|x|linkedin|rss`, `utm_campaign=blog-<slug>`). Shares, follows, GLMIS clicks and chatbot questions and ratings are pushed to `window.dataLayer`. Add a Google Tag Manager or GA4 snippet to `src/layout.html` to see which platform sends the most visitors to the site and to GLMIS.
 
@@ -78,9 +83,9 @@ LD Assist follows the Chatbot guide (Brand Guide pages 20 to 23):
 - **Hand-over to a person:** typing "officer", or two missed answers in a row, gives the user a way to reach a Labour Officer.
 - **Ratings:** users can rate answers with thumbs up or down.
 
-- **Offline mode (default):** answers come only from the approved knowledge base in `static/js/knowledge.js`.
+- **Offline mode (default):** answers come only from the approved knowledge base in `content/chatbot.json`.
 - **AI mode:** set `ANTHROPIC_API_KEY` in Vercel. The prompt in `api/chat.js` applies the guide's voice and safety rules.
-- To review or update answers, edit `knowledge.js`, then run `node scripts/export-kb.mjs` to refresh `KNOWLEDGE_BASE.md` for PRU sign-off.
+- Officers edit answers in the CMS under **LD Assist answers**. To produce a review copy for PRU sign-off, run `node build.mjs && node scripts/export-kb.mjs`, which writes `KNOWLEDGE_BASE.md`.
 
 ## Deploy
 
@@ -90,11 +95,11 @@ LD Assist follows the Chatbot guide (Brand Guide pages 20 to 23):
 
 ## Before the official launch (PRU checklist)
 
-1. **Chief Labour Officer portrait:** save the official photo as `static/img/chief-labour-officer.jpg` (4:5, at least 800x1000).
+1. **Chief Labour Officer portrait:** upload it in the CMS under Site content → Leadership.
 2. **Logo:** replace `static/img/ld-logo-*.png` with exports from the PRU vector master pack. The current files were taken from the Brand Guide PDF, and the guide says to use only the master files.
-3. **Photography:** the supporting photos are AI-generated illustrations of fictional people. The guide asks for real, captioned photos taken with consent. Place real photos with the same names in `static/img/photos/`. Blog posts only show a photo once a real one is saved there.
-4. **Social handles:** add them to `site.config.json`.
+3. **Photography:** the supporting photos are photorealistic AI-generated images of fictional people, used so the site feels real and relatable from launch. Replace them over time with real Department photos taken with consent, either by uploading through the CMS or by saving files with the same names in `static/img/photos/`. The child labour page deliberately shows only a child's hands, never a face.
+4. **Social handles:** add them in the CMS under Site content.
 5. **Fact-check and sign-off:** the four launch blog posts follow the guide's voice and checklist, but they were drafted with AI help. A named officer must check every fact before publishing (Brand Guide p.26).
 6. **Emergency numbers:** confirm the police numbers 191 and 18555 used in the safety script (Brand Guide p.23).
 7. **Data protection:** register the chatbot's data processing with the Data Protection Commission (Act 843) and review `/privacy`.
-8. **Minimum wage:** update every January. Search for `21.77`.
+8. **Minimum wage:** update every January in the CMS under Site content → Contacts, figures and social media.

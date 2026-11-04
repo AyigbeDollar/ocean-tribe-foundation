@@ -37,11 +37,12 @@ h1{font-size:${"{size}"}px;font-weight:800;line-height:1.08;letter-spacing:-1.5p
 
 const esc = (s) => s.replace(/&/g, "&amp;").replace(/</g, "&lt;");
 const jobs = [{ out: "static/img/og-image.png", pill: "Ghana Labour Department", title: "Decent work for every Ghanaian.", bar: "Register free on GLMIS" }];
-const blogDir = join(root, "src/blog");
-for (const f of existsSync(blogDir) ? readdirSync(blogDir).filter((x) => x.endsWith(".html")) : []) {
-  const meta = JSON.parse(readFileSync(join(blogDir, f), "utf8").match(/^<!--meta\s*([\s\S]*?)-->/)[1]);
+const blogDir = join(root, "content/blog");
+const YAML = (await import("yaml")).default;
+for (const f of existsSync(blogDir) ? readdirSync(blogDir).filter((x) => x.endsWith(".md")) : []) {
+  const meta = YAML.parse(readFileSync(join(blogDir, f), "utf8").match(/^---\n([\s\S]*?)\n---/)[1]);
   const bar = meta.pillar === "Know your rights" ? "Questions? Call free 0800 600 300" : "Free help to find work";
-  jobs.push({ out: `static/img/og/${f.replace(/\.html$/, "")}.png`, pill: meta.pillar, title: meta.title, bar });
+  jobs.push({ out: `static/img/og/${f.replace(/\.md$/, "")}.png`, pill: meta.pillar, title: meta.title, bar });
 }
 
 mkdirSync(join(root, "static/img/og"), { recursive: true });

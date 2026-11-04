@@ -2,7 +2,7 @@
 {
   "title": "Ghana Labour Department | Jobs, Workers' Rights & Employer Services",
   "shareText": "Free help to find work and know your rights, from the Ghana Labour Department.",
-  "description": "Find jobs on GLMIS, know your rights under the Labour Act 2003 (Act 651), check the 2026 minimum wage, file a labour complaint and get free employment services in Ghana.",
+  "description": "Find jobs on GLMIS, know your rights under the Labour Act 2003 (Act 651), check the {{minWageYear}} minimum wage, file a labour complaint and get free employment services in Ghana.",
   "bodyClass": "home",
   "head": "<link rel=\"modulepreload\" href=\"/js/vendor/three.module.min.js\">",
   "jsonld": [
@@ -32,7 +32,7 @@
         <button class="btn btn-primary btn-sm" type="submit">Ask</button>
       </form>
       <ul>
-        <li><a href="#" data-chat-ask="What is the minimum wage in 2026?">Minimum wage 2026 <svg width="16" height="16" aria-hidden="true"><use href="/img/icons.svg#arrow"/></svg></a></li>
+        <li><a href="#" data-chat-ask="What is the minimum wage in {{minWageYear}}?">Minimum wage 2026 <svg width="16" height="16" aria-hidden="true"><use href="/img/icons.svg#arrow"/></svg></a></li>
         <li><a href="#" data-chat-ask="My employer dismissed me without notice. What can I do?">I was dismissed unfairly <svg width="16" height="16" aria-hidden="true"><use href="/img/icons.svg#arrow"/></svg></a></li>
         <li><a href="#" data-chat-ask="How do I register on GLMIS as a job seeker?">Register as a job seeker <svg width="16" height="16" aria-hidden="true"><use href="/img/icons.svg#arrow"/></svg></a></li>
       </ul>
@@ -43,7 +43,7 @@
 <section class="section-tight" aria-label="Key facts">
   <div class="container">
     <div class="stats reveal">
-      <div class="stat"><strong>GH&#162;21.77</strong><span>National daily minimum wage, 2026</span></div>
+      <div class="stat"><strong>GH&#162;{{minWage}}</strong><span>National daily minimum wage, {{minWageYear}}</span></div>
       <div class="stat"><strong>16</strong><span>Regional Public Employment Centres</span></div>
       <div class="stat"><strong>15 days</strong><span>Minimum paid annual leave</span></div>
       <div class="stat"><strong>Free</strong><span>Job matching and counselling</span></div>
@@ -77,17 +77,19 @@
         <p>Registration protects you and the people you place. See the rules and avoid fake recruiters.</p>
         <span class="go">Agency registration <svg width="16" height="16" aria-hidden="true"><use href="/img/icons.svg#arrow"/></svg></span>
       </a>
-      <a class="tile tile-sm tile-red reveal" style="--i:3" href="/child-labour" data-tilt="4">
+      <a class="tile tile-sm tile-photo reveal" style="--i:3" href="/child-labour" data-tilt="4">
+        <img class="bg" src="/img/photos/child-hands.png" alt="" width="1200" height="900" loading="lazy">
         <span class="tile-icon"><svg width="26" height="26" aria-hidden="true"><use href="/img/icons.svg#child"/></svg></span>
         <h3>End child labour</h3>
-        <p>Know the age rules and how to report a case.</p>
+        <p>Our Child Labour Unit leads the fight. Know the age rules and how to report a case.</p>
       </a>
       <a class="tile tile-sm tile-green reveal" style="--i:4" href="/services#compensation" data-tilt="4">
         <span class="tile-icon"><svg width="26" height="26" aria-hidden="true"><use href="/img/icons.svg#medical"/></svg></span>
         <h3>Workmen's compensation</h3>
         <p>Injured at work? Learn how claims are handled.</p>
       </a>
-      <a class="tile tile-sm reveal" style="--i:5" href="/employers" data-tilt="4">
+      <a class="tile tile-sm tile-photo reveal" style="--i:5" href="/employers" data-tilt="4">
+        <img class="bg" src="/img/photos/labour-inspection.png" alt="" width="1200" height="900" loading="lazy">
         <span class="tile-icon"><svg width="26" height="26" aria-hidden="true"><use href="/img/icons.svg#building"/></svg></span>
         <h3>Employer compliance</h3>
         <p>Inspections, safety and your duties under Act 651.</p>
@@ -138,13 +140,13 @@
   <div class="container leader">
     <figure class="leader-photo reveal" style="margin:0">
       <div class="frame" data-tilt="6">
-        <img src="/img/chief-labour-officer.jpg" alt="Braimah Ibrahim Dawuda, Chief Labour Officer of Ghana" width="800" height="1000" loading="lazy" onerror="this.onerror=null;this.src='/img/chief-labour-officer-placeholder.svg'">
+        <img src="{{cloPhoto}}" alt="{{cloPhotoAlt}}" width="800" height="1000" loading="lazy" onerror="this.onerror=null;this.src='/img/chief-labour-officer-placeholder.svg'">
       </div>
     </figure>
     <div class="reveal" style="--i:1">
       <h2 id="leader-title">Led by the Chief Labour Officer</h2>
-      <p class="lead">The Department's district labour offices and Public Employment Centres exist to serve you, whether you are looking for work or need help at work. Our employment services are free.</p>
-      <p><strong>Braimah Ibrahim Dawuda</strong><br><span class="role">Chief Labour Officer, Ghana Labour Department</span></p>
+      <p class="lead">{{cloIntro}}</p>
+      <p><strong>{{cloName}}</strong><br><span class="role">{{cloTitle}}, Ghana Labour Department</span></p>
       <a class="btn btn-ghost" href="/about#management">Meet our leadership</a>
     </div>
   </div>
@@ -167,7 +169,7 @@
       <div class="card reveal" style="--i:1">
         <h3><svg width="24" height="24" aria-hidden="true"><use href="/img/icons.svg#money"/></svg>Pay and dismissal</h3>
         <ul>
-          <li>No one may be paid below the national daily minimum wage of GH&#162;21.77 (2026).</li>
+          <li>No one may be paid below the national daily minimum wage of GH&#162;{{minWage}} ({{minWageYear}}).</li>
           <li>Dismissal needs proper notice or pay in lieu, and a fair reason.</li>
           <li>Dismissal for union membership or pregnancy is unfair under the Labour Act.</li>
         </ul>

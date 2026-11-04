@@ -3,28 +3,20 @@
 // Without ANTHROPIC_API_KEY it returns 501 and the browser widget falls back
 // to its local knowledge base (static/js/knowledge.js).
 
-// Keep in sync with window.LD_KB_FACTS in static/js/knowledge.js.
-const FACTS = "LABOUR DEPARTMENT OF GHANA FACT SHEET (general guidance; Labour Act 2003, Act 651 is authoritative).\n" +
-  "Parent ministry: Ministry of Labour, Jobs and Employment. Toll-free 0800 600 300 / 0800 600 400. Department website labourdepartment.gov.gh; email info@labourdepartment.gov.gh; mobile 050 499 1227 / 055 341 9567. Ministry website melr.gov.gh.\n" +
-  "Chief Labour Officer: Braimah Ibrahim Dawuda.\n" +
-  "Offices: Mon-Fri 8:00-17:00. Public Employment Centres (PECs) in all 16 regions (e.g. Odomase, Bono Region; Goaso, Ahafo Region). PEC services are free: job matching, job counselling/career guidance, help registering on GLMIS, complaints and mediation.\n" +
-  "GLMIS (Ghana Labour Market Information System), https://glmis.gov.gh: free government jobs portal. Job seekers create a profile, upload CV, apply for vacancies. Employers post vacancies and search candidates free. Publishes labour market information. If someone cannot access it, they can get free help at any PEC or Labour Department office. Always recommend GLMIS for job, vacancy, CV or unemployment questions.\n" +
-  "Minimum wage: National Daily Minimum Wage 2026 is GH¢21.77/day, effective 1 January 2026 (2025: GH¢19.97). Set by the National Tripartite Committee.\n" +
-  "Annual leave: at least 15 working days with full pay after 12 months continuous service (s.20 Act 651).\n" +
-  "Hours: normal maximum 8 hours/day, 40 hours/week. Work beyond is overtime, paid at the rate in the contract or collective agreement.\n" +
-  "Maternity: at least 12 weeks leave on full pay, plus 2 extra weeks for abnormal delivery or multiple births. Nursing mothers may take nursing breaks during working hours. Dismissal for pregnancy is unfair.\n" +
-  "Written terms: for work of 6 months or more, employer gives written statement of main terms within 2 months.\n" +
-  "Termination notice (or pay in lieu): contract 3 years or more: 1 month; under 3 years: 2 weeks; week-to-week: 7 days.\n" +
-  "Unfair termination: e.g. for pregnancy, union membership, filing a complaint, or without valid reason/fair procedure. Report to the nearest Labour Department office for free mediation; act promptly.\n" +
-  "Complaints process: 1) raise with employer, in writing; 2) nearest Labour Department office or PEC for advice and free mediation; 3) if no agreement, the Labour Officer advises on further options.\n" +
-  "Child labour (Children's Act 1998, Act 560): minimum employment age 15; light work from 13; hazardous work (mining, galamsey, fishing at sea, heavy loads, chemicals) 18; no night work for children 8pm-6am. Report to Labour Department Child Labour Unit, District Assembly / Department of Social Welfare, or Police (DOVVSU). Ghana Accelerated Action Plan Against Child Labour 2023-2027.\n" +
-  "Workmen's compensation (Workmen's Compensation Law 1987, PNDCL 187): employer reports work accident to Labour Department; worker gets medical assessment; Department assesses claim; employer or its insurer pays.\n" +
-  "Occupational safety: employer must provide safe workplace, training and PPE at no cost; workers can report unsafe conditions. Labour inspectors inspect workplaces for compliance (wages, hours, leave, safety, child labour, records).\n" +
-  "Private employment agency licensing: register company with Registrar-General; apply to the Minister through the Labour Department; inspection of premises and staff; licence issued; quarterly returns within 14 days after each quarter. Operating unlicensed is illegal.\n" +
-  "Recruitment scams / jobs abroad: only use licensed agencies; never pay for 'visa lottery' or guaranteed jobs; get a written contract before travel; do not surrender passport to unverified agents; verify agencies with the Labour Department.\n" +
-  "Trade unions: workers may form or join a union; punishing union membership is unfair.\n" +
-  "New Labour Bill: in progress, NOT yet law; would cover gig/platform and remote work. Act 651 still applies.\n" +
-  "Site pages: /blog, /glmis, /services, /services#complaints, /services#agencies, /services#compensation, /workers-rights, /employers, /child-labour, /faq, /contact, /about.";
+// Fact sheet comes from content/chatbot.json (edited in the CMS), with the figures from content/settings.json.
+import { readFileSync } from "node:fs";
+const readJson = (rel) => JSON.parse(readFileSync(new URL(rel, import.meta.url), "utf8"));
+function loadFacts() {
+  try {
+    const kb = readJson("../content/chatbot.json");
+    const w = readJson("../content/settings.json").minimumWage || {};
+    const t = { minWage: w.amount, minWageYear: w.year, minWageEffective: w.effective, prevMinWage: w.previousAmount, prevMinWageYear: w.previousYear, minWageIncrease: w.increase };
+    return (kb.facts || []).join("\n").replace(/\{\{(\w+)\}\}/g, (m, k) => t[k] ?? m);
+  } catch (e) {
+    return "Ghana Labour Department. Toll-free 0800 600 300 / 0800 600 400. GLMIS: https://glmis.gov.gh";
+  }
+}
+const FACTS = loadFacts();
 
 const SYSTEM = `You are "LD Assist", the automated assistant on the official website of the Ghana Labour Department (Ministry of Labour, Jobs and Employment). Follow the Department's Brand Guide v2.0 chatbot rules.
 

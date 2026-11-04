@@ -1,0 +1,72 @@
+{
+  "groups": [
+    {
+      "title": "Jobs and GLMIS",
+      "items": [
+        {
+          "q": "How do I find a job through the Labour Department?",
+          "a": "Register free on the Ghana Labour Market Information System at [glmis.gov.gh](https://glmis.gov.gh), or visit a Public Employment Centre for help registering and for career counselling."
+        },
+        {
+          "q": "Do I pay to register or get a job?",
+          "a": "No. Our employment services and GLMIS are free. Anyone asking for money to \"secure\" you a job through the Labour Department is not acting for us."
+        },
+        {
+          "q": "Where is my nearest Public Employment Centre?",
+          "a": "There is a regional Public Employment Centre in each of Ghana's 16 regions, usually in or near the regional capital. See our [contact page](/contact)."
+        }
+      ]
+    },
+    {
+      "title": "Pay, hours and leave",
+      "items": [
+        {
+          "q": "What is Ghana's minimum wage in {{minWageYear}}?",
+          "a": "GH¢{{minWage}} per day from {{minWageEffective}}, a {{minWageIncrease}} increase on the {{prevMinWageYear}} rate of GH¢{{prevMinWage}}."
+        },
+        {
+          "q": "How many hours should I work?",
+          "a": "Normal working hours are 8 hours a day and 40 hours a week. Extra hours are overtime and should be paid at an agreed rate."
+        },
+        {
+          "q": "How much annual leave do I get?",
+          "a": "At least 15 working days on full pay after 12 months of continuous service. Public holidays are not counted as leave days."
+        },
+        {
+          "q": "How long is maternity leave?",
+          "a": "At least 12 weeks on full pay, plus 2 additional weeks for abnormal or multiple births. Nursing mothers are entitled to paid breaks to breastfeed."
+        }
+      ]
+    },
+    {
+      "title": "Dismissal and disputes",
+      "items": [
+        {
+          "q": "Can my employer dismiss me without notice?",
+          "a": "Your employer must give notice (1 month for contracts of 3 years or more, 2 weeks for shorter contracts, 7 days for week-to-week) or pay in lieu, and must have a fair reason. Visit the nearest Labour Department office for free mediation."
+        },
+        {
+          "q": "My salary has not been paid. What should I do?",
+          "a": "Raise it in writing with your employer, keep your payslips and contract, then file a complaint at the nearest Labour Department office. See [how complaints work](/services#complaints)."
+        }
+      ]
+    },
+    {
+      "title": "Agencies, children and injuries",
+      "items": [
+        {
+          "q": "How do I know if a recruitment agency is genuine?",
+          "a": "Ask to see the agency's Labour Department licence and confirm it at your nearest Labour Department office before paying any money. Be careful of offers of guaranteed jobs or visas abroad."
+        },
+        {
+          "q": "What is the minimum age for work?",
+          "a": "15 years for employment, 13 years for light work, and 18 years for hazardous work or night work. See our [child labour page](/child-labour)."
+        },
+        {
+          "q": "I was injured at work. What should I do?",
+          "a": "Get medical care, inform your employer and make sure the accident is reported to the Labour Department, which administers workmen's compensation. See [compensation](/services#compensation)."
+        }
+      ]
+    }
+  ]
+}

@@ -2,9 +2,10 @@
   "$schema": "https://openapi.vercel.sh/vercel.json",
   "buildCommand": "node build.mjs",
   "outputDirectory": "dist",
-  "installCommand": "",
+  "installCommand": "npm ci",
   "framework": null,
   "cleanUrls": true,
+  "functions": { "api/*.js": { "includeFiles": "content/**" } },
   "trailingSlash": false,
   "images": {
     "sizes": [640, 1200, 1920],

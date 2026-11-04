@@ -1,15 +1,30 @@
-// Static site builder for the Ghana Labour Department website. Zero dependencies (Node 18+).
-//   node build.mjs
-// - src/pages/*.html  -> dist/<page>.html      (one shared layout, SEO tags, JSON-LD)
-// - src/blog/*.html   -> dist/blog/<slug>.html  (+ /blog index, rss.xml, feed.json, social-kit)
-// - static/           -> dist/                  (copied as-is)
-// - remote-assets.json photos fetched at build time when not stored locally
+// Static site builder for the Ghana Labour Department website (Node 18+).
+//   npm install && node build.mjs
+// Officers edit everything under content/ through the CMS at /admin (Decap CMS):
+// - content/blog/*.md        -> dist/blog/<slug>.html (+ /blog index, rss.xml, feed.json, social-kit)
+// - content/settings.json    -> contacts, social links, minimum wage figures used across pages
+// - content/announcement.json-> optional site-wide notice bar
+// - content/leadership.json  -> Chief Labour Officer name, photo and profile
+// - content/faqs.json        -> the FAQ page and its structured data
+// - content/chatbot.json     -> LD Assist answers (dist/js/knowledge.js) and the AI fact sheet
+// - src/pages/*.html         -> page layouts; src/layout.html is the shared shell
+// - static/                  -> copied as-is; remote-assets.json photos fetched when not stored locally
 import { readFileSync, writeFileSync, readdirSync, mkdirSync, cpSync, rmSync, existsSync } from "node:fs";
 import { join, dirname } from "node:path";
 import { fileURLToPath } from "node:url";
+import { marked } from "marked";
+import YAML from "yaml";
 
 const root = dirname(fileURLToPath(import.meta.url));
-const config = JSON.parse(readFileSync(join(root, "site.config.json"), "utf8"));
+const readJson = (rel) => JSON.parse(readFileSync(join(root, rel), "utf8"));
+const config = readJson("content/settings.json");
+const leadership = readJson("content/leadership.json");
+const announcement = readJson("content/announcement.json");
+const faqs = readJson("content/faqs.json");
+const chatbot = readJson("content/chatbot.json");
+marked.setOptions({ gfm: true, breaks: false });
+const md = (s = "") => marked.parse(String(s));
+const mdInline = (s = "") => marked.parseInline(String(s));
 const SITE = (process.env.SITE_URL || config.siteUrl).replace(/\/$/, "");
 const out = join(root, "dist");
 const layout = readFileSync(join(root, "src/layout.html"), "utf8");
@@ -28,6 +43,17 @@ const readMeta = (raw, file) => {
   if (!m) throw new Error(`Missing <!--meta {...}--> header in ${file}`);
   return { meta: JSON.parse(m[1]), body: raw.slice(m[0].length).trim() };
 };
+const REMOTE_ASSETS = new Set(existsSync(join(root, "remote-assets.json")) ? Object.keys(readJson("remote-assets.json")) : []);
+const W = config.minimumWage || {};
+const TOKENS = {
+  "{{minWage}}": W.amount, "{{minWageYear}}": W.year, "{{minWageEffective}}": W.effective,
+  "{{prevMinWage}}": W.previousAmount, "{{prevMinWageYear}}": W.previousYear, "{{minWageIncrease}}": W.increase,
+  "{{officeHours}}": config.officeHours, "{{prEmail}}": config.prEmail,
+  "{{cloName}}": esc(leadership.name), "{{cloTitle}}": esc(leadership.title),
+  "{{cloPhoto}}": esc(leadership.photo || "/img/chief-labour-officer-placeholder.svg"), "{{cloPhotoAlt}}": esc(leadership.photoAlt || leadership.name),
+  "{{cloIntro}}": esc(leadership.homeIntro), "{{cloBio}}": md(leadership.bio),
+};
+const applyTokens = (s) => Object.entries(TOKENS).reduce((acc, [k, v]) => acc.replaceAll(k, v ?? ""), s);
 const utm = (url, source, campaign) => `${url}${url.includes("?") ? "&" : "?"}utm_source=${source}&utm_medium=social&utm_campaign=${campaign}`;
 
 // ---------- Social profiles (only configured ones are shown) ----------
@@ -63,20 +89,27 @@ function shareBar(url, text, campaign) {
 }
 
 // ---------- Blog posts ----------
-const blogDir = join(root, "src/blog");
-const posts = (existsSync(blogDir) ? readdirSync(blogDir).filter((f) => f.endsWith(".html")) : [])
+const blogDir = join(root, "content/blog");
+const posts = (existsSync(blogDir) ? readdirSync(blogDir).filter((f) => f.endsWith(".md")) : [])
   .map((file) => {
-    const { meta, body } = readMeta(readFileSync(join(blogDir, file), "utf8"), file);
-    const slug = file.replace(/\.html$/, "");
+    const raw = readFileSync(join(blogDir, file), "utf8");
+    const m = raw.match(/^---\n([\s\S]*?)\n---\n?/);
+    if (!m) throw new Error(`Missing front matter in content/blog/${file}`);
+    const meta = YAML.parse(m[1]) || {};
+    const slug = file.replace(/\.md$/, "");
+    const body = applyTokens(md(raw.slice(m[0].length)));
     const words = body.replace(/<[^>]+>/g, " ").split(/\s+/).filter(Boolean).length;
-    const og = existsSync(join(root, "static/img/og", `${slug}.png`)) ? `/img/og/${slug}.png` : "/img/og-image.png";
-    return { ...meta, slug, body, url: `${SITE}/blog/${slug}`, path: `/blog/${slug}`, mins: Math.max(2, Math.round(words / 200)), words, og };
+    const date = String(meta.date || today).slice(0, 10);
+    const reviewed = meta.reviewed ? String(meta.reviewed).slice(0, 10) : "";
+    const og = existsSync(join(root, "static/img/og", `${slug}.png`)) ? `/img/og/${slug}.png` : meta.shareImage || meta.image || "/img/og-image.png";
+    return { ...meta, date, reviewed, faq: meta.faq || [], related: meta.related || [], social: meta.social || {}, slug, body, url: `${SITE}/blog/${slug}`, path: `/blog/${slug}`, mins: Math.max(2, Math.round(words / 200)), words, og };
   })
+  .filter((p) => !p.draft && p.date <= today)
   .sort((a, b) => (a.date < b.date ? 1 : a.date > b.date ? -1 : a.title.localeCompare(b.title)));
 const bySlug = Object.fromEntries(posts.map((p) => [p.slug, p]));
 
 const postCard = (p, featured = false) => `<a class="post-card reveal${featured ? " is-featured" : ""}" href="${p.path}" data-pillar="${esc(p.pillar)}">
-  <div class="thumb"><img src="${p.og}" alt="" width="1200" height="630" loading="lazy"></div>
+  <div class="thumb"><img src="${p.image || p.og}" alt="" width="1200" height="630" loading="lazy"></div>
   <div class="body">
     <span class="post-meta">${esc(p.pillar)} &middot; ${p.mins} min read</span>
     <h3>${esc(p.title)}</h3>
@@ -86,6 +119,21 @@ const postCard = (p, featured = false) => `<a class="post-card reveal${featured 
 const latestPosts = posts.length
   ? `<div class="post-grid">${posts.slice(0, 3).map((p) => postCard(p)).join("\n")}</div>`
   : "";
+
+// ---------- Announcement bar (content/announcement.json) ----------
+const annLive = announcement.enabled && announcement.text && (!announcement.expires || String(announcement.expires).slice(0, 10) >= today);
+const announcementBar = annLive
+  ? `<div class="announce announce-${esc(announcement.style || "info")}" role="status"><div class="container"><p>${mdInline(announcement.text)}${announcement.linkUrl ? ` <a href="${esc(announcement.linkUrl)}">${esc(announcement.linkLabel || "Read more")}</a>` : ""}</p></div></div>`
+  : "";
+
+// ---------- FAQ page (content/faqs.json) ----------
+const faqGroups = (faqs.groups || []).map((g, gi) => `<div class="faq-group reveal">
+      <h2${gi === 0 ? ' style="margin-top:0"' : ""}>${esc(g.title)}</h2>
+      <div class="faq">
+${(g.items || []).map((it) => `        <details><summary>${esc(applyTokens(it.q))}</summary><div class="faq-a">${applyTokens(mdInline(it.a))}</div></details>`).join("\n")}
+      </div>
+    </div>`).join("\n    ");
+const faqLd = { "@context": "https://schema.org", "@type": "FAQPage", mainEntity: (faqs.groups || []).flatMap((g) => g.items || []).map((it) => ({ "@type": "Question", name: applyTokens(it.q), acceptedAnswer: { "@type": "Answer", text: applyTokens(it.a).replace(/\[([^\]]+)\]\([^)]+\)/g, "$1").replace(/[*_`]/g, "") } })) };
 
 // ---------- Page renderer ----------
 const NAV = [
@@ -110,7 +158,7 @@ function render({ meta, body, path, outFile }) {
       })}</script>`
     : "";
   const ld = (meta.jsonld || []).map((o) => `<script type="application/ld+json">${JSON.stringify(o)}</script>`).join("\n");
-  const html = layout
+  const html = applyTokens(layout
     .replaceAll("{{title}}", esc(meta.title))
     .replaceAll("{{description}}", esc(meta.description))
     .replaceAll("{{canonical}}", canonical)
@@ -126,11 +174,13 @@ function render({ meta, body, path, outFile }) {
     .replace("{{nav}}", nav)
     .replace("{{jsonld}}", crumbs + "\n" + ld)
     .replace("{{head}}", meta.head || "")
-    .replace("{{content}}", body
+    .replace("{{content}}", applyTokens(body)
       .replace("<!--latest-posts-->", latestPosts)
       .replace("<!--follow-links-->", followLinks)
-      .replace("<!--share-site-->", shareBar(SITE + path, meta.shareText || meta.title, "site" + (path === "/" ? "-home" : path.replace(/\//g, "-")))))
-    .replaceAll("{{year}}", String(new Date().getFullYear()));
+      .replace("<!--share-site-->", shareBar(SITE + path, meta.shareText || meta.title, "site" + (path === "/" ? "-home" : path.replace(/\//g, "-"))))
+      .replace("<!--faq-groups-->", faqGroups))
+    .replaceAll("{{year}}", String(new Date().getFullYear()))
+    .replace("<!--announcement-->", announcementBar));
   mkdirSync(dirname(join(out, outFile)), { recursive: true });
   writeFileSync(join(out, outFile), html);
   if (!noindex) urls.push({ loc: canonical, lastmod: meta.reviewed || meta.date || today, priority: meta.priority || (path === "/" ? "1.0" : "0.8") });
@@ -140,6 +190,7 @@ function render({ meta, body, path, outFile }) {
 for (const file of readdirSync(join(root, "src/pages")).filter((f) => f.endsWith(".html"))) {
   const { meta, body } = readMeta(readFileSync(join(root, "src/pages", file), "utf8"), file);
   const slug = file === "index.html" ? "" : file.replace(/\.html$/, "");
+  if (body.includes("<!--faq-groups-->")) meta.jsonld = [...(meta.jsonld || []), faqLd];
   render({ meta, body, path: slug ? `/${slug}` : "/", outFile: file });
 }
 
@@ -236,7 +287,7 @@ for (const p of posts) {
     <article>
       <p class="standfirst">${esc(p.standfirst)}</p>
       <p class="byline">By ${esc(p.author)} &middot; ${fmtDate(p.date)}${p.reviewed ? ` &middot; Last reviewed ${fmtDate(p.reviewed)}` : ""}</p>
-      ${p.image && existsSync(join(root, "static", p.image)) ? `<figure class="hero-img"><img src="${p.image}" alt="${esc(p.imageAlt || "")}" width="1200" height="630"></figure>` : ""}
+      ${p.image && (existsSync(join(root, "static", p.image)) || REMOTE_ASSETS.has(p.image.replace(/^\//, ""))) ? `<figure class="hero-img"><img src="${p.image}" alt="${esc(p.imageAlt || "")}" width="1200" height="630"></figure>` : ""}
       <div class="article-body prose">
 ${p.body}
       </div>
@@ -329,13 +380,26 @@ ${posts.map((p) => `<article class="card" style="display:grid;gap:18px">
   });
 }
 
+// ---------- LD Assist knowledge base (content/chatbot.json -> /js/knowledge.js) ----------
+const kbLink = (l) => ({ href: l.url, label: l.label, ...(l.glmis || /glmis\.gov\.gh/.test(l.url) ? { glmis: true } : {}) });
+const kb = (chatbot.intents || []).filter((i) => i.id && i.answer).map((i) => ({
+  id: i.id, q: i.questions || [], k: (i.keywords || []).map((x) => String(x).toLowerCase()),
+  a: applyTokens(md(i.answer)).trim(), links: (i.links || []).map(kbLink),
+}));
+mkdirSync(join(out, "js"), { recursive: true });
+writeFileSync(join(out, "js/knowledge.js"), `/* Generated by build.mjs from content/chatbot.json. Edit answers in the CMS (/admin), not here. */
+window.LD_KB = ${JSON.stringify(kb)};
+window.LD_KB_FALLBACK = ${JSON.stringify({ id: "fallback", a: applyTokens(md(chatbot.fallback?.answer || "")).trim(), links: (chatbot.fallback?.links || []).map(kbLink) })};
+window.LD_KB_FACTS = ${JSON.stringify(applyTokens((chatbot.facts || []).join("\n")))};
+`);
+
 // ---------- Sitemap and robots ----------
 writeFileSync(join(out, "sitemap.xml"), `<?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 ${urls.map((u) => `  <url><loc>${u.loc}</loc><lastmod>${u.lastmod}</lastmod><priority>${u.priority}</priority></url>`).join("\n")}
 </urlset>
 `);
-writeFileSync(join(out, "robots.txt"), `User-agent: *\nAllow: /\nDisallow: /social-kit\n\nSitemap: ${SITE}/sitemap.xml\n`);
+writeFileSync(join(out, "robots.txt"), `User-agent: *\nAllow: /\nDisallow: /social-kit\nDisallow: /admin\n\nSitemap: ${SITE}/sitemap.xml\n`);
 
 // ---------- Remote photography (static/img/photos wins if present) ----------
 const assetsFile = join(root, "remote-assets.json");

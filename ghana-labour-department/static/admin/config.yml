@@ -1,0 +1,217 @@
+# Decap CMS configuration for the Ghana Labour Department website.
+# Officers sign in at /admin with a GitHub account that has write access to the repository.
+# Every save is a Git commit; Vercel rebuilds and publishes the site automatically.
+# Editorial workflow = Brand Guide p.15 publishing workflow: Draft -> In review -> Ready -> Publish.
+
+backend:
+  name: github
+  repo: AyigbeDollar/ocean-tribe-foundation
+  branch: claude/ghana-labour-website-chatbot-rndaol   # change to the Vercel production branch (e.g. main) after merging
+  base_url: https://labour-department-ghana.vercel.app  # where /api/auth and /api/callback run
+  auth_endpoint: api/auth
+  commit_messages:
+    create: "CMS: create {{collection}} \"{{slug}}\""
+    update: "CMS: update {{collection}} \"{{slug}}\""
+    delete: "CMS: delete {{collection}} \"{{slug}}\""
+    uploadMedia: "CMS: upload \"{{path}}\""
+    deleteMedia: "CMS: delete \"{{path}}\""
+
+publish_mode: editorial_workflow
+local_backend: true            # for local editing: run `npx decap-server` next to `npx serve dist`
+
+site_url: https://labour-department-ghana.vercel.app
+display_url: https://labour-department-ghana.vercel.app
+logo_url: /img/ld-logo-320.png
+locale: en
+
+media_folder: ghana-labour-department/static/img/uploads
+public_folder: /img/uploads
+
+collections:
+  # ------------------------------------------------------------------ Blog
+  - name: blog
+    label: News and guides
+    label_singular: Post
+    description: "Plain-language posts for the public (Blogging guide, Brand Guide pages 24 to 27). At least two a month, one of them 'Know your rights'."
+    folder: ghana-labour-department/content/blog
+    extension: md
+    format: frontmatter
+    create: true
+    slug: "{{slug}}"
+    identifier_field: title
+    summary: "{{title}} | {{pillar}} | {{date}}"
+    sortable_fields: [date, title, pillar]
+    view_filters:
+      - { label: "Find work", field: pillar, pattern: "Find work" }
+      - { label: "Know your rights", field: pillar, pattern: "Know your rights" }
+      - { label: "Impact stories", field: pillar, pattern: "Impact stories" }
+      - { label: "Labour market insight", field: pillar, pattern: "Labour market insight" }
+      - { label: "Hidden drafts", field: draft, pattern: true }
+    preview_path: "blog/{{slug}}"
+    fields:
+      - { label: "Headline", name: title, widget: string, hint: "50 to 65 characters, sentence case, with the reader's search words. Example: How to report unpaid wages in Ghana", pattern: ["^.{30,70}$", "Aim for 50 to 65 characters"] }
+      - { label: "Standfirst", name: standfirst, widget: text, hint: "One or two sentences: who it is for and what they will learn." }
+      - { label: "Topic (pillar)", name: pillar, widget: select, options: ["Find work", "Know your rights", "Impact stories", "Labour market insight"] }
+      - { label: "Theme hashtag", name: tag, widget: select, options: ["#JobsGhana", "#GLMIS", "#KnowYourRights", "#DecentWork", "#EndChildLabour"], hint: "#GhanaLabourDepartment is added automatically." }
+      - { label: "Publish date", name: date, widget: datetime, format: "YYYY-MM-DD", date_format: "D MMMM YYYY", time_format: false, picker_utc: true, hint: "Posts with a future date stay hidden until that day (after the next site update)." }
+      - { label: "Last reviewed", name: reviewed, widget: datetime, format: "YYYY-MM-DD", date_format: "D MMMM YYYY", time_format: false, picker_utc: true, required: false, hint: "Required for 'Know your rights' posts. Review every six months." }
+      - { label: "Byline", name: author, widget: string, default: "Public Relations Unit" }
+      - { label: "Body", name: body, widget: markdown, buttons: [bold, italic, link, heading-two, heading-three, bulleted-list, numbered-list, quote], editor_components: [image], hint: "Subheading every 150 to 250 words. Short paragraphs. Numbered steps for any process. Use a Quote block for a 'Remember:' callout. Link to GLMIS and the PEC directory (/contact)." }
+      - { label: "Legal basis box", name: legal, widget: string, required: false, hint: "For rights posts: the Act's full title, number and section, e.g. Labour Act, 2003 (Act 651), section 20." }
+      - label: "FAQ block"
+        name: faq
+        widget: list
+        required: false
+        hint: "Two or three questions people actually search. These also appear in Google results."
+        fields:
+          - { label: Question, name: q, widget: string }
+          - { label: Answer, name: a, widget: text }
+      - { label: "Real photo (optional)", name: image, widget: image, required: false, hint: "Real, captioned photo with written consent. Never an identifiable child in a child labour context. Under 500 KB." }
+      - { label: "Photo alt text", name: imageAlt, widget: string, required: false }
+      - { label: "Share image 1200x630 (optional)", name: shareImage, widget: image, required: false, hint: "Shown when the post is shared on social media. Leave empty to use the standard branded card." }
+      - label: "Related posts"
+        name: related
+        widget: relation
+        collection: blog
+        value_field: "{{slug}}"
+        search_fields: [title]
+        display_fields: [title]
+        multiple: true
+        required: false
+      - label: "Social captions"
+        name: social
+        widget: object
+        collapsed: true
+        hint: "Ready-to-post captions shown in the Social media kit (/social-kit). Tracked links and hashtags are added automatically."
+        fields:
+          - { label: Facebook, name: facebook, widget: text, required: false }
+          - { label: "X (max 200 characters)", name: x, widget: text, required: false, pattern: ["^.{0,200}$", "Keep X captions to 200 characters"] }
+          - { label: LinkedIn, name: linkedin, widget: text, required: false }
+          - { label: "WhatsApp Channel", name: whatsapp, widget: text, required: false }
+      - { label: "Meta description", name: description, widget: text, hint: "140 to 155 characters for Google results.", pattern: ["^.{100,170}$", "Aim for 140 to 155 characters"] }
+      - { label: "Hide from site", name: draft, widget: boolean, default: false, required: false }
+
+  # ------------------------------------------------------------------ Site content
+  - name: site
+    label: Site content
+    description: "Figures, contacts, the announcement bar, leadership and FAQs used across the website."
+    editor: { preview: false }
+    files:
+      - name: announcement
+        label: Announcement bar
+        file: ghana-labour-department/content/announcement.json
+        fields:
+          - { label: "Show the bar", name: enabled, widget: boolean, default: false }
+          - { label: Style, name: style, widget: select, options: [{ label: "Red: urgent alert or scam warning", value: alert }, { label: "Blue: notice", value: info }, { label: "Yellow: job fair or event", value: event }, { label: "Green: good news", value: success }], default: info }
+          - { label: Message, name: text, widget: string, hint: "One short sentence. Example: Kumasi Regional Job Fair, Thursday 26 November, 9:00 am. Entry is free." }
+          - { label: "Link text", name: linkLabel, widget: string, required: false }
+          - { label: "Link address", name: linkUrl, widget: string, required: false, hint: "A page on this site (e.g. /blog/...) or a full web address." }
+          - { label: "Hide after (optional)", name: expires, widget: datetime, format: "YYYY-MM-DD", time_format: false, picker_utc: true, required: false }
+
+      - name: settings
+        label: Contacts, figures and social media
+        file: ghana-labour-department/content/settings.json
+        fields:
+          - label: Minimum wage
+            name: minimumWage
+            widget: object
+            hint: "Updates every page, FAQ and LD Assist answer that mentions the minimum wage."
+            fields:
+              - { label: "Daily amount (GH¢)", name: amount, widget: string, hint: "e.g. 21.77" }
+              - { label: Year, name: year, widget: string }
+              - { label: "Effective from", name: effective, widget: string, hint: "e.g. 1 January 2026" }
+              - { label: "Increase on previous year", name: increase, widget: string, hint: "e.g. 9%" }
+              - { label: "Previous daily amount (GH¢)", name: previousAmount, widget: string }
+              - { label: "Previous year", name: previousYear, widget: string }
+          - { label: "General email", name: email, widget: string }
+          - { label: "Public Relations Unit email", name: prEmail, widget: string }
+          - { label: "Toll-free numbers", name: tollFree, widget: list, field: { label: Number, name: number, widget: string } }
+          - { label: "Mobile numbers", name: mobile, widget: list, field: { label: Number, name: number, widget: string } }
+          - { label: "Office hours", name: officeHours, widget: string }
+          - { label: "GLMIS address", name: glmisUrl, widget: string }
+          - { label: "Main hashtag", name: hashtag, widget: string }
+          - label: "Official social media accounts"
+            name: social
+            widget: object
+            hint: "Paste the full address of each official account. Empty ones are hidden."
+            fields:
+              - { label: Facebook, name: facebook, widget: string, required: false }
+              - { label: X, name: x, widget: string, required: false }
+              - { label: LinkedIn, name: linkedin, widget: string, required: false }
+              - { label: Instagram, name: instagram, widget: string, required: false }
+              - { label: TikTok, name: tiktok, widget: string, required: false }
+              - { label: YouTube, name: youtube, widget: string, required: false }
+              - { label: "WhatsApp Channel", name: whatsappChannel, widget: string, required: false }
+          - { label: "Website address (this host)", name: siteUrl, widget: string, hint: "Used for links in feeds and share buttons." }
+          - { label: "Official domain", name: productionDomain, widget: string }
+
+      - name: leadership
+        label: Leadership (Chief Labour Officer)
+        file: ghana-labour-department/content/leadership.json
+        fields:
+          - { label: Name, name: name, widget: string }
+          - { label: Title, name: title, widget: string }
+          - { label: "Official portrait", name: photo, widget: image, hint: "Portrait 4:5, at least 800x1000 pixels." }
+          - { label: "Portrait alt text", name: photoAlt, widget: string }
+          - { label: "Home page introduction", name: homeIntro, widget: text }
+          - { label: "Profile (About page)", name: bio, widget: markdown, buttons: [bold, italic, link] }
+
+      - name: faqs
+        label: FAQs
+        file: ghana-labour-department/content/faqs.json
+        fields:
+          - label: Groups
+            name: groups
+            widget: list
+            summary: "{{fields.title}}"
+            fields:
+              - { label: "Group title", name: title, widget: string }
+              - label: Questions
+                name: items
+                widget: list
+                summary: "{{fields.q}}"
+                fields:
+                  - { label: Question, name: q, widget: string }
+                  - { label: Answer, name: a, widget: text, hint: "Plain language. Links: [link text](/page). Use {{minWage}} for the current minimum wage." }
+
+  # ------------------------------------------------------------------ Chatbot
+  - name: chatbot
+    label: LD Assist answers
+    description: "The approved knowledge base for the chatbot (Chatbot guide, Brand Guide pages 20 to 23). Answers: three sentences or fewer, then a next step."
+    editor: { preview: false }
+    files:
+      - name: knowledge
+        label: Knowledge base
+        file: ghana-labour-department/content/chatbot.json
+        fields:
+          - label: Topics
+            name: intents
+            widget: list
+            summary: "{{fields.id}}: {{fields.questions}}"
+            fields:
+              - { label: "Topic ID", name: id, widget: string, hint: "Short, no spaces, e.g. annual_leave" }
+              - { label: "Example questions", name: questions, widget: list, field: { label: Question, name: q, widget: string }, hint: "How people ask it, in their own words." }
+              - { label: Keywords, name: keywords, widget: list, hint: "Comma separated words people use, including local phrasing." }
+              - { label: Answer, name: answer, widget: markdown, buttons: [bold, italic, link, bulleted-list], hint: "Cite the law where relevant: 'Under the Labour Act, 2003 (Act 651)...'. Use {{minWage}} for the minimum wage." }
+              - label: Buttons
+                name: links
+                widget: list
+                required: false
+                summary: "{{fields.label}}"
+                fields:
+                  - { label: Label, name: label, widget: string }
+                  - { label: "Link address", name: url, widget: string }
+                  - { label: "GLMIS button (yellow)", name: glmis, widget: boolean, default: false, required: false }
+          - label: "When LD Assist does not understand"
+            name: fallback
+            widget: object
+            fields:
+              - { label: Answer, name: answer, widget: markdown, buttons: [bold, italic, link] }
+              - label: Buttons
+                name: links
+                widget: list
+                fields:
+                  - { label: Label, name: label, widget: string }
+                  - { label: "Link address", name: url, widget: string }
+                  - { label: "GLMIS button (yellow)", name: glmis, widget: boolean, default: false, required: false }
+          - { label: "AI fact sheet", name: facts, widget: list, field: { label: Fact, name: fact, widget: text }, hint: "Facts the AI mode may use. Never add unverified figures." }

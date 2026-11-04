@@ -547,3 +547,118 @@ tbody tr:nth-child(even) td { background: var(--panel); }
 .wa-card .share-bar > span { color: #fff; }
 .wa-card .share-btn { background: #fff; border-color: #fff; color: var(--ink); }
 .wa-card .share-btn.wa { background: var(--ink); border-color: var(--ink); color: #fff; }
+
+/* Announcement bar (managed in the CMS) */
+.announce { font-weight: 600; font-size: .95rem; }
+.announce .container { padding-block: 10px; }
+.announce p { margin: 0; }
+.announce a { font-weight: 700; color: inherit; }
+.announce-alert { background: var(--red); color: #fff; font-size: 1.125rem; }
+.announce-info { background: var(--blue); color: #fff; }
+.announce-event { background: var(--yellow); color: var(--ink); }
+.announce-success { background: var(--green); color: #fff; }
+/* Callout written as a quote in CMS Markdown */
+.article-body blockquote { margin: 1.4em 0; padding: 16px 20px; border-radius: var(--radius); background: var(--panel); border-left: 4px solid var(--red); }
+.article-body blockquote p { margin: 0; }
+
+/* =====================================================================
+   Premium 3D layer: depth, glass and photography on top of the brand palette.
+   Brand colours stay the source of truth; shades of brand blue add depth.
+   ===================================================================== */
+:root { --blue-deep: #161d55; --blue-mid: #3a4cc0; }
+
+/* Hero: deep brand-blue space with the WebGL globe */
+.hero {
+  background:
+    radial-gradient(70% 90% at 82% 40%, rgb(58 76 192 / .95) 0%, rgb(43 57 144 / .9) 38%, rgb(22 29 85 / 1) 100%),
+    var(--blue-deep);
+}
+.hero::after { background: linear-gradient(90deg, rgb(22 29 85 / .92) 0%, rgb(22 29 85 / .55) 46%, rgb(22 29 85 / 0) 76%); }
+.hero::before {
+  content: ""; position: absolute; inset: auto 0 0 0; height: 140px; z-index: -1; pointer-events: none;
+  background: linear-gradient(180deg, transparent, rgb(22 29 85 / .65));
+}
+.hero-card {
+  background: linear-gradient(145deg, rgb(255 255 255 / .17), rgb(255 255 255 / .05));
+  border: 1px solid rgb(255 255 255 / .22); border-top: 1px solid rgb(255 255 255 / .35);
+  backdrop-filter: blur(20px) saturate(160%); -webkit-backdrop-filter: blur(20px) saturate(160%);
+  box-shadow: inset 0 1px 0 rgb(255 255 255 / .25), 0 40px 80px -40px rgb(0 0 0 / .7);
+  color: #fff;
+}
+.hero-card h2 { color: #fff; }
+.hero-card p { color: #dfe3f7; }
+.hero-search { background: rgb(255 255 255 / .96); border-color: transparent; }
+.hero-search:focus-within { box-shadow: 0 0 0 3px var(--yellow); }
+.hero-card li a { background: rgb(255 255 255 / .08); color: #fff; border-left-color: var(--yellow); }
+.hero-card li:nth-child(2) a { border-left-color: var(--red); }
+.hero-card li:nth-child(3) a { border-left-color: #2ec27e; }
+.hero-card li a:hover { background: rgb(255 255 255 / .16); }
+@media (prefers-reduced-transparency: reduce) { .hero-card { background: #26318a; backdrop-filter: none; } }
+
+/* Inner page heroes: text + photo in a 3D frame */
+.page-hero {
+  background:
+    radial-gradient(80% 140% at 100% 0%, rgb(58 76 192 / .9), transparent 60%),
+    linear-gradient(160deg, var(--blue) 0%, var(--blue-deep) 100%);
+  isolation: isolate;
+}
+.page-hero::before {
+  content: ""; position: absolute; right: -140px; top: -160px; width: 520px; height: 520px; border-radius: 50%; z-index: -1;
+  border: 1px solid rgb(249 237 50 / .35); box-shadow: 0 0 0 70px rgb(255 255 255 / .025), 0 0 0 140px rgb(255 255 255 / .02);
+  pointer-events: none;
+}
+.hero-split { display: grid; grid-template-columns: minmax(0, 1.05fr) minmax(0, .95fr); gap: clamp(28px, 5vw, 64px); align-items: center; }
+@media (max-width: 860px) { .hero-split { grid-template-columns: minmax(0, 1fr); } }
+.photo-3d { position: relative; perspective: 1200px; margin: 0; }
+.photo-3d .frame {
+  position: relative; border-radius: 20px; overflow: hidden; aspect-ratio: 4 / 3; background: var(--blue-deep);
+  transform: rotateY(-9deg) rotateX(3deg); transform-style: preserve-3d;
+  box-shadow: 0 50px 90px -40px rgb(0 0 0 / .75), 0 0 0 1px rgb(255 255 255 / .12);
+  transition: transform .8s var(--ease);
+}
+.photo-3d .frame img { width: 100%; height: 100%; object-fit: cover; }
+.photo-3d .frame::after { content: ""; position: absolute; inset: 0; background: linear-gradient(120deg, rgb(255 255 255 / .18), transparent 40%); pointer-events: none; }
+.photo-3d::before { content: ""; position: absolute; right: -16px; bottom: -16px; width: 46%; height: 46%; border-radius: 18px; background: var(--yellow); z-index: -1; transform: translateZ(-40px); }
+.photo-3d::after { content: ""; position: absolute; left: -14px; top: -14px; width: 28%; height: 28%; border-radius: 14px; background: var(--red); z-index: -1; }
+.photo-3d:hover .frame { transform: rotateY(-3deg) rotateX(1deg); }
+.photo-3d figcaption { margin-top: 14px; font-size: .85rem; color: #d6daf0; }
+@media (max-width: 860px) { .photo-3d .frame { transform: none; } .photo-3d { max-width: 560px; } }
+@media (prefers-reduced-motion: reduce) { .photo-3d .frame { transform: none; transition: none; } }
+
+/* Elevated cards with an accent top edge (replaces flat panels) */
+.card, .step, .faq details, .region, .aside-card:not(.glmis), .tile:not(.tile-feature):not(.tile-gold):not(.tile-photo) {
+  background: var(--surface); border-left: 0; border: 1px solid var(--line); border-top: 4px solid var(--blue);
+  box-shadow: var(--shadow); transition: transform .45s var(--ease), box-shadow .45s var(--ease);
+}
+.card:hover, .step:hover, .region:hover { transform: translateY(-4px); box-shadow: var(--shadow-lg); }
+.grid-3 > .card:nth-child(3n+2), .grid-2 > .card:nth-child(2n), .tile-red, .step:nth-child(2) { border-top-color: var(--red); }
+.grid-3 > .card:nth-child(3n), .tile-green, .step:nth-child(4) { border-top-color: var(--green); }
+.step:nth-child(3) { border-top-color: var(--yellow); }
+.faq details { border-top-width: 1px; border-left: 4px solid var(--blue); }
+.faq details[open] { border-left-color: var(--red); }
+.region { border-top-width: 3px; }
+.stats { background: var(--surface); box-shadow: var(--shadow-lg); border: 1px solid var(--line); }
+.section-alt { background: linear-gradient(180deg, var(--panel), var(--bg)); }
+.tile-feature { background: radial-gradient(120% 120% at 100% 100%, var(--blue-mid), var(--blue) 45%, var(--blue-deep)); box-shadow: var(--shadow-lg); }
+.tile-photo { position: relative; color: #fff; border: 0; min-height: 240px; justify-content: flex-end; background: var(--blue-deep); box-shadow: var(--shadow-lg); }
+.tile-photo img.bg { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; z-index: 0; transition: transform 1.2s var(--ease); }
+.tile-photo::after { content: ""; position: absolute; inset: 0; background: linear-gradient(180deg, rgb(22 29 85 / .05) 20%, rgb(22 29 85 / .92)); z-index: 0; }
+.tile-photo > *:not(img) { position: relative; z-index: 1; }
+.tile-photo h3, .tile-photo .go { color: #fff; }
+.tile-photo p { color: #e6e9f7; }
+.tile-photo:hover img.bg { transform: scale(1.05); }
+.glmis-visual { transform: perspective(1200px) rotateY(6deg); transition: transform .8s var(--ease); box-shadow: 0 50px 90px -45px rgb(22 29 85 / .8); }
+.glmis-visual:hover { transform: perspective(1200px) rotateY(1deg); }
+.glmis-band > .glmis-visual:last-child { transform: perspective(1200px) rotateY(-6deg); }
+@media (max-width: 860px) { .glmis-visual, .glmis-band > .glmis-visual:last-child { transform: none; } }
+.cta-band { background: radial-gradient(120% 160% at 0% 0%, var(--blue-mid), var(--blue) 45%, var(--blue-deep)); box-shadow: var(--shadow-lg); }
+.site-footer { background: linear-gradient(180deg, var(--blue) 0%, var(--blue-deep) 100%); }
+.leader-photo .frame { transform: perspective(1000px) rotateY(8deg); box-shadow: 0 50px 90px -40px rgb(22 29 85 / .8); }
+
+/* Photo gallery strip (relatability) */
+.photo-row { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 18px; }
+.photo-row figure { margin: 0; border-radius: 16px; overflow: hidden; aspect-ratio: 4 / 3; background: var(--blue-deep); box-shadow: var(--shadow-lg); }
+.photo-row img { width: 100%; height: 100%; object-fit: cover; transition: transform 1s var(--ease); }
+.photo-row figure:hover img { transform: scale(1.05); }
+@media (max-width: 760px) { .photo-row { grid-template-columns: minmax(0, 1fr); } }
+:root[data-theme="dark"] .card, :root[data-theme="dark"] .step { background: var(--surface); }

@@ -1,11 +1,11 @@
 <!--meta
 {
   "title": "Workers' Rights in Ghana 2026 | Minimum Wage, Leave, Termination | Labour Dept",
-  "description": "Plain-language guide to your rights under Ghana's Labour Act 2003 (Act 651): 2026 minimum wage GH¢21.77, annual leave, working hours, maternity leave, notice and unfair termination.",
+  "description": "Plain-language guide to your rights under Ghana's Labour Act 2003 (Act 651): {{minWageYear}} minimum wage GH¢{{minWage}}, annual leave, working hours, maternity leave, notice and unfair termination.",
   "crumb": "Workers' Rights",
   "jsonld": [
     {"@context": "https://schema.org", "@type": "FAQPage", "mainEntity": [
-      {"@type": "Question", "name": "What is the minimum wage in Ghana in 2026?", "acceptedAnswer": {"@type": "Answer", "text": "The national daily minimum wage is GH¢21.77 from 1 January 2026, up 9% from GH¢19.97 in 2025."}},
+      {"@type": "Question", "name": "What is the minimum wage in Ghana in 2026?", "acceptedAnswer": {"@type": "Answer", "text": "The national daily minimum wage is GH¢{{minWage}} from {{minWageEffective}}, up {{minWageIncrease}} from GH¢{{prevMinWage}} in {{prevMinWageYear}}."}},
       {"@type": "Question", "name": "How many days of annual leave am I entitled to in Ghana?", "acceptedAnswer": {"@type": "Answer", "text": "At least 15 working days of paid annual leave after 12 months of continuous service, under section 20 of the Labour Act, 2003 (Act 651)."}},
       {"@type": "Question", "name": "How long is maternity leave in Ghana?", "acceptedAnswer": {"@type": "Answer", "text": "At least 12 weeks of maternity leave on full pay, extended by 2 weeks for abnormal or multiple births."}}
     ]}
@@ -13,10 +13,15 @@
 }
 -->
 <section class="page-hero">
-  <div class="container hero-anim">
+  <div class="container hero-split">
+    <div class="hero-anim">
     <nav class="crumbs" aria-label="Breadcrumb"><a href="/">Home</a> / Workers' Rights</nav>
     <h1>Know your rights at work</h1>
     <p>A plain-language summary of the Labour Act, 2003 (Act 651) for every worker in Ghana.</p>
+    </div>
+    <figure class="photo-3d hero-anim">
+      <div class="frame" data-tilt="5"><img src="/img/photos/worksite-safety.png" alt="A construction worker in safety gear and an engineer with a tablet on a building site" width="1200" height="900" fetchpriority="high"></div>
+    </figure>
   </div>
 </section>
 
@@ -27,7 +32,7 @@
         <caption class="sr-only">Key worker entitlements in Ghana</caption>
         <thead><tr><th scope="col">Right</th><th scope="col">What the law says</th><th scope="col">Source</th></tr></thead>
         <tbody>
-          <tr><td><strong>Minimum wage</strong></td><td>GH&#162;21.77 per day from 1 January 2026 (GH&#162;19.97 in 2025). Set each year by the National Tripartite Committee.</td><td>Act 651, s.113</td></tr>
+          <tr><td><strong>Minimum wage</strong></td><td>GH&#162;{{minWage}} per day from {{minWageEffective}} (GH&#162;{{prevMinWage}} in {{prevMinWageYear}}). Set each year by the National Tripartite Committee.</td><td>Act 651, s.113</td></tr>
           <tr><td><strong>Working hours</strong></td><td>8 hours a day, 40 hours a week. Work beyond this is overtime and is paid at an agreed rate.</td><td>Act 651, s.33</td></tr>
           <tr><td><strong>Annual leave</strong></td><td>At least 15 working days on full pay after 12 months of continuous service.</td><td>Act 651, s.20</td></tr>
           <tr><td><strong>Maternity leave</strong></td><td>At least 12 weeks on full pay, plus 2 more weeks for abnormal or multiple births. Paid breaks to nurse a baby.</td><td>Act 651, s.57</td></tr>

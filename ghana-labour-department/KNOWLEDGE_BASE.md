@@ -1,8 +1,8 @@
-# Kofi chatbot knowledge base
+# LD Assist knowledge base
 
-Generated from `static/js/knowledge.js` by `node scripts/export-kb.mjs`. Edit answers in `knowledge.js` (and the fact sheet in `api/chat.js` if AI mode is on), then re-run this script.
+Generated from `content/chatbot.json` by `node scripts/export-kb.mjs`. Officers edit answers in the CMS at /admin under **LD Assist answers**.
 
-41 topics. For each topic: the example questions it is trained on, the answer Kofi gives, and the buttons shown under the answer.
+41 topics. For each topic: the example questions it is trained on, the answer LD Assist gives, and the buttons shown under the answer.
 
 ## Small talk
 
@@ -12,7 +12,7 @@ Generated from `static/js/knowledge.js` by `node scripts/export-kb.mjs`. Edit an
 
 **Answer:**
 
-Akwaaba! I'm LD Assist, the Labour Department's automated assistant. I can help you find work on GLMIS, explain your rights at work and show you where to get help.
+Akwaaba! I&#39;m LD Assist, the Labour Department&#39;s automated assistant. I can help you find work on GLMIS, explain your rights at work and show you where to get help.
 
 What would you like to know?
 
@@ -26,10 +26,14 @@ What would you like to know?
 
 I can answer common questions about:
 
-- Finding work or hiring through **GLMIS**, Ghana's free jobs portal
+- Finding work or hiring through **GLMIS**, Ghana&#39;s free jobs portal
+
 - Public Employment Centres and job counselling
-- Workers' rights: minimum wage, hours, leave, maternity, termination
+
+- Workers&#39; rights: minimum wage, hours, leave, maternity, termination
+
 - Labour complaints, child labour and workplace injuries
+
 - Licensing private employment agencies and avoiding job scams
 
 I am an **automated assistant**, not a human officer. I give general guidance, not legal advice. Type **officer** to reach a person.
@@ -42,7 +46,7 @@ I am an **automated assistant**, not a human officer. I give general guidance, n
 
 **Answer:**
 
-You're welcome! Is there anything else I can help with? You can also call us free on 0800 600 300.
+You&#39;re welcome! Is there anything else I can help with? You can also call us free on 0800 600 300.
 
 **Buttons:** [Register on GLMIS](https://glmis.gov.gh)
 
@@ -63,10 +67,12 @@ Goodbye, and all the best! You can reopen this chat any time from the **Ask LD A
 
 **Answer:**
 
-**GLMIS** (Ghana Labour Market Information System) is the government's free online jobs platform. It connects job seekers with employers across Ghana and publishes labour market information.
+**GLMIS** (Ghana Labour Market Information System) is the government&#39;s free online jobs platform. It connects job seekers with employers across Ghana and publishes labour market information.
 
 - Job seekers create a profile, upload a CV and apply for vacancies
+
 - Employers post vacancies and search for candidates
+
 - Anyone can view labour market data and trends
 
 **Buttons:** [Open GLMIS](https://glmis.gov.gh) | How GLMIS works (`/glmis`)
@@ -77,10 +83,12 @@ Goodbye, and all the best! You can reopen this chat any time from the **Ask LD A
 
 **Answer:**
 
-The fastest way is to **register on GLMIS**, Ghana's free government jobs portal:
+The fastest way is to **register on GLMIS**, Ghana&#39;s free government jobs portal:
 
 - Go to glmis.gov.gh and create a job seeker account
+
 - Complete your profile, skills and upload your CV
+
 - Search and apply for vacancies, and let employers find you
 
 You can also visit a **Public Employment Centre** in your region for free job matching and counselling.
@@ -96,7 +104,9 @@ You can also visit a **Public Employment Centre** in your region for free job ma
 Employers can recruit for free on **GLMIS**:
 
 - Create an employer account on glmis.gov.gh
+
 - Post your vacancy with the job description and requirements
+
 - Search job seeker profiles and shortlist candidates
 
 The Public Employment Centre in your region can also help match you with suitable candidates.
@@ -111,7 +121,7 @@ The Public Employment Centre in your region can also help match you with suitabl
 
 Yes. **GLMIS is free** for both job seekers and employers. Services at the Public Employment Centres are also free.
 
-Never pay anyone who asks for money to register you or "guarantee" a job.
+Never pay anyone who asks for money to register you or &quot;guarantee&quot; a job.
 
 **Buttons:** [Register on GLMIS](https://glmis.gov.gh) | About GLMIS (`/glmis`)
 
@@ -124,7 +134,9 @@ Never pay anyone who asks for money to register you or "guarantee" a job.
 If you have trouble with GLMIS:
 
 - Use the password reset option on the GLMIS login page
+
 - Try another browser or device, or a different network
+
 - Visit your nearest **Public Employment Centre** or Labour Department office. Staff can help you register and update your profile for free
 
 **Buttons:** [Open GLMIS](https://glmis.gov.gh) | Find an office (`/contact`)
@@ -150,7 +162,9 @@ For official national employment statistics you can also check the Ghana Statist
 Tips for a strong application:
 
 - Keep your CV to 1 or 2 pages: contact details, skills, experience, education
+
 - Tailor it to each vacancy and use clear job titles
+
 - Upload it to your **GLMIS** profile so employers can find you
 
 For free one-on-one career guidance, visit a **Public Employment Centre**.
@@ -168,8 +182,11 @@ For free one-on-one career guidance, visit a **Public Employment Centre**.
 **Public Employment Centres (PECs)** are Labour Department offices in all 16 regions, for example at Odomase (Bono Region) and Goaso (Ahafo Region). Their services are **free**:
 
 - Job matching and placement
+
 - Job counselling and career guidance
+
 - Help registering on GLMIS
+
 - Labour complaints and mediation
 
 **Buttons:** Find an office (`/contact`) | Services (`/services`) | [Open GLMIS](https://glmis.gov.gh)
@@ -209,7 +226,9 @@ It is set by the National Tripartite Committee (government, employers and organi
 Your employer must pay your wages in full and on time, as agreed in your contract. If wages are unpaid or wrongly deducted:
 
 - Raise it with your employer in writing first and keep copies
+
 - If it is not resolved, report to the nearest **Labour Department office** for mediation
+
 - The Labour Officer will invite your employer and help you both reach a settlement
 
 **Buttons:** File a complaint (`/services#complaints`) | Find an office (`/contact`)
@@ -259,6 +278,7 @@ If overtime is not being paid, keep a record of your hours and report to the nea
 A woman worker is entitled to **at least 12 weeks of maternity leave on full pay**, plus **2 extra weeks** for an abnormal delivery or multiple births.
 
 - A nursing mother may take breaks during working hours to nurse her baby
+
 - You cannot be dismissed because you are pregnant or on maternity leave
 
 **Buttons:** Workers' rights (`/workers-rights`) | Report a problem (`/services#complaints`)
@@ -271,7 +291,7 @@ A woman worker is entitled to **at least 12 weeks of maternity leave on full pay
 
 Sick leave terms are usually set by your contract or collective agreement, often supported by a medical certificate. If you are unsure of your rights or think you were treated unfairly, contact your nearest Labour Department office.
 
-If you were injured at work, ask me about **workmen's compensation**.
+If you were injured at work, ask me about **workmen&#39;s compensation**.
 
 **Buttons:** Workers' rights (`/workers-rights`) | Contact us (`/contact`)
 
@@ -297,9 +317,11 @@ Keep copies of your contract and payslips. If you have problems, the Labour Depa
 
 Minimum notice under the Labour Act (either side can give pay instead of notice):
 
-- Contract of **3 years or more**: 1 month's notice or 1 month's pay
-- Contract **under 3 years**: 2 weeks' notice or 2 weeks' pay
-- **Week to week** contract: 7 days' notice
+- Contract of **3 years or more**: 1 month&#39;s notice or 1 month&#39;s pay
+
+- Contract **under 3 years**: 2 weeks&#39; notice or 2 weeks&#39; pay
+
+- **Week to week** contract: 7 days&#39; notice
 
 Your contract may give longer notice.
 
@@ -314,7 +336,9 @@ Your contract may give longer notice.
 Termination is **unfair** if it is for reasons such as pregnancy, union membership, filing a complaint, illness, or without a valid reason and fair procedure.
 
 - Write down what happened and keep your contract, payslips and letters
+
 - Report to the nearest **Labour Department office** for advice and mediation
+
 - A Labour Officer will mediate between you and your employer for free
 
 Meanwhile, keep your job search going on GLMIS.
@@ -330,7 +354,9 @@ Meanwhile, keep your job search going on GLMIS.
 How to resolve a workplace problem:
 
 - **1.** Raise it with your employer or supervisor, in writing if possible
+
 - **2.** If unresolved, go to the nearest **Labour Department office** or Public Employment Centre for advice and mediation
+
 - **3.** If no agreement is reached, the Labour Officer will advise you on your further options under the law
 
 Bring your contract, payslips and any letters.
@@ -345,11 +371,14 @@ Bring your contract, payslips and any letters.
 
 **Answer:**
 
-Under the Children's Act, 1998 (Act 560):
+Under the Children&#39;s Act, 1998 (Act 560):
 
 - Minimum age for employment: **15 years**
+
 - Light work (not harmful, does not affect school): from **13 years**
+
 - Hazardous work (mining, fishing at sea, heavy loads, chemicals, night work): **18 years**
+
 - No child may do night work between **8pm and 6am**
 
 **Buttons:** Child labour (`/child-labour`)
@@ -363,7 +392,9 @@ Under the Children's Act, 1998 (Act 560):
 Thank you for speaking up. Children under 18 must never do hazardous work such as mining or galamsey. You can report to:
 
 - The **Child Labour Unit** of the Labour Department, or any Labour Department office
+
 - Your **District Assembly** or Department of Social Welfare
+
 - The **Police** (DOVVSU), especially if the child is in immediate danger
 
 Give the location and what you saw. You do not need proof to report.
@@ -378,7 +409,7 @@ Give the location and what you saw. You do not need proof to report.
 
 The **Ghana Accelerated Action Plan Against Child Labour (2023-2027)** guides national efforts to end child labour, working with District Assemblies, communities, employers, cocoa and mining sectors, and partners.
 
-The Labour Department's Child Labour Unit coordinates much of this work.
+The Labour Department&#39;s Child Labour Unit coordinates much of this work.
 
 **Buttons:** Child labour (`/child-labour`) | About us (`/about`)
 
@@ -390,10 +421,12 @@ The Labour Department's Child Labour Unit coordinates much of this work.
 
 **Answer:**
 
-Under the **Workmen's Compensation Law, 1987 (PNDCL 187)**, a worker injured (or the family of a worker killed) in a work accident may be compensated:
+Under the **Workmen&#39;s Compensation Law, 1987 (PNDCL 187)**, a worker injured (or the family of a worker killed) in a work accident may be compensated:
 
 - The employer must report the accident to the **Labour Department**
+
 - The worker has a medical assessment of the injury
+
 - The Department assesses the claim and the **employer or its insurer pays**
 
 Get medical care first, then contact your nearest office.
@@ -433,9 +466,13 @@ Employers should keep proper records and cooperate. Workers can request an inspe
 Key employer duties include:
 
 - Pay at least the minimum wage, on time
+
 - Respect hours, leave and maternity rights
+
 - Give written terms of employment
+
 - Keep a safe workplace and report accidents
+
 - Never employ children in prohibited work
 
 Recruit for free on **GLMIS**.
@@ -465,9 +502,13 @@ Collective agreements can give better terms than the legal minimum.
 To operate a **private employment agency** you need a licence:
 
 - Register your company with the **Registrar-General**
+
 - Apply to the Minister through the **Labour Department**
+
 - Your premises and staff are inspected
+
 - If approved, a licence is issued
+
 - Submit **quarterly returns within 14 days** after each quarter
 
 Operating without a licence is illegal.
@@ -482,8 +523,10 @@ Operating without a licence is illegal.
 
 **Be careful.** Warning signs of a recruitment scam:
 
-- You must pay money for a "visa lottery", processing or a guaranteed job
+- You must pay money for a &quot;visa lottery&quot;, processing or a guaranteed job
+
 - No written contract, or the agency has no licence
+
 - Pressure to travel quickly or hand over your passport
 
 Only use **licensed** agencies and verify them with the Labour Department before paying or travelling. Genuine local jobs are on GLMIS for free.
@@ -499,7 +542,9 @@ Only use **licensed** agencies and verify them with the Labour Department before
 If you plan to work abroad:
 
 - Use only a **licensed private employment agency**; verify it with the Labour Department
+
 - Get a written contract before you travel and keep a copy with family
+
 - Never hand your passport to an agent you cannot verify
 
 Also explore opportunities at home on **GLMIS**.
@@ -524,7 +569,7 @@ The **Chief Labour Officer** is **Braimah Ibrahim Dawuda**, who heads the Labour
 
 **Answer:**
 
-The **Labour Department** administers labour laws in Ghana. We run Public Employment Centres and GLMIS, inspect workplaces, settle complaints, license private employment agencies, handle workmen's compensation and fight child labour.
+The **Labour Department** administers labour laws in Ghana. We run Public Employment Centres and GLMIS, inspect workplaces, settle complaints, license private employment agencies, handle workmen&#39;s compensation and fight child labour.
 
 **Buttons:** About us (`/about`) | [Open GLMIS](https://glmis.gov.gh)
 
@@ -537,6 +582,7 @@ The **Labour Department** administers labour laws in Ghana. We run Public Employ
 The Labour Department is under the **Ministry of Labour, Jobs and Employment**.
 
 - Toll-free: **0800 600 300** or **0800 600 400**
+
 - Website: melr.gov.gh
 
 **Buttons:** [Ministry website](https://melr.gov.gh) | Contact us (`/contact`)
@@ -560,7 +606,9 @@ A **new Labour Bill** is being developed to update the Labour Act, including pro
 Our offices are open **Monday to Friday, 8:00am to 5:00pm** (closed on public holidays). There is a Labour Department office or Public Employment Centre in every region.
 
 - Toll-free: **0800 600 300** or **0800 600 400**
+
 - Mobile: **050 499 1227** or **055 341 9567**
+
 - Email: **info@labourdepartment.gov.gh**
 
 **Buttons:** Contact details (`/contact`) | [Open GLMIS](https://glmis.gov.gh)
@@ -577,9 +625,9 @@ Our **News and guides** page has plain-language guides on finding work, your rig
 
 **Buttons:** News and guides (`/blog`) | [Open GLMIS](https://glmis.gov.gh)
 
-## When Kofi does not understand
+## When LD Assist does not understand
 
-Sorry, I didn't quite get that. You can choose a topic below or type **officer** to reach a person.
+Sorry, I didn&#39;t quite get that. You can choose a topic below or type **officer** to reach a person.
 
 I can help with jobs on GLMIS, your rights at work, workplace complaints, child labour, workplace injury and agency registration.
 

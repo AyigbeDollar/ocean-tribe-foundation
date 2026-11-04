@@ -1,0 +1,41 @@
+<!doctype html>
+<html lang="en-GH">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="noindex, nofollow">
+  <title>Content Manager | Ghana Labour Department</title>
+  <link rel="icon" href="/img/favicon.ico">
+  <link href="/admin/config.yml" type="text/yaml" rel="cms-config-url">
+  <style>
+    /* Brand the CMS chrome lightly (Brand Guide v2.0 colours and Montserrat). */
+    @font-face { font-family: "Montserrat"; font-weight: 100 900; font-display: swap; src: url("/fonts/montserrat-latin-wght-normal.woff2") format("woff2"); }
+    body { font-family: "Montserrat", Arial, sans-serif; }
+    [class*="AuthenticationPage"] { background: #2B3990 !important; }
+    [class*="AuthenticationPage"] button { background: #DD2A1B !important; color: #fff !important; font-size: 18px !important; }
+  </style>
+</head>
+<body>
+  <script src="/admin/decap-cms.js"></script>
+  <script>
+    // Preview posts with the live site styles so officers see what the public sees.
+    CMS.registerPreviewStyle("/css/site.css");
+    var Post = createClass({
+      render: function () {
+        var e = this.props.entry;
+        var get = function (k) { return e.getIn(["data", k]) || ""; };
+        return h("div", {},
+          h("section", { className: "page-hero" }, h("div", { className: "container" },
+            h("span", { className: "tag-pill" }, get("pillar")),
+            h("h1", {}, get("title")))),
+          h("section", { className: "section" }, h("div", { className: "container" },
+            h("article", { className: "prose" },
+              h("p", { className: "standfirst" }, get("standfirst")),
+              h("div", { className: "article-body" }, this.props.widgetFor("body")),
+              get("legal") ? h("p", { className: "legal-box" }, h("strong", {}, "Legal basis: "), get("legal")) : null))));
+      }
+    });
+    CMS.registerPreviewTemplate("blog", Post);
+  </script>
+</body>
+</html>
