@@ -1,9 +1,4 @@
 {
-  "_comment": "Images fetched at build time into dist/img/photos/ (generated photography, rights-cleared for this site). Replace with your own photos by placing files with the same names in static/img/photos/.",
-  "img/photos/employment-centre.png": "https://d8j0ntlcm91z4.cloudfront.net/user_3FkExudndKk4z130QPYP9h3Uw3z/hf_20261103_115516_3dcce5bb-7bb6-463a-bf27-3bf87c9623c5.png",
-  "img/photos/worksite-safety.png": "https://d8j0ntlcm91z4.cloudfront.net/user_3FkExudndKk4z130QPYP9h3Uw3z/hf_20261103_115516_1a4479c0-edbc-41ef-9092-02e8fc0aedff.png",
-  "img/photos/workplace-meeting.png": "https://d8j0ntlcm91z4.cloudfront.net/user_3FkExudndKk4z130QPYP9h3Uw3z/hf_20261103_115517_8976c5fe-03f9-4ad5-a424-175c1513a840.png",
-  "img/photos/officers-team.png": "https://d2ol7oe51mr4n9.cloudfront.net/user_3FkExudndKk4z130QPYP9h3Uw3z/05051e71-0f6d-4bc1-8f1d-e3d5af0a8dd3.png",
-  "img/photos/labour-inspection.png": "https://d2ol7oe51mr4n9.cloudfront.net/user_3FkExudndKk4z130QPYP9h3Uw3z/0fb2db62-2de5-4707-910d-e80049df4a2f.png",
+  "_comment": "Generated image fetched at build time into dist/img/photos/. All other site photos are real Department photos in static/img/photos/. child-hands stays generated so no identifiable child is shown.",
   "img/photos/child-hands.png": "https://d2ol7oe51mr4n9.cloudfront.net/user_3FkExudndKk4z130QPYP9h3Uw3z/89da6164-3dfb-4ce2-b726-8434e67ffcb7.png"
 }

@@ -7,8 +7,8 @@ date: 2026-11-03
 reviewed: 2026-11-03
 author: Public Relations Unit
 tag: "#JobsGhana"
-image: /img/photos/employment-centre.png
-imageAlt: A job seeker talks with a staff member at a desk in a Public Employment Centre
+image: /img/photos/employment-centre.jpg
+imageAlt: A job seeker speaking with Ghana Labour Department officers at a Public Employment Centre registration booth
 legal: ""
 faq:
   - q: What is a Public Employment Centre in Ghana?

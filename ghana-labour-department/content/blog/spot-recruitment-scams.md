@@ -7,8 +7,8 @@ date: 2026-11-03
 reviewed: 2026-11-03
 author: Public Relations Unit
 tag: "#DecentWork"
-image: /img/photos/officers-team.png
-imageAlt: Labour officers checking a recruitment agency licence before advising a job seeker
+image: /img/photos/officers-team.jpg
+imageAlt: Ghana Labour Department officers and volunteers with placards at the Jobs Roadshow in Sunyani
 legal: Labour Act, 2003 (Act 651), section 7 (Private Employment Agencies).
 faq:
   - q: Does the Ghana Labour Department charge for jobs?

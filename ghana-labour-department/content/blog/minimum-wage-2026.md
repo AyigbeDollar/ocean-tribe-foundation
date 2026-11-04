@@ -7,8 +7,8 @@ date: 2026-11-03
 reviewed: 2026-11-03
 author: Public Relations Unit
 tag: "#KnowYourRights"
-image: /img/photos/worksite-safety.png
-imageAlt: Workers in safety helmets and reflective vests on a worksite
+image: /img/photos/worksite-safety.jpg
+imageAlt: Ghana Labour Department officers sharing information with traders at their market stalls
 legal: Labour Act, 2003 (Act 651), section 113. Rate announced for 2026 by the National Tripartite Committee.
 faq:
   - q: What is the minimum wage in Ghana in 2026?

@@ -7,8 +7,8 @@ date: 2026-11-03
 reviewed: 2026-11-03
 author: Public Relations Unit
 tag: "#GLMIS"
-image: /img/photos/workplace-meeting.png
-imageAlt: A small group of people talk together around a table in a workplace meeting
+image: /img/photos/workplace-meeting.jpg
+imageAlt: Officers, employers and agency representatives at a Ghana Labour Department stakeholder meeting
 legal: ""
 faq:
   - q: Is it free to register on GLMIS?
