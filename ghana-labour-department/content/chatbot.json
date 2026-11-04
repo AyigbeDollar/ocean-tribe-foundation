@@ -40,7 +40,7 @@
     "Recruitment scams / jobs abroad: only use licensed agencies; never pay for 'visa lottery' or guaranteed jobs; get a written contract before travel; do not surrender passport to unverified agents; verify agencies with the Labour Department.",
     "Trade unions: workers may form or join a union; punishing union membership is unfair.",
     "New Labour Bill: in progress, NOT yet law; would cover gig/platform and remote work. Act 651 still applies.",
-    "Contacts: info@labourdepartment.gov.gh; mobile 050 499 1227 / 055 341 9567. Website labourdepartment.gov.gh. Blog at /blog.",
+    "Contacts: info@labourdepartment.gov.gh. Website labourdepartment.gov.gh. Blog at /blog.",
     "Site pages: /blog, /glmis, /services, /services#complaints, /services#agencies, /services#compensation, /workers-rights, /employers, /child-labour, /faq, /contact, /about."
   ],
   "intents": [
@@ -1599,7 +1599,7 @@
         "working days",
         "time"
       ],
-      "answer": "Our offices are open **Monday to Friday, 8:00am to 5:00pm** (closed on public holidays). There is a Labour Department office or Public Employment Centre in every region.\n\n-   Toll-free: **0800 600 300** or **0800 600 400**\n-   Mobile: **050 499 1227** or **055 341 9567**\n-   Email: **info@labourdepartment.gov.gh**",
+      "answer": "Our offices are open **Monday to Friday, 8:00am to 5:00pm** (closed on public holidays). There is a Labour Department office or Public Employment Centre in every region.\n\n-   Toll-free: **0800 600 300** or **0800 600 400**\n-   Email: **info@labourdepartment.gov.gh**",
       "links": [
         {
           "label": "Contact details",

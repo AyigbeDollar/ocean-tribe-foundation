@@ -8,7 +8,7 @@ Generated from `content/chatbot.json` by `node scripts/export-kb.mjs`. Officers 
 
 ### 1. Hello
 
-**Example questions:** "hello", "hi there", "good morning", "akwaaba", "hey ld assist", "how are you"
+**Example questions:** "hello", "hi there", "good morning", "akwaaba", "hey kojo", "how are you"
 
 **Answer:**
 
@@ -16,7 +16,7 @@ Akwaaba! I&#39;m Kojo, the Labour Department&#39;s automated assistant. I can he
 
 What would you like to know?
 
-**Buttons:** [Search jobs on GLMIS](https://glmis.gov.gh) | Workers' rights (`/workers-rights`) | Our services (`/services`)
+**Buttons:** [Search jobs on GLMIS](https://www.glmis.gov.gh/Jobs/Joblistings) | Workers' rights (`/workers-rights`) | Our services (`/services`)
 
 ### 2. What can you do
 
@@ -38,7 +38,7 @@ I can answer common questions about:
 
 I am an **automated assistant**, not a human officer. I give general guidance, not legal advice. Type **officer** to reach a person.
 
-**Buttons:** [Open GLMIS](https://glmis.gov.gh) | FAQ (`/faq`) | Contact us (`/contact`)
+**Buttons:** [Create a GLMIS profile](https://www.glmis.gov.gh/Identity/Account/Register) | FAQ (`/faq`) | Contact us (`/contact`)
 
 ### 3. Thank you
 
@@ -48,7 +48,7 @@ I am an **automated assistant**, not a human officer. I give general guidance, n
 
 You&#39;re welcome! Is there anything else I can help with? You can also call us free on 0800 600 300.
 
-**Buttons:** [Register on GLMIS](https://glmis.gov.gh)
+**Buttons:** [Register on GLMIS](https://www.glmis.gov.gh/Identity/Account/Register)
 
 ### 4. Bye
 
@@ -75,7 +75,7 @@ Goodbye, and all the best! You can reopen this chat any time from the **Ask Kojo
 
 - Anyone can view labour market data and trends
 
-**Buttons:** [Open GLMIS](https://glmis.gov.gh) | How GLMIS works (`/glmis`)
+**Buttons:** [Create a GLMIS profile](https://www.glmis.gov.gh/Identity/Account/Register) | How GLMIS works (`/glmis`)
 
 ### 6. How do i get a job
 
@@ -85,7 +85,7 @@ Goodbye, and all the best! You can reopen this chat any time from the **Ask Kojo
 
 The fastest way is to **register on GLMIS**, Ghana&#39;s free government jobs portal:
 
-- Go to glmis.gov.gh and create a job seeker account
+- Open the GLMIS sign-up page and create a job seeker account
 
 - Complete your profile, skills and upload your CV
 
@@ -93,7 +93,7 @@ The fastest way is to **register on GLMIS**, Ghana&#39;s free government jobs po
 
 You can also visit a **Public Employment Centre** in your region for free job matching and counselling.
 
-**Buttons:** [Register on GLMIS](https://glmis.gov.gh) | GLMIS guide (`/glmis`) | Employment centres (`/services`)
+**Buttons:** [Register on GLMIS](https://www.glmis.gov.gh/Identity/Account/Register) | GLMIS guide (`/glmis`) | Employment centres (`/services`)
 
 ### 7. How do i post a vacancy
 
@@ -103,7 +103,7 @@ You can also visit a **Public Employment Centre** in your region for free job ma
 
 Employers can recruit for free on **GLMIS**:
 
-- Create an employer account on glmis.gov.gh
+- Create an employer account on the GLMIS company sign-up page
 
 - Post your vacancy with the job description and requirements
 
@@ -111,7 +111,7 @@ Employers can recruit for free on **GLMIS**:
 
 The Public Employment Centre in your region can also help match you with suitable candidates.
 
-**Buttons:** [Post a vacancy on GLMIS](https://glmis.gov.gh) | Employer guide (`/employers`)
+**Buttons:** [Register your company](https://www.glmis.gov.gh/Identity/Account/RegisterCompany) | [Post a vacancy on GLMIS](https://www.glmis.gov.gh/Identity/Account/Login) | Employer guide (`/employers`)
 
 ### 8. Is glmis free
 
@@ -123,7 +123,7 @@ Yes. **GLMIS is free** for both job seekers and employers. Services at the Publi
 
 Never pay anyone who asks for money to register you or &quot;guarantee&quot; a job.
 
-**Buttons:** [Register on GLMIS](https://glmis.gov.gh) | About GLMIS (`/glmis`)
+**Buttons:** [Register on GLMIS](https://www.glmis.gov.gh/Identity/Account/Register) | About GLMIS (`/glmis`)
 
 ### 9. I cannot access glmis
 
@@ -139,7 +139,7 @@ If you have trouble with GLMIS:
 
 - Visit your nearest **Public Employment Centre** or Labour Department office. Staff can help you register and update your profile for free
 
-**Buttons:** [Open GLMIS](https://glmis.gov.gh) | Find an office (`/contact`)
+**Buttons:** [Get GLMIS help](https://www.glmis.gov.gh/Support) | Find an office (`/contact`)
 
 ### 10. Where can i find labour market data
 
@@ -151,7 +151,7 @@ Labour market information (vacancy trends, in-demand skills and related data) is
 
 For official national employment statistics you can also check the Ghana Statistical Service.
 
-**Buttons:** [Open GLMIS](https://glmis.gov.gh) | GLMIS overview (`/glmis`)
+**Buttons:** [GLMIS labour statistics](https://www.glmis.gov.gh) | GLMIS overview (`/glmis`)
 
 ### 11. How do i write a cv
 
@@ -169,7 +169,7 @@ Tips for a strong application:
 
 For free one-on-one career guidance, visit a **Public Employment Centre**.
 
-**Buttons:** [Register on GLMIS](https://glmis.gov.gh) | Job counselling (`/services`)
+**Buttons:** [Register on GLMIS](https://www.glmis.gov.gh/Identity/Account/Register) | Job counselling (`/services`)
 
 ## Public Employment Centres
 
@@ -189,7 +189,7 @@ For free one-on-one career guidance, visit a **Public Employment Centre**.
 
 - Labour complaints and mediation
 
-**Buttons:** Find an office (`/contact`) | Services (`/services`) | [Open GLMIS](https://glmis.gov.gh)
+**Buttons:** Find an office (`/contact`) | Services (`/services`) | [Public Employment Centres on GLMIS](https://www.glmis.gov.gh/employmentagencies)
 
 ### 13. Do you offer job counselling
 
@@ -201,7 +201,7 @@ Yes. Our Public Employment Centres offer **free job counselling**: help choosing
 
 Register on GLMIS too, so you see current vacancies.
 
-**Buttons:** Employment services (`/services`) | [Register on GLMIS](https://glmis.gov.gh)
+**Buttons:** [Book counselling on GLMIS](https://www.glmis.gov.gh/CounsellingRequest) | Employment services (`/services`) | [Register on GLMIS](https://www.glmis.gov.gh/Identity/Account/Register)
 
 ## Pay, hours and leave
 
@@ -343,7 +343,7 @@ Termination is **unfair** if it is for reasons such as pregnancy, union membersh
 
 Meanwhile, keep your job search going on GLMIS.
 
-**Buttons:** File a complaint (`/services#complaints`) | [Search jobs on GLMIS](https://glmis.gov.gh)
+**Buttons:** File a complaint (`/services#complaints`) | [Search jobs on GLMIS](https://www.glmis.gov.gh/Jobs/Joblistings)
 
 ### 24. How do i file a labour complaint
 
@@ -431,7 +431,7 @@ Under the **Workmen&#39;s Compensation Law, 1987 (PNDCL 187)**, a worker injured
 
 Get medical care first, then contact your nearest office.
 
-**Buttons:** Compensation claims (`/services#compensation`) | Find an office (`/contact`)
+**Buttons:** [Report an accident on GLMIS](https://www.glmis.gov.gh/accidents) | Compensation claims (`/services#compensation`) | Find an office (`/contact`)
 
 ### 29. My workplace is not safe
 
@@ -443,7 +443,7 @@ Employers must provide a **safe and healthy workplace**: safe equipment, trainin
 
 A worker may report unsafe conditions to the Labour Department, and should not be punished for doing so.
 
-**Buttons:** Employer duties (`/employers`) | Report a problem (`/services#complaints`)
+**Buttons:** [Report an accident on GLMIS](https://www.glmis.gov.gh/accidents) | Employer duties (`/employers`) | Report a problem (`/services#complaints`)
 
 ### 30. Does the labour department inspect workplaces
 
@@ -477,7 +477,7 @@ Key employer duties include:
 
 Recruit for free on **GLMIS**.
 
-**Buttons:** Employer guide (`/employers`) | [Post a vacancy on GLMIS](https://glmis.gov.gh)
+**Buttons:** Employer guide (`/employers`) | [Post a vacancy on GLMIS](https://www.glmis.gov.gh/Identity/Account/Login)
 
 ### 32. Can i join a trade union
 
@@ -531,7 +531,7 @@ Operating without a licence is illegal.
 
 Only use **licensed** agencies and verify them with the Labour Department before paying or travelling. Genuine local jobs are on GLMIS for free.
 
-**Buttons:** Licensed agencies (`/services#agencies`) | [Search jobs on GLMIS](https://glmis.gov.gh) | Verify with us (`/contact`)
+**Buttons:** Licensed agencies (`/services#agencies`) | [Search jobs on GLMIS](https://www.glmis.gov.gh/Jobs/Joblistings) | Verify with us (`/contact`)
 
 ### 35. I want to work abroad
 
@@ -549,7 +549,7 @@ If you plan to work abroad:
 
 Also explore opportunities at home on **GLMIS**.
 
-**Buttons:** Licensed agencies (`/services#agencies`) | [Search jobs on GLMIS](https://glmis.gov.gh)
+**Buttons:** Licensed agencies (`/services#agencies`) | [Search jobs on GLMIS](https://www.glmis.gov.gh/Jobs/Joblistings)
 
 ## About the Department
 
@@ -571,7 +571,7 @@ The **Chief Labour Officer** is **Braimah Ibrahim Dawuda**, who heads the Labour
 
 The **Labour Department** administers labour laws in Ghana. We run Public Employment Centres and GLMIS, inspect workplaces, settle complaints, license private employment agencies, handle workmen&#39;s compensation and fight child labour.
 
-**Buttons:** About us (`/about`) | [Open GLMIS](https://glmis.gov.gh)
+**Buttons:** About us (`/about`) | [Create a GLMIS profile](https://www.glmis.gov.gh/Identity/Account/Register)
 
 ### 38. Which ministry is the labour department under
 
@@ -607,11 +607,9 @@ Our offices are open **Monday to Friday, 8:00am to 5:00pm** (closed on public ho
 
 - Toll-free: **0800 600 300** or **0800 600 400**
 
-- Mobile: **050 499 1227** or **055 341 9567**
-
 - Email: **info@labourdepartment.gov.gh**
 
-**Buttons:** Contact details (`/contact`) | [Open GLMIS](https://glmis.gov.gh)
+**Buttons:** Contact details (`/contact`) | [Create a GLMIS profile](https://www.glmis.gov.gh/Identity/Account/Register)
 
 ## Other
 
@@ -623,7 +621,7 @@ Our offices are open **Monday to Friday, 8:00am to 5:00pm** (closed on public ho
 
 Our **News and guides** page has plain-language guides on finding work, your rights and job fairs. You can share any guide straight to WhatsApp or Facebook.
 
-**Buttons:** News and guides (`/blog`) | [Open GLMIS](https://glmis.gov.gh)
+**Buttons:** News and guides (`/blog`) | [Create a GLMIS profile](https://www.glmis.gov.gh/Identity/Account/Register)
 
 ## When Kojo does not understand
 
@@ -631,7 +629,7 @@ Sorry, I didn&#39;t quite get that. You can choose a topic below or type **offic
 
 I can help with jobs on GLMIS, your rights at work, workplace complaints, child labour, workplace injury and agency registration.
 
-**Buttons:** [Open GLMIS](https://glmis.gov.gh) | FAQ (`/faq`) | Contact us (`/contact`)
+**Buttons:** [Create a GLMIS profile](https://www.glmis.gov.gh/Identity/Account/Register) | FAQ (`/faq`) | Contact us (`/contact`)
 
 ## Fact sheet used in AI mode
 
@@ -641,7 +639,7 @@ When `ANTHROPIC_API_KEY` is set, the AI is given these facts and told to stay wi
 - Parent ministry: Ministry of Labour, Jobs and Employment. Toll-free 0800 600 300 / 0800 600 400. Website melr.gov.gh.
 - Chief Labour Officer: Braimah Ibrahim Dawuda.
 - Offices: Mon-Fri 8:00-17:00. Public Employment Centres (PECs) in all 16 regions (e.g. Odomase, Bono Region; Goaso, Ahafo Region). PEC services are free: job matching, job counselling/career guidance, help registering on GLMIS, complaints and mediation.
-- GLMIS (Ghana Labour Market Information System), https://glmis.gov.gh: free government jobs portal. Job seekers create a profile, upload CV, apply for vacancies. Employers post vacancies and search candidates free. Publishes labour market information. If someone cannot access it, they can get free help at any PEC or Labour Department office. Always recommend GLMIS for job, vacancy, CV or unemployment questions.
+- GLMIS (Ghana Labour Market Information System), https://www.glmis.gov.gh: free government jobs portal. Job seekers create a profile, upload CV, apply for vacancies. Employers post vacancies and search candidates free. Publishes labour market information. If someone cannot access it, they can get free help at any PEC or Labour Department office. Always recommend GLMIS for job, vacancy, CV or unemployment questions.
 - Minimum wage: National Daily Minimum Wage 2026 is GH¢21.77/day, effective 1 January 2026 (2025: GH¢19.97). Set by the National Tripartite Committee.
 - Annual leave: at least 15 working days with full pay after 12 months continuous service (s.20 Act 651).
 - Hours: normal maximum 8 hours/day, 40 hours/week. Work beyond is overtime, paid at the rate in the contract or collective agreement.
@@ -657,5 +655,5 @@ When `ANTHROPIC_API_KEY` is set, the AI is given these facts and told to stay wi
 - Recruitment scams / jobs abroad: only use licensed agencies; never pay for 'visa lottery' or guaranteed jobs; get a written contract before travel; do not surrender passport to unverified agents; verify agencies with the Labour Department.
 - Trade unions: workers may form or join a union; punishing union membership is unfair.
 - New Labour Bill: in progress, NOT yet law; would cover gig/platform and remote work. Act 651 still applies.
-- Contacts: info@labourdepartment.gov.gh; mobile 050 499 1227 / 055 341 9567. Website labourdepartment.gov.gh. Blog at /blog.
+- Contacts: info@labourdepartment.gov.gh. Website labourdepartment.gov.gh. Blog at /blog.
 - Site pages: /blog, /glmis, /services, /services#complaints, /services#agencies, /services#compensation, /workers-rights, /employers, /child-labour, /faq, /contact, /about.
