@@ -670,3 +670,142 @@ tbody tr:nth-child(even) td { background: var(--panel); }
 :root[data-theme="dark"] .card, :root[data-theme="dark"] .step { background: var(--surface); }
 /* Hide the floating chat button while the hero's ask box is on screen (phones), so they never overlap */
 @media (max-width: 560px) { .chat.hero-visible:not(.is-open) .chat-launcher { opacity: 0; pointer-events: none; transform: translateY(12px); } .chat-launcher { transition: transform .3s var(--ease), opacity .3s var(--ease); } }
+
+/* =====================================================================
+   Depth and texture layer
+   - Film grain on every dark brand surface (SVG noise, no image request)
+   - Kente-inspired weave in brand colours at very low strength
+   - Floating 3D rings and soft orbs with scroll parallax (--p from site.js)
+   - Pointer-lit sheen and stacked plates on cards and stats
+   All motion stops under prefers-reduced-motion.
+   ===================================================================== */
+:root {
+  --grain: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 0 0 0 .55 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  --grain-dark: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 .17 0 0 0 0 .22 0 0 0 0 .56 0 0 0 .35 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  --kente: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='72' height='72' viewBox='0 0 72 72'%3E%3Cg fill='none' stroke-width='3'%3E%3Cpath stroke='%23F9ED32' d='M0 4h36M0 12h36M0 20h36M0 28h36'/%3E%3Cpath stroke='%23DD2A1B' d='M40 36v36M48 36v36M56 36v36M64 36v36'/%3E%3Cpath stroke='%23006838' d='M40 0v32M52 0v32M64 0v32'/%3E%3Cpath stroke='%23F9ED32' d='M0 42h36M0 54h36M0 66h36'/%3E%3C/g%3E%3Cpath fill='%23F9ED32' d='M14 14l4-4 4 4-4 4zM50 50l4-4 4 4-4 4z'/%3E%3C/svg%3E");
+}
+
+/* Grain + weave on the dark brand surfaces */
+.hero {
+  background:
+    var(--grain),
+    radial-gradient(70% 90% at 82% 40%, rgb(58 76 192 / .95) 0%, rgb(43 57 144 / .9) 38%, rgb(22 29 85 / 1) 100%),
+    var(--blue-deep);
+  background-size: 180px 180px, auto, auto;
+  background-blend-mode: soft-light, normal, normal;
+}
+.page-hero {
+  background:
+    var(--grain),
+    linear-gradient(90deg, var(--blue-deep), transparent 30%),
+    var(--kente),
+    radial-gradient(80% 140% at 100% 0%, rgb(58 76 192 / .9), transparent 60%),
+    linear-gradient(160deg, var(--blue) 0%, var(--blue-deep) 100%);
+  background-size: 180px 180px, 72px 100%, 72px 72px, auto, auto;
+  background-position: 0 0, right 0 top 0, right 0 top 0, 0 0, 0 0;
+  background-repeat: repeat, no-repeat, repeat-y, no-repeat, no-repeat;
+  background-blend-mode: soft-light, normal, soft-light, normal, normal;
+}
+.cta-band {
+  background:
+    var(--grain),
+    var(--kente),
+    radial-gradient(120% 160% at 0% 0%, var(--blue-mid), var(--blue) 45%, var(--blue-deep));
+  background-size: 180px 180px, 72px 72px, auto;
+  background-position: 0 0, right 0 top 0, 0 0;
+  background-repeat: repeat, repeat-y, no-repeat;
+  background-blend-mode: soft-light, soft-light, normal;
+}
+.tile-feature {
+  background:
+    var(--grain),
+    radial-gradient(120% 120% at 100% 100%, var(--blue-mid), var(--blue) 45%, var(--blue-deep));
+  background-size: 180px 180px, auto;
+  background-blend-mode: soft-light, normal;
+}
+.site-footer {
+  background:
+    var(--grain),
+    linear-gradient(180deg, var(--blue) 0%, var(--blue-deep) 100%);
+  background-size: 180px 180px, auto;
+  background-blend-mode: soft-light, normal;
+}
+
+/* 3D orbit ring in inner page heroes (replaces the flat circle) */
+.page-hero::before {
+  right: -120px; top: -40px; width: 560px; height: 560px;
+  border: 2px solid rgb(249 237 50 / .45);
+  box-shadow: 0 0 0 46px rgb(255 255 255 / .03), 0 0 0 92px rgb(255 255 255 / .025), inset 0 0 60px rgb(249 237 50 / .12);
+  transform: perspective(900px) rotateX(64deg) rotateZ(0deg);
+  animation: ld-orbit 40s linear infinite;
+}
+@keyframes ld-orbit { to { transform: perspective(900px) rotateX(64deg) rotateZ(360deg); } }
+
+/* Light sections: faint weave, floating orbs and a tilted ring, with parallax */
+.section-alt { position: relative; isolation: isolate; overflow: hidden; }
+.section-alt::before, .section-alt::after { content: ""; position: absolute; z-index: -1; pointer-events: none; }
+.section-alt::before {
+  inset: 0;
+  background: var(--kente) 0 0 / 72px 72px;
+  opacity: .07;
+  -webkit-mask-image: radial-gradient(60% 70% at 100% 0%, #000, transparent 70%);
+          mask-image: radial-gradient(60% 70% at 100% 0%, #000, transparent 70%);
+}
+.section-alt::after {
+  left: -180px; bottom: -220px; width: 520px; height: 520px; border-radius: 50%;
+  background: radial-gradient(circle at 35% 35%, rgb(58 76 192 / .22), rgb(58 76 192 / 0) 62%);
+  box-shadow: 0 0 0 1px rgb(43 57 144 / .10), 0 0 0 60px rgb(43 57 144 / .025);
+  transform: translate3d(0, calc(var(--p, 0) * -60px), 0) perspective(800px) rotateX(58deg);
+}
+.section { position: relative; }
+.section:not(.section-alt) > .container { position: relative; z-index: 1; }
+
+/* Floating depth orbs (added by site.js to sections marked data-depth) */
+.depth-orb {
+  position: absolute; z-index: 0; pointer-events: none; border-radius: 50%;
+  transform: translate3d(0, calc(var(--p, 0) * var(--speed, 40px)), 0);
+  will-change: transform;
+}
+.depth-orb.o1 { width: 220px; height: 220px; right: 4%; top: 8%; --speed: -70px;
+  background: radial-gradient(circle at 30% 30%, #fff8a6, var(--yellow) 40%, #c9b900 100%); opacity: .16; filter: blur(2px); }
+.depth-orb.o2 { width: 120px; height: 120px; left: 3%; top: 55%; --speed: 50px;
+  background: radial-gradient(circle at 30% 30%, #ff8a7f, var(--red) 45%, #8f150c 100%); opacity: .12; }
+.depth-orb.o3 { width: 360px; height: 360px; right: -120px; bottom: -160px; --speed: -30px;
+  background: none; border: 1px solid rgb(43 57 144 / .18); box-shadow: 0 0 0 40px rgb(43 57 144 / .025);
+  transform: translate3d(0, calc(var(--p, 0) * var(--speed)), 0) perspective(700px) rotateX(62deg); }
+:root[data-theme="dark"] .depth-orb.o1 { opacity: .1; }
+:root[data-theme="dark"] .depth-orb.o3 { border-color: rgb(255 255 255 / .12); }
+
+/* Pointer-lit sheen on tilt surfaces (--mx/--my set by site.js) */
+.tile::before, .card::before, .step::before, .hero-card::before {
+  content: ""; position: absolute; inset: 0; border-radius: inherit; pointer-events: none; z-index: 2;
+  background: radial-gradient(420px circle at var(--mx, 50%) var(--my, -40%), rgb(255 255 255 / .22), transparent 45%);
+  opacity: 0; transition: opacity .4s var(--ease);
+}
+.tile:hover::before, .card:hover::before, .step:hover::before, .hero-card:hover::before { opacity: 1; }
+.card, .step { position: relative; }
+.tile:not(.tile-feature):not(.tile-photo)::before, .card::before, .step::before {
+  background: radial-gradient(380px circle at var(--mx, 50%) var(--my, -40%), rgb(43 57 144 / .09), transparent 50%);
+}
+:root[data-theme="dark"] .card::before, :root[data-theme="dark"] .step::before { background: radial-gradient(380px circle at var(--mx, 50%) var(--my, -40%), rgb(255 255 255 / .07), transparent 50%); }
+
+/* Stacked-plate depth under key panels */
+.stats { box-shadow: 10px 10px 0 -1px var(--yellow), 20px 20px 0 -2px rgb(43 57 144 / .16), var(--shadow-lg); }
+.cta-band { box-shadow: 14px 14px 0 -2px rgb(249 237 50 / .9), var(--shadow-lg); }
+@media (max-width: 560px) { .page-hero { background-size: 180px 180px, 36px 100%, 36px 36px, auto, auto; } .cta-band { background-size: 180px 180px, 36px 36px, auto; } .stats { box-shadow: 6px 6px 0 -1px var(--yellow), var(--shadow-lg); } .cta-band { box-shadow: 8px 8px 0 -2px rgb(249 237 50 / .9), var(--shadow-lg); } }
+
+/* Layered depth inside tiles: icon lifts towards the viewer on hover */
+.tile-icon { transition: transform .5s var(--ease), box-shadow .5s var(--ease); }
+.tile:hover .tile-icon { transform: translateY(-3px) scale(1.06); box-shadow: 0 14px 24px -12px rgb(22 29 85 / .55); }
+
+/* Step numbers as embossed 3D chips */
+.step .num {
+  background: linear-gradient(145deg, var(--blue-mid), var(--blue-deep)) !important; color: #fff !important;
+  box-shadow: inset 0 1px 0 rgb(255 255 255 / .35), inset 0 -3px 0 rgb(0 0 0 / .25), 0 8px 16px -8px rgb(22 29 85 / .7);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .page-hero::before { animation: none; }
+  .depth-orb, .section-alt::after { transform: none !important; }
+}
+@media (prefers-reduced-transparency: reduce) { .depth-orb { display: none; } }

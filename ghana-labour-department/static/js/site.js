@@ -62,6 +62,8 @@
 
   // 3D tilt on cards (pointer devices only). Communicates "this is interactive".
   if (!reduceMotion && window.matchMedia("(hover: hover) and (pointer: fine)").matches) {
+    // Gentle tilt on content cards too, so every panel has depth.
+    document.querySelectorAll(".card, .step, .region").forEach(function (el) { if (!el.hasAttribute("data-tilt")) el.setAttribute("data-tilt", "3"); });
     document.querySelectorAll("[data-tilt]").forEach(function (el) {
       var max = Number(el.getAttribute("data-tilt")) || 6;
       var raf = 0;
@@ -71,6 +73,8 @@
         var y = (e.clientY - r.top) / r.height - 0.5;
         cancelAnimationFrame(raf);
         raf = requestAnimationFrame(function () {
+          el.style.setProperty("--mx", ((x + 0.5) * 100).toFixed(1) + "%");
+          el.style.setProperty("--my", ((y + 0.5) * 100).toFixed(1) + "%");
           el.style.transform = "perspective(900px) rotateX(" + (-y * max).toFixed(2) + "deg) rotateY(" + (x * max).toFixed(2) + "deg) translateZ(0)";
         });
       });
@@ -167,4 +171,34 @@
   var card = document.querySelector(".hero-card"), chat = document.querySelector(".chat");
   if (!card || !chat || !("IntersectionObserver" in window)) return;
   new IntersectionObserver(function (e) { chat.classList.toggle("hero-visible", e[0].isIntersecting); }, { threshold: 0.15 }).observe(card);
+})();
+
+// Depth layers: floating orbs in plain sections and scroll parallax (--p from -1 to 1 per section).
+(function () {
+  var reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  var secs = [].slice.call(document.querySelectorAll("main .section, main section.section-tight, .page-hero"));
+  secs.forEach(function (s, i) {
+    if (!s.classList.contains("section") || s.classList.contains("section-alt")) return;
+    if (i % 2) return; // every other plain section, so it stays calm
+    ["o1", "o2", "o3"].forEach(function (c) { var d = document.createElement("span"); d.className = "depth-orb " + c; d.setAttribute("aria-hidden", "true"); s.insertBefore(d, s.firstChild); });
+    s.style.overflow = "hidden";
+  });
+  if (reduce) return;
+  var visible = new Set(), ticking = false;
+  function update() {
+    ticking = false;
+    var vh = window.innerHeight;
+    visible.forEach(function (s) {
+      var r = s.getBoundingClientRect();
+      var p = ((r.top + r.height / 2) - vh / 2) / (vh / 2 + r.height / 2);
+      s.style.setProperty("--p", Math.max(-1, Math.min(1, p)).toFixed(3));
+    });
+  }
+  function onScroll() { if (!ticking) { ticking = true; requestAnimationFrame(update); } }
+  if ("IntersectionObserver" in window) {
+    var io = new IntersectionObserver(function (es) { es.forEach(function (e) { e.isIntersecting ? visible.add(e.target) : visible.delete(e.target); }); onScroll(); });
+    secs.forEach(function (s) { io.observe(s); });
+    window.addEventListener("scroll", onScroll, { passive: true });
+    window.addEventListener("resize", onScroll);
+  }
 })();
