@@ -258,7 +258,7 @@ for (const p of posts) {
     path: p.path,
     outFile: `blog/${p.slug}.html`,
     meta: {
-      title: `${p.title} | Ghana Labour Department`,
+      title: p.seoTitle || (p.title.length + 26 <= 65 ? `${p.title} | Ghana Labour Department` : p.title),
       description: p.description,
       crumb: p.title,
       parent: ["/blog", "Blog"],

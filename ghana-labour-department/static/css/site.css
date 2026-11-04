@@ -270,7 +270,7 @@ strong { font-weight: 700; }
 .stat:nth-child(4) { border-left-color: var(--yellow); }
 .stat strong { display: block; font-size: clamp(1.6rem, 3vw, 2.2rem); font-weight: 800; color: var(--heading); line-height: 1.1; }
 .stat span { color: var(--text-2); font-size: .95rem; }
-@media (max-width: 760px) { .stats { grid-template-columns: repeat(2, minmax(0, 1fr)); } .stat { padding: 18px; } }
+@media (max-width: 760px) { .stats { grid-template-columns: repeat(2, minmax(0, 1fr)); } .stat { padding: 18px 14px; } .stat strong { font-size: clamp(1.25rem, 6.2vw, 1.6rem); white-space: nowrap; } }
 
 /* Bento service grid */
 .bento { display: grid; grid-template-columns: repeat(6, 1fr); gap: 16px; }
@@ -501,6 +501,12 @@ tbody tr:nth-child(even) td { background: var(--panel); }
 .chat-launcher:hover { transform: translateY(-2px); }
 .chat-launcher img { width: 38px; height: 38px; border-radius: 50%; background: #fff; padding: 2px; }
 .chat.is-open .chat-launcher { display: none; }
+@media (max-width: 560px) {
+  .chat { right: 14px; bottom: 14px; }
+  .chat-launcher { padding: 6px; gap: 0; }
+  .chat-launcher img { width: 44px; height: 44px; }
+  .chat-launcher span { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+}
 .chat-panel {
   width: min(400px, calc(100vw - 24px)); height: min(640px, calc(100dvh - 40px)); display: flex; flex-direction: column;
   background: var(--surface); border: 1px solid var(--line); border-radius: 20px; box-shadow: var(--shadow-lg); overflow: hidden;
@@ -662,3 +668,5 @@ tbody tr:nth-child(even) td { background: var(--panel); }
 .photo-row figure:hover img { transform: scale(1.05); }
 @media (max-width: 760px) { .photo-row { grid-template-columns: minmax(0, 1fr); } }
 :root[data-theme="dark"] .card, :root[data-theme="dark"] .step { background: var(--surface); }
+/* Hide the floating chat button while the hero's ask box is on screen (phones), so they never overlap */
+@media (max-width: 560px) { .chat.hero-visible:not(.is-open) .chat-launcher { opacity: 0; pointer-events: none; transform: translateY(12px); } .chat-launcher { transition: transform .3s var(--ease), opacity .3s var(--ease); } }

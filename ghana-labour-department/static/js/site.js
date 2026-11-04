@@ -161,3 +161,10 @@
     });
   }
 })();
+
+// Phones: keep the floating chat button out of the way while the hero ask box is visible.
+(function () {
+  var card = document.querySelector(".hero-card"), chat = document.querySelector(".chat");
+  if (!card || !chat || !("IntersectionObserver" in window)) return;
+  new IntersectionObserver(function (e) { chat.classList.toggle("hero-visible", e[0].isIntersecting); }, { threshold: 0.15 }).observe(card);
+})();
