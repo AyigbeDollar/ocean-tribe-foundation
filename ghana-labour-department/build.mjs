@@ -74,6 +74,14 @@ const followLinks = SOCIAL.length
   : `<ul class="social-links"><li><a href="/rss.xml">${icon("rss")}Blog RSS feed</a></li><li><a href="/blog">${icon("book")}News and guides</a></li></ul>`;
 const sameAs = SOCIAL.length ? `,\n    "sameAs": ${JSON.stringify(SOCIAL.map(([k]) => config.social[k]))}` : "";
 
+// ---------- Analytics: set analyticsId in content/settings.json (CMS: Site content) to "GTM-XXXX" or "G-XXXX" ----------
+const AID = (config.analyticsId || "").trim();
+const analyticsHead = /^GTM-[A-Z0-9]+$/.test(AID)
+  ? `<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src='https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);})(window,document,'script','dataLayer','${AID}');</script>`
+  : /^G-[A-Z0-9]+$/.test(AID)
+  ? `<script async src="https://www.googletagmanager.com/gtag/js?id=${AID}"></script><script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','${AID}');</script>`
+  : "";
+
 // ---------- Share bar (UTM-tagged so traffic from each platform is measurable) ----------
 function shareBar(url, text, campaign) {
   const t = encodeURIComponent(text);
@@ -173,7 +181,7 @@ function render({ meta, body, path, outFile }) {
     .replace("{{footerSocial}}", footerSocial)
     .replace("{{nav}}", nav)
     .replace("{{jsonld}}", crumbs + "\n" + ld)
-    .replace("{{head}}", meta.head || "")
+    .replace("{{head}}", analyticsHead + (meta.head || ""))
     .replace("{{content}}", applyTokens(body)
       .replace("<!--latest-posts-->", latestPosts)
       .replace("<!--follow-links-->", followLinks)

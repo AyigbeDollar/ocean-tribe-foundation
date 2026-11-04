@@ -144,6 +144,7 @@ collections:
               - { label: "WhatsApp Channel", name: whatsappChannel, widget: string, required: false }
           - { label: "Website address (this host)", name: siteUrl, widget: string, hint: "Used for links in feeds and share buttons." }
           - { label: "Official domain", name: productionDomain, widget: string }
+          - { label: "Analytics ID", name: analyticsId, widget: string, required: false, hint: "Google Tag Manager (GTM-XXXX) or GA4 (G-XXXX). Leave empty to turn analytics off." }
 
       - name: leadership
         label: Leadership (Chief Labour Officer)

@@ -54,14 +54,16 @@ This folder holds the full source of the Ghana Labour Department website. Use th
 ## Outstanding tasks, in priority order
 
 1. **Turn on CMS sign-in:**
-   - Create a GitHub OAuth App with the callback `https://labour-department-ghana.vercel.app/api/callback`.
+   - GitHub OAuth App "Ghana Labour Department CMS" is registered (owner KojoSelorm, Client ID `Ov23liF1cX60wECxK0bv`).
+   - Generate its client secret in GitHub → Settings → Developer settings → OAuth Apps.
+   - ~~Create a GitHub OAuth App with the callback `https://labour-department-ghana.vercel.app/api/callback`.~~
    - Add `GITHUB_CLIENT_ID` and `GITHUB_CLIENT_SECRET` to the Vercel project's environment variables, then redeploy.
    - Invite officers to the repository with Write access.
 2. **Production branch:** CMS commits go to `claude/ghana-labour-website-chatbot-rndaol` (set in `static/admin/config.yml`). Either set that branch as the Production Branch in Vercel → Settings → Git, or merge it into `main` and change `backend.branch` to `main`.
 3. **Chief Labour Officer portrait:** upload the official photo in the CMS under Site content → Leadership. A branded placeholder shows until then.
 4. **Real photography:** the site uses photorealistic AI-generated images of fictional people, listed in `remote-assets.json`. Replace them with real, consented Department photos through the CMS or in `static/img/photos/`.
 5. **Social media handles:** add the official accounts in the CMS under Site content. Then connect `/rss.xml` to Meta Business Suite, Buffer or Zapier to auto-post new articles.
-6. **Analytics:** add a Google Tag Manager or GA4 snippet to `src/layout.html`.
+6. **Analytics:** paste a Google Tag Manager (`GTM-...`) or GA4 (`G-...`) ID into the CMS under Site content → Analytics ID (or `analyticsId` in `content/settings.json`). The tag loads on every page once set.
 7. **Domain:** point `labourdepartment.gov.gh` at the Vercel project and update `siteUrl` in `content/settings.json`.
 8. **PRU sign-off:**
    - Fact-check the four launch blog posts.
