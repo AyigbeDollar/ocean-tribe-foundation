@@ -60,7 +60,7 @@ This folder holds the full source of the Ghana Labour Department website. Use th
    - Add `GITHUB_CLIENT_ID` and `GITHUB_CLIENT_SECRET` to the Vercel project's environment variables, then redeploy.
    - Invite officers to the repository with Write access.
 2. **Production branch:** CMS commits go to `claude/ghana-labour-website-chatbot-rndaol` (set in `static/admin/config.yml`). Either set that branch as the Production Branch in Vercel → Settings → Git, or merge it into `main` and change `backend.branch` to `main`.
-3. **Chief Labour Officer portrait:** done. Official photo at `static/img/chief-labour-officer.jpg` (replace in the CMS under Site content → Leadership).
+3. **Chief Labour Officer portrait:** done. Official photo at `static/img/chief-labour-officer-2026-11.jpg` (use a new file name when replacing it, so caches refresh) (replace in the CMS under Site content → Leadership).
 4. **Real photography:** done for five of six slots. `static/img/photos/*.jpg` are real Department photos (Jobs Roadshow Sunyani, PEC booth, YEA-PEA stakeholder meeting), exported at 1600x1200 with camera and GPS data removed. `child-hands.png` stays generated on purpose so no identifiable child appears. Confirm the people shown agreed to appear on the website.
 5. **Social media handles:** add the official accounts in the CMS under Site content. Then connect `/rss.xml` to Meta Business Suite, Buffer or Zapier to auto-post new articles.
 6. **Analytics:** paste a Google Tag Manager (`GTM-...`) or GA4 (`G-...`) ID into the CMS under Site content → Analytics ID (or `analyticsId` in `content/settings.json`). The tag loads on every page once set.
