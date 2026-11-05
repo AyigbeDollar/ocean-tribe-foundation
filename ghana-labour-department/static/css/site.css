@@ -922,3 +922,23 @@ tbody tr:nth-child(even) td { background: var(--panel); }
   .share-card { box-shadow: 6px 6px 0 -1px var(--yellow), var(--shadow-lg); border-radius: 20px; }
 }
 @media (prefers-reduced-motion: reduce) { .share-story::before { animation: none; } .sp-screen, .share-card:hover .sp-screen { transform: none; } .share-tile:hover { transform: none; } }
+
+/* Official platform marks: shown in each brand's own colour on a white chip */
+.t-wa, .t-fb, .t-x, .t-in { --mark: currentColor; }
+.share-tile.t-fb .st-icon, .share-tile.t-x .st-icon, .share-tile.t-in .st-icon, .share-tile.t-wa .st-icon {
+  background: #fff; box-shadow: 0 0 0 1px rgb(0 0 0 / .08), 0 6px 14px -8px rgb(0 0 0 / .35);
+}
+.share-tile.t-wa .st-icon { color: #25D366; }
+.share-tile.t-fb .st-icon { color: #0866FF; }
+.share-tile.t-x .st-icon { color: #000; }
+.share-tile.t-in .st-icon { color: #0A66C2; }
+.share-tile.t-fb .st-icon svg, .share-tile.t-x .st-icon svg, .share-tile.t-in .st-icon svg, .share-tile.t-wa .st-icon svg { width: 26px; height: 26px; }
+.share-tile.t-x .st-icon svg { width: 22px; height: 22px; }
+.brand-facebook svg { color: #0866FF !important; }
+.brand-xlogo svg { color: #000 !important; }
+.brand-linkedin svg { color: #0A66C2 !important; }
+.brand-instagram svg { color: #FF0069 !important; }
+.brand-tiktok svg { color: #000 !important; }
+.brand-youtube svg { color: #FF0000 !important; }
+.brand-whatsapp svg { color: #25D366 !important; }
+:root[data-theme="dark"] .brand-xlogo svg, :root[data-theme="dark"] .brand-tiktok svg { color: #fff !important; }

@@ -71,7 +71,7 @@ const footerSocial = SOCIAL.length
   ? `<div class="footer-social" aria-label="Follow us">${SOCIAL.map(([k, label, ic]) => `<a href="${esc(config.social[k])}" target="_blank" rel="noopener" aria-label="${label}" data-track="follow_${k}">${icon(ic)}</a>`).join("")}</div>`
   : "";
 const followLinks = SOCIAL.length
-  ? `<ul class="social-links">${SOCIAL.map(([k, label, ic]) => `<li><a href="${esc(config.social[k])}" target="_blank" rel="noopener" data-track="follow_${k}">${icon(ic)}${label}</a></li>`).join("")}</ul>`
+  ? `<ul class="social-links">${SOCIAL.map(([k, label, ic]) => `<li><a class="brand-${ic}" href="${esc(config.social[k])}" target="_blank" rel="noopener" data-track="follow_${k}">${icon(ic)}${label}</a></li>`).join("")}</ul>`
   : `<ul class="social-links"><li><a href="/rss.xml">${icon("rss")}Blog RSS feed</a></li><li><a href="/blog">${icon("book")}News and guides</a></li></ul>`;
 const sameAs = SOCIAL.length ? `,\n    "sameAs": ${JSON.stringify(SOCIAL.map(([k]) => config.social[k]))}` : "";
 
