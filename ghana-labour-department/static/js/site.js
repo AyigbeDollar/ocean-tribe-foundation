@@ -120,15 +120,23 @@
     else window.prompt("Copy this:", text);
   }
   document.querySelectorAll("[data-share]").forEach(function (bar) {
+    var url = bar.getAttribute("data-url"), title = bar.getAttribute("data-title");
     var btn = bar.querySelector("[data-copy-link]");
-    if (!btn) return;
-    btn.addEventListener("click", function () {
-      var url = bar.getAttribute("data-url"), title = bar.getAttribute("data-title");
-      window.dataLayer.push({ event: "share", method: navigator.share ? "native" : "copy", page: location.pathname });
-      if (navigator.share && window.matchMedia("(pointer: coarse)").matches) {
-        navigator.share({ title: title, text: title, url: url.replace("utm_source=copy", "utm_source=native") }).catch(function () {});
-      } else copy(url, btn, "Link copied");
+    if (btn) btn.addEventListener("click", function () {
+      window.dataLayer.push({ event: "share", method: "copy", page: location.pathname });
+      var field = bar.querySelector(".share-field input");
+      if (field) field.select();
+      copy(url, btn, "Copied");
+      btn.classList.add("is-done"); setTimeout(function () { btn.classList.remove("is-done"); }, 1800);
     });
+    var more = bar.querySelector("[data-native-share]");
+    if (more && navigator.share) {
+      more.closest("li").hidden = false;
+      more.addEventListener("click", function () {
+        window.dataLayer.push({ event: "share", method: "native", page: location.pathname });
+        navigator.share({ title: title, text: title, url: url.replace("utm_source=copy", "utm_source=native") }).catch(function () {});
+      });
+    }
   });
   document.addEventListener("click", function (e) {
     var a = e.target.closest && e.target.closest("[data-track^='share_'], [data-track^='follow_']");

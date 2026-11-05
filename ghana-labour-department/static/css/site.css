@@ -809,3 +809,116 @@ tbody tr:nth-child(even) td { background: var(--panel); }
   .depth-orb, .section-alt::after { transform: none !important; }
 }
 @media (prefers-reduced-transparency: reduce) { .depth-orb { display: none; } }
+
+/* =====================================================================
+   Share card: story + live message preview on the left, big share tiles on the right.
+   Container queries keep it right in any width (home, blog index, inside a post).
+   ===================================================================== */
+.share-head { display: flex; flex-wrap: wrap; align-items: flex-end; justify-content: space-between; gap: 18px 32px; margin-bottom: clamp(24px, 4vw, 36px); }
+.share-head h2 { margin-bottom: 8px; }
+.share-head .lead { margin: 0; max-width: 52ch; }
+.post-share { margin-top: 40px; }
+.share-card {
+  position: relative; display: grid; grid-template-columns: minmax(0, 1fr);
+  border-radius: 24px; overflow: hidden; background: var(--surface); border: 1px solid var(--line);
+  box-shadow: 12px 12px 0 -2px var(--yellow), var(--shadow-lg);
+}
+.share-card > * { min-width: 0; }
+.share-story {
+  position: relative; isolation: isolate; color: #fff; padding: clamp(24px, 4vw, 40px);
+  overflow: hidden;
+  background:
+    var(--grain),
+    radial-gradient(120% 120% at 0% 0%, var(--blue-mid), var(--blue) 45%, var(--blue-deep));
+  background-size: 180px 180px, auto;
+  background-blend-mode: soft-light, normal;
+}
+.share-story::before {
+  content: ""; position: absolute; z-index: -1; right: -160px; bottom: -200px; width: 460px; height: 460px; border-radius: 50%; pointer-events: none;
+  border: 2px solid rgb(249 237 50 / .45); box-shadow: 0 0 0 40px rgb(255 255 255 / .03), 0 0 0 80px rgb(255 255 255 / .025);
+  transform: perspective(900px) rotateX(62deg); animation: ld-orbit-share 40s linear infinite;
+}
+.share-story::after {
+  content: ""; position: absolute; left: 0; right: 0; bottom: 0; height: 6px;
+  background: linear-gradient(90deg, var(--red) 0 33.33%, var(--yellow) 33.33% 66.66%, var(--green) 66.66%);
+}
+@keyframes ld-orbit-share { to { transform: perspective(900px) rotateX(62deg) rotateZ(360deg); } }
+.share-story .share-kicker { display: inline-flex; align-items: center; gap: 8px; margin: 0 0 12px; padding: 6px 12px; border-radius: 999px; background: var(--yellow); color: var(--ink); font-size: .78rem; font-weight: 800; letter-spacing: .08em; text-transform: uppercase; }
+.share-story h3 { color: #fff; font-size: clamp(1.4rem, 2.4vw, 1.85rem); line-height: 1.2; margin: 0 0 10px; max-width: 20ch; }
+.share-story > p { color: #e3e7f8; margin: 0 0 24px; max-width: 44ch; }
+
+/* Message preview: what the friend sees, on a small tilted phone screen */
+.share-preview { margin: 0; perspective: 1100px; }
+.sp-screen {
+  max-width: 360px; border-radius: 22px; overflow: hidden; background: #efe7dd;
+  background-image: radial-gradient(rgb(43 57 144 / .07) 1px, transparent 1.5px); background-size: 14px 14px;
+  box-shadow: 0 0 0 6px rgb(255 255 255 / .1), 0 40px 70px -35px rgb(0 0 0 / .75);
+  transform: rotateY(9deg) rotateX(4deg); transform-origin: left center; transition: transform .8s var(--ease);
+}
+.share-card:hover .sp-screen { transform: rotateY(2deg) rotateX(1deg); }
+.sp-bar { display: flex; align-items: center; gap: 10px; padding: 10px 14px; background: #075e54; color: #fff; }
+.sp-bar strong { display: block; font-size: .9rem; line-height: 1.2; }
+.sp-bar small { font-size: .72rem; color: #cfe9e4; }
+.sp-avatar { display: grid; place-items: center; width: 32px; height: 32px; border-radius: 50%; background: rgb(255 255 255 / .2); }
+.sp-bubble { position: relative; margin: 14px 14px 16px auto; width: 86%; padding: 6px 6px 8px; border-radius: 12px 2px 12px 12px; background: #dcf8c6; color: #1f2b22; box-shadow: 0 1px 1px rgb(0 0 0 / .12); font-size: .86rem; line-height: 1.4; }
+.sp-link { border-radius: 8px; overflow: hidden; background: rgb(0 0 0 / .05); }
+.sp-link img { display: block; width: 100%; aspect-ratio: 1200 / 630; object-fit: cover; }
+.sp-link div { padding: 7px 9px; }
+.sp-link strong { display: block; font-size: .8rem; line-height: 1.3; color: #111; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
+.sp-link small { font-size: .72rem; color: #5b6b60; }
+.sp-bubble p { margin: 6px 4px 0; color: #1f2b22; }
+.sp-url { color: #0b62a3; word-break: break-all; }
+.sp-meta { display: flex; justify-content: flex-end; align-items: center; gap: 4px; font-size: .68rem; color: #5b6b60; margin: 2px 4px 0; }
+.sp-meta svg { color: #34b7f1; }
+
+/* Actions */
+.share-actions { padding: clamp(22px, 4vw, 40px); display: flex; flex-direction: column; justify-content: center; gap: 16px; }
+.share-label { margin: 0; font-weight: 800; color: var(--heading); font-size: 1.05rem; }
+.share-grid { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; }
+.share-grid li { min-width: 0; }
+.share-grid li:first-child, .share-grid:has(.st-more[hidden]) li:nth-child(6) { grid-column: 1 / -1; }
+.share-tile {
+  position: relative; display: flex; align-items: center; gap: 12px; width: 100%; min-height: 64px; padding: 10px 14px; border-radius: 16px;
+  border: 1.5px solid var(--line); background: var(--surface); color: var(--text); text-decoration: none; font: inherit; text-align: left; cursor: pointer;
+  transition: transform .35s var(--ease), box-shadow .35s var(--ease), border-color .35s var(--ease);
+}
+.share-tile:hover { transform: translateY(-3px); border-color: var(--tile, var(--blue)); box-shadow: 0 16px 30px -18px var(--tile-shadow, rgb(43 57 144 / .6)); }
+.share-tile:focus-visible { outline: 3px solid var(--tile, var(--blue)); outline-offset: 2px; }
+.st-icon { flex: none; display: grid; place-items: center; width: 44px; height: 44px; border-radius: 12px; background: var(--tile, var(--blue)); color: #fff; box-shadow: inset 0 1px 0 rgb(255 255 255 / .3), inset 0 -3px 0 rgb(0 0 0 / .18); }
+.st-text { min-width: 0; display: flex; flex-direction: column; }
+.st-text strong { font-size: 1rem; line-height: 1.2; }
+.st-text small { font-size: .82rem; color: var(--muted); line-height: 1.3; }
+.t-wa { --tile: #1f8f4e; --tile-shadow: rgb(0 104 56 / .55); }
+.t-fb { --tile: #1877f2; --tile-shadow: rgb(24 119 242 / .5); }
+.t-x { --tile: #111; --tile-shadow: rgb(0 0 0 / .45); }
+.t-in { --tile: #0a66c2; --tile-shadow: rgb(10 102 194 / .5); }
+.t-sms { --tile: var(--green); --tile-shadow: rgb(0 104 56 / .45); }
+.t-mail { --tile: var(--red); --tile-shadow: rgb(221 42 27 / .45); }
+.t-more { --tile: var(--blue); }
+:root[data-theme="dark"] .t-x { --tile: #3a3a3a; }
+/* WhatsApp is the main channel in Ghana: make it the hero tile */
+.share-tile.t-wa { min-height: 72px; background: linear-gradient(135deg, #0a7a3f, var(--green)); border-color: transparent; color: #fff; box-shadow: 0 18px 34px -20px rgb(0 104 56 / .8); }
+.share-tile.t-wa .st-icon { background: #fff; color: #128c48; }
+.share-tile.t-wa .st-text strong { font-size: 1.12rem; }
+.share-tile.t-wa .st-text small { color: #d8f1e2; }
+.share-tile.t-wa::after { content: ""; margin-left: auto; width: 34px; height: 34px; flex: none; border-radius: 50%; background: rgb(255 255 255 / .16) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='white' stroke-width='2.4' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M5 12h14M13 6l6 6-6 6'/%3E%3C/svg%3E") center / 18px no-repeat; }
+
+.share-copy label { display: block; font-size: .88rem; font-weight: 700; color: var(--text-2); margin-bottom: 6px; }
+.share-field { display: flex; gap: 6px; padding: 5px; border-radius: 14px; border: 1.5px dashed var(--line); background: var(--panel); }
+.share-field input { flex: 1; min-width: 0; border: 0; background: transparent; padding: 0 10px; font: inherit; font-size: .92rem; color: var(--text); text-overflow: ellipsis; }
+.share-field input:focus { outline: none; }
+.share-field:focus-within { border-color: var(--blue); border-style: solid; }
+.share-field button { flex: none; display: inline-flex; align-items: center; gap: 6px; min-height: 42px; padding: 0 16px; border: 0; border-radius: 10px; background: var(--blue); color: #fff; font: inherit; font-weight: 700; cursor: pointer; }
+.share-field button:hover { background: var(--blue-deep); }
+.share-field button.is-done { background: var(--green); }
+
+/* Side by side on wide screens when the card spans the page container */
+@media (min-width: 900px) {
+  .container > .share-card { grid-template-columns: minmax(0, .95fr) minmax(0, 1.05fr); }
+}
+@media (max-width: 420px) {
+  .share-grid { grid-template-columns: minmax(0, 1fr); }
+  .sp-screen { transform: none; }
+  .share-card { box-shadow: 6px 6px 0 -1px var(--yellow), var(--shadow-lg); border-radius: 20px; }
+}
+@media (prefers-reduced-motion: reduce) { .share-story::before { animation: none; } .sp-screen, .share-card:hover .sp-screen { transform: none; } .share-tile:hover { transform: none; } }

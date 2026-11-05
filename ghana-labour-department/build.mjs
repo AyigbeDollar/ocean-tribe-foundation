@@ -84,16 +84,49 @@ const analyticsHead = /^GTM-[A-Z0-9]+$/.test(AID)
   : "";
 
 // ---------- Share bar (UTM-tagged so traffic from each platform is measurable) ----------
-function shareBar(url, text, campaign) {
+const SITE_HOST = SITE.replace(/^https?:\/\//, "").replace(/\/$/, "");
+let shareCount = 0;
+function shareBar(url, text, campaign, o = {}) {
   const t = encodeURIComponent(text);
   const u = (s) => encodeURIComponent(utm(url, s, campaign));
-  return `<div class="share-bar" data-share data-url="${esc(utm(url, "copy", campaign))}" data-title="${esc(text)}">
-  <span>Share</span>
-  <a class="share-btn wa" href="https://wa.me/?text=${t}%20${u("whatsapp")}" target="_blank" rel="noopener" data-track="share_whatsapp">${icon("whatsapp", 18)}WhatsApp</a>
-  <a class="share-btn" href="https://www.facebook.com/sharer/sharer.php?u=${u("facebook")}" target="_blank" rel="noopener" data-track="share_facebook">${icon("facebook", 18)}Facebook</a>
-  <a class="share-btn" href="https://twitter.com/intent/tweet?text=${t}&amp;url=${u("x")}&amp;hashtags=${HASHTAG.slice(1)}" target="_blank" rel="noopener" data-track="share_x">${icon("xlogo", 18)}X</a>
-  <a class="share-btn" href="https://www.linkedin.com/sharing/share-offsite/?url=${u("linkedin")}" target="_blank" rel="noopener" data-track="share_linkedin">${icon("linkedin", 18)}LinkedIn</a>
-  <button class="share-btn" type="button" data-copy-link>${icon("link", 18)}<span>Copy link</span></button>
+  const id = `share-link-${++shareCount}`;
+  const display = url.replace(/^https?:\/\//, "");
+  const heading = o.heading || "Know someone looking for work?";
+  const sub = o.sub || "Most people hear about jobs from friends and family. Send this in one tap. Our help is free and we never charge for jobs.";
+  const tile = (cls, href, track, ic, name, note) =>
+    `<li><a class="share-tile ${cls}" href="${href}" target="_blank" rel="noopener" data-track="${track}"><span class="st-icon">${icon(ic, 22)}</span><span class="st-text"><strong>${name}</strong><small>${note}</small></span></a></li>`;
+  return `<div class="share-card reveal" data-share data-url="${esc(utm(url, "copy", campaign))}" data-title="${esc(text)}">
+  <div class="share-story">
+    <p class="share-kicker">${icon("share", 16)}Pass it on</p>
+    <h3>${esc(heading)}</h3>
+    <p>${esc(sub)}</p>
+    <figure class="share-preview" aria-label="Preview of the message your friend will receive">
+      <div class="sp-screen">
+        <div class="sp-bar"><span class="sp-avatar">${icon("user", 16)}</span><span><strong>Your friend</strong><small>online</small></span></div>
+        <div class="sp-bubble">
+          <div class="sp-link"><img src="${esc(o.image || "/img/og-image.png")}" alt="" width="1200" height="630" loading="lazy"><div><strong>${esc(o.previewTitle || text)}</strong><small>${esc(SITE_HOST)}</small></div></div>
+          <p>${esc(text)} <span class="sp-url">${esc(display)}</span></p>
+          <span class="sp-meta">Now <svg width="16" height="10" viewBox="0 0 16 10" aria-hidden="true"><path d="M1 5l3 3 6-7M6 8l1 1 6-8" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+        </div>
+      </div>
+    </figure>
+  </div>
+  <div class="share-actions">
+    <p class="share-label">Choose where to share</p>
+    <ul class="share-grid">
+      ${tile("t-wa", `https://wa.me/?text=${t}%20${u("whatsapp")}`, "share_whatsapp", "whatsapp", "WhatsApp", "Family, friends and groups")}
+      ${tile("t-fb", `https://www.facebook.com/sharer/sharer.php?u=${u("facebook")}`, "share_facebook", "facebook", "Facebook", "Your community")}
+      ${tile("t-x", `https://twitter.com/intent/tweet?text=${t}&amp;url=${u("x")}&amp;hashtags=${HASHTAG.slice(1)}`, "share_x", "xlogo", "X", "Post to followers")}
+      ${tile("t-in", `https://www.linkedin.com/sharing/share-offsite/?url=${u("linkedin")}`, "share_linkedin", "linkedin", "LinkedIn", "Professional network")}
+      ${tile("t-sms", `sms:?&amp;body=${t}%20${u("sms")}`, "share_sms", "chat", "Text message", "Works on any phone")}
+      ${tile("t-mail", `mailto:?subject=${t}&amp;body=${t}%0A%0A${u("email")}`, "share_email", "mail", "Email", "Send to anyone")}
+      <li class="st-more" hidden><button class="share-tile t-more" type="button" data-native-share><span class="st-icon">${icon("share", 22)}</span><span class="st-text"><strong>More apps</strong><small>Telegram, Instagram and others</small></span></button></li>
+    </ul>
+    <div class="share-copy">
+      <label for="${id}">Or copy the link</label>
+      <div class="share-field"><input id="${id}" type="text" readonly value="${esc(display)}"><button type="button" data-copy-link>${icon("copy", 18)}<span>Copy</span></button></div>
+    </div>
+  </div>
 </div>`;
 }
 
@@ -235,17 +268,15 @@ ${posts.map((p, i) => postCard(p, i === 0)).join("\n")}
   </div>
 </section>
 <section class="section section-alt">
-  <div class="container social-band">
-    <div class="reveal">
-      <h2>Never miss an update</h2>
-      <p class="lead">Follow the Department for vacancies, job fairs and rights education, or subscribe to the blog feed.</p>
+  <div class="container">
+    <div class="share-head reveal">
+      <div>
+        <h2>Never miss an update</h2>
+        <p class="lead">Follow the Department for vacancies, job fairs and rights education, or subscribe to the blog feed.</p>
+      </div>
       <!--follow-links-->
     </div>
-    <div class="wa-card reveal" style="--i:1">
-      <h3>${icon("whatsapp", 26)}Share with someone looking for work</h3>
-      <p>Most people hear about jobs from friends and family. Forward our free job guide to your WhatsApp groups.</p>
-      ${shareBar(`${SITE}/blog/${posts.find((p) => p.pillar === "Find work")?.slug || posts[0].slug}`, "Free help to find work in Ghana from the Labour Department", "blog-index")}
-    </div>
+    ${shareBar(`${SITE}/blog/${posts.find((p) => p.pillar === "Find work")?.slug || posts[0].slug}`, "Free help to find work in Ghana from the Labour Department", "blog-index", { heading: "Share with someone looking for work", sub: "Forward our free job guide to your family and WhatsApp groups. It could be the start of someone's next job.", image: `/img/og/${posts.find((p) => p.pillar === "Find work")?.slug || posts[0].slug}.png`, previewTitle: posts.find((p) => p.pillar === "Find work")?.title || posts[0].title })}
   </div>
 </section>`,
   });
@@ -302,7 +333,7 @@ ${p.body}
       </div>
       ${p.legal ? `<p class="legal-box" style="margin-top:28px"><strong>Legal basis:</strong> ${esc(p.legal)}</p>` : ""}
       <div class="prose" style="margin-top:28px">${faq}</div>
-      <div style="margin-top:32px">${shareBar(p.url, shareText, `blog-${p.slug}`)}</div>
+      <div class="post-share">${shareBar(p.url, shareText, `blog-${p.slug}`, { heading: "Found this useful? Share it.", sub: "Someone you know may need this today. Send it to them in one tap.", image: p.og, previewTitle: p.title })}</div>
     </article>
     <aside class="article-aside" aria-label="Related actions">
       <div class="aside-card glmis">
