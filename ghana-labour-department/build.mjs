@@ -12,6 +12,7 @@
 import { readFileSync, writeFileSync, readdirSync, mkdirSync, cpSync, rmSync, existsSync } from "node:fs";
 import { join, dirname } from "node:path";
 import { fileURLToPath } from "node:url";
+import { createHash } from "node:crypto";
 import { marked } from "marked";
 import YAML from "yaml";
 
@@ -36,6 +37,8 @@ mkdirSync(out, { recursive: true });
 cpSync(join(root, "static"), out, { recursive: true });
 
 const esc = (s = "") => String(s).replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;");
+// Version the icon sprite URL so browsers fetch new icons as soon as the sprite changes.
+const ICONS_V = createHash("sha1").update(readFileSync(join(root, "static/img/icons.svg"))).digest("hex").slice(0, 8);
 const icon = (id, size = 20) => `<svg width="${size}" height="${size}" aria-hidden="true"><use href="/img/icons.svg#${id}"/></svg>`;
 const fmtDate = (iso) => new Date(iso + "T00:00:00Z").toLocaleDateString("en-GB", { day: "numeric", month: "long", year: "numeric", timeZone: "UTC" });
 const readMeta = (raw, file) => {
@@ -224,7 +227,7 @@ function render({ meta, body, path, outFile }) {
     .replaceAll("{{year}}", String(new Date().getFullYear()))
     .replace("<!--announcement-->", announcementBar));
   mkdirSync(dirname(join(out, outFile)), { recursive: true });
-  writeFileSync(join(out, outFile), html);
+  writeFileSync(join(out, outFile), html.replaceAll("/img/icons.svg#", `/img/icons.svg?v=${ICONS_V}#`));
   if (!noindex) urls.push({ loc: canonical, lastmod: meta.reviewed || meta.date || today, priority: meta.priority || (path === "/" ? "1.0" : "0.8") });
 }
 
