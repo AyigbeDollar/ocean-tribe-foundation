@@ -112,7 +112,13 @@
         "assistant",
         "options",
         "menu",
-        "topics"
+        "topics",
+        "how do you work",
+        "how does this work",
+        "human",
+        "real person",
+        "are you human",
+        "are you a person"
       ],
       "answer": "I can answer common questions about:\n\n-   Finding work or hiring through **GLMIS**, Ghana's free jobs portal\n-   Public Employment Centres and job counselling\n-   Workers' rights: minimum wage, hours, leave, maternity, termination\n-   Labour complaints, child labour and workplace injuries\n-   Licensing private employment agencies and avoiding job scams\n\nI am an **automated assistant**, not a human officer. I give general guidance, not legal advice. Type **officer** to reach a person.",
       "links": [
@@ -152,7 +158,9 @@
         "helpful",
         "great",
         "nice one",
-        "ok"
+        "ok",
+        "that helps",
+        "helps"
       ],
       "answer": "You're welcome! Is there anything else I can help with? You can also call us free on 0800 600 300.",
       "links": [
@@ -314,7 +322,12 @@
         "my business",
         "candidates",
         "workers for my",
-        "staff"
+        "staff",
+        "employer register on glmis",
+        "register my company",
+        "register as employer",
+        "company sign up",
+        "advertise a job"
       ],
       "answer": "Employers can recruit for free on **GLMIS**:\n\n-   Create an employer account on the [GLMIS company sign-up page](https://www.glmis.gov.gh/Identity/Account/RegisterCompany)\n-   Post your vacancy with the job description and requirements\n-   Search job seeker profiles and shortlist candidates\n\nThe Public Employment Centre in your region can also help match you with suitable candidates.",
       "links": [
@@ -627,7 +640,11 @@
         "deduction",
         "deductions",
         "withheld",
-        "chop my money"
+        "chop my money",
+        "deduct",
+        "deducted",
+        "cut my pay",
+        "pay cut"
       ],
       "answer": "Your employer must pay your wages in full and on time, as agreed in your contract. If wages are unpaid or wrongly deducted:\n\n-   Raise it with your employer in writing first and keep copies\n-   If it is not resolved, report to the nearest **Labour Department office** for mediation\n-   The Labour Officer will invite your employer and help you both reach a settlement",
       "links": [
@@ -696,7 +713,12 @@
         "shift",
         "shifts",
         "break",
-        "rest"
+        "rest",
+        "hours a day",
+        "work a day",
+        "hours per day",
+        "how many hours",
+        "overtime hours"
       ],
       "answer": "The normal maximum is **8 hours a day** and **40 hours a week**. Work beyond these hours is **overtime** and must be paid at the agreed overtime rate.\n\nIf you are regularly made to work longer without overtime pay, report it to the Labour Department.",
       "links": [
@@ -764,7 +786,9 @@
         "delivery",
         "mother",
         "new mum",
-        "paternity"
+        "paternity",
+        "maternity leave",
+        "paternity leave"
       ],
       "answer": "A woman worker is entitled to **at least 12 weeks of maternity leave on full pay**, plus **2 extra weeks** for an abnormal delivery or multiple births.\n\n-   A nursing mother may take breaks during working hours to nurse her baby\n-   You cannot be dismissed because you are pregnant or on maternity leave",
       "links": [
@@ -862,7 +886,11 @@
         "one month notice",
         "two weeks notice",
         "terminate",
-        "termination"
+        "termination",
+        "without notice",
+        "notice before",
+        "how much notice",
+        "sacked without notice"
       ],
       "answer": "Minimum notice under the Labour Act (either side can give pay instead of notice):\n\n-   Contract of **3 years or more**: 1 month's notice or 1 month's pay\n-   Contract **under 3 years**: 2 weeks' notice or 2 weeks' pay\n-   **Week to week** contract: 7 days' notice\n\nYour contract may give longer notice.",
       "links": [
@@ -881,7 +909,7 @@
     {
       "id": "unfair_termination",
       "questions": [
-        "my boss sacked me without notice",
+        "my boss sacked me for no reason",
         "i was fired unfairly",
         "unfair dismissal",
         "they sacked me because i am pregnant",
@@ -1072,7 +1100,10 @@
         "government doing",
         "strategy",
         "eliminate",
-        "campaign"
+        "campaign",
+        "government",
+        "government plan",
+        "what is government doing"
       ],
       "answer": "The **Ghana Accelerated Action Plan Against Child Labour (2023-2027)** guides national efforts to end child labour, working with District Assemblies, communities, employers, cocoa and mining sectors, and partners.\n\nThe Labour Department's Child Labour Unit coordinates much of this work.",
       "links": [
@@ -1111,7 +1142,14 @@
         "death",
         "claim",
         "insurance",
-        "insurer"
+        "insurer",
+        "fell",
+        "fall",
+        "who pays",
+        "hurt at work",
+        "injured at work",
+        "died at work",
+        "died on duty"
       ],
       "answer": "Under the **Workmen's Compensation Law, 1987 (PNDCL 187)**, a worker injured (or the family of a worker killed) in a work accident may be compensated:\n\n-   The employer must report the accident to the **Labour Department**\n-   The worker has a medical assessment of the injury\n-   The Department assesses the claim and the **employer or its insurer pays**\n\nGet medical care first, then contact your nearest office.",
       "links": [
@@ -1191,7 +1229,15 @@
         "visit",
         "audit",
         "compliance",
-        "check"
+        "check",
+        "inspect my company",
+        "inspect my workplace",
+        "labour inspection",
+        "inspect workplaces",
+        "visit companies",
+        "visit workplaces",
+        "visit my company",
+        "labour office visit"
       ],
       "answer": "Labour Officers carry out **workplace inspections** to check that employers follow the law on wages, hours, leave, safety, child labour and records.\n\nEmployers should keep proper records and cooperate. Workers can request an inspection by reporting a problem to their nearest office.",
       "links": [
@@ -1339,7 +1385,17 @@
         "verify agency",
         "check agency",
         "agency real",
-        "agency licensed"
+        "agency licensed",
+        "pay for a job",
+        "asking me to pay",
+        "pay to get a job",
+        "money for a job",
+        "job offer",
+        "too good to be true",
+        "fake agency",
+        "fake recruitment",
+        "job scam",
+        "scam agency"
       ],
       "answer": "**Be careful.** Warning signs of a recruitment scam:\n\n-   You must pay money for a \"visa lottery\", processing or a guaranteed job\n-   No written contract, or the agency has no licence\n-   Pressure to travel quickly or hand over your passport\n\nOnly use **licensed** agencies and verify them with the Labour Department before paying or travelling. Genuine local jobs are on GLMIS for free.",
       "links": [
@@ -1383,7 +1439,14 @@
         "gulf",
         "middle east",
         "foreign",
-        "japa"
+        "japa",
+        "qatar",
+        "dubai",
+        "saudi",
+        "go abroad",
+        "travel for work",
+        "work abroad",
+        "safe to go"
       ],
       "answer": "If you plan to work abroad:\n\n-   Use only a **licensed private employment agency**; verify it with the Labour Department\n-   Get a written contract before you travel and keep a copy with family\n-   Never hand your passport to an agent you cannot verify\n\nAlso explore opportunities at home on **GLMIS**.",
       "links": [
@@ -1415,7 +1478,10 @@
         "leader",
         "in charge",
         "dawuda",
-        "braimah"
+        "braimah",
+        "who heads",
+        "heads the labour department",
+        "head of labour department"
       ],
       "answer": "The **Chief Labour Officer** is **Braimah Ibrahim Dawuda**, who heads the Labour Department of Ghana.",
       "links": [
@@ -1434,14 +1500,17 @@
         "what is the labour department of ghana"
       ],
       "keywords": [
-        "labour department",
-        "department",
         "about",
         "mandate",
         "what do you do",
         "role",
         "function",
-        "history"
+        "history",
+        "what you do",
+        "vision",
+        "mission",
+        "about us",
+        "what does the department do"
       ],
       "answer": "The **Labour Department** administers labour laws in Ghana. We run Public Employment Centres and GLMIS, inspect workplaces, settle complaints, license private employment agencies, handle workmen's compensation and fight child labour.",
       "links": [
@@ -1588,16 +1657,17 @@
         "open",
         "opening",
         "closing",
-        "visit",
-        "where",
         "reach",
         "saturday",
         "sunday",
         "weekend",
         "closed",
         "open on",
-        "working days",
-        "time"
+        "open on weekends",
+        "opening hours",
+        "where is your office",
+        "contact the labour department",
+        "phone number"
       ],
       "answer": "Our offices are open **Monday to Friday, 8:00am to 5:00pm** (closed on public holidays). There is a Labour Department office or Public Employment Centre in every region.\n\n-   Toll-free: **0800 600 300** or **0800 600 400**\n-   Email: **info@labourdepartment.gov.gh**",
       "links": [

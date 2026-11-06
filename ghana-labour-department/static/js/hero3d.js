@@ -7,14 +7,17 @@ const host = document.querySelector("[data-hero-3d]");
 if (host) init(host);
 
 function init(host) {
-  const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  // Low-powered phones, data saver and reduced motion get one still frame instead of animation.
+  const conn = navigator.connection || {};
+  const lowEnd = (navigator.hardwareConcurrency || 8) <= 4 || (navigator.deviceMemory || 8) <= 2 || conn.saveData === true || /2g/.test(conn.effectiveType || "");
+  const reduce = lowEnd || window.matchMedia("(prefers-reduced-motion: reduce)").matches;
   let renderer;
   try {
     renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true, powerPreference: "low-power" });
   } catch (e) {
     return; // No WebGL: the CSS gradient hero remains.
   }
-  renderer.setPixelRatio(Math.min(window.devicePixelRatio, 1.75));
+  renderer.setPixelRatio(Math.min(window.devicePixelRatio, window.innerWidth < 900 ? 1.25 : 1.5));
   host.appendChild(renderer.domElement);
   renderer.domElement.setAttribute("aria-hidden", "true");
 
@@ -139,9 +142,13 @@ function init(host) {
     if (running) return;
     running = true;
     clock.getDelta();
+    // About 30 frames a second: smooth for a slow globe, half the work of 60.
+    let acc = 0;
     const tick = () => {
       if (!visible || document.hidden) { running = false; return; }
-      frame(Math.min(clock.getDelta(), 0.05));
+      const dt = Math.min(clock.getDelta(), 0.1);
+      acc += dt;
+      if (acc >= 1 / 30) { frame(Math.min(acc, 0.1)); acc = 0; }
       requestAnimationFrame(tick);
     };
     requestAnimationFrame(tick);

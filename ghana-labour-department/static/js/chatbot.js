@@ -138,14 +138,20 @@
 
   function scoreDoc(doc, toks, ctoks, tns) {
     // (a) keyword / key-phrase hits, weighted by rarity, phrases boosted
-    var kw = 0;
+    // A phrase that loses words when filler is dropped ("no leave" -> "leave") must match in full,
+    // otherwise it would double-count a single common word.
+    var hits = [];
     doc.kws.forEach(function (k) {
-      if (!(k.ns.length ? containsSeq(tns, k.ns) : containsSeq(toks, k.toks))) return;
+      var hit = k.ns.length >= 2 || k.ns.length === k.toks.length ? containsSeq(tns, k.ns.length ? k.ns : k.toks) : containsSeq(toks, k.toks);
+      if (!hit) return;
       var s = 0;
       k.toks.forEach(function (t) { s += idfOf(t); });
       if (k.isStop) s = 0.6 * k.toks.length; // e.g. "what can you do"
-      kw += s * (1 + 0.35 * (k.toks.length - 1));
+      hits.push(s * (1 + 0.35 * (k.toks.length - 1)));
     });
+    // Strongest keyword counts in full; overlapping extra hits add a little, so generic words cannot stack up.
+    hits.sort(function (a, b) { return b - a; });
+    var kw = hits.length ? hits[0] + 0.35 * hits.slice(1).reduce(function (a, b) { return a + b; }, 0) : 0;
     // (b) weighted Jaccard similarity with the example phrasings
     var sim = 0;
     doc.qs.forEach(function (q) {
@@ -196,7 +202,9 @@
   /** match(question, previousQuestion?) -> {id, score, intent} | {id:"fallback", ...} */
   function match(q, prev) {
     var r = pick(rank(q));
-    if (!r && prev && content(tokens(q)).length <= 5) {
+    // Only treat it as a follow-up when it reads like one ("what about twins?", "and if I resign?", "is it paid?").
+    var FOLLOW_RE = /^(and|but|also|so|then|or|what about|how about|what if|if|for|is it|is that|does it|does that|do they|can they|can i still|how long|how much|when)\b/i;
+    if (!r && prev && content(tokens(q)).length <= 5 && FOLLOW_RE.test(q.trim())) {
       // Light multi-turn: "what about for twins?" after a maternity question.
       var r2 = pick(rank(prev + " " + q));
       if (r2 && !SMALL_TALK[r2.id]) r = r2;
@@ -474,6 +482,9 @@
       return null;
     }).then(function (r) { clearTimeout(timer); return r; });
   }
+
+  // Test hook for quality checks: open any page with ?kojo-debug to call window.__kojoMatch(question).
+  if (/[?&]kojo-debug/.test(location.search)) w.__kojoMatch = function (q, prev) { return match(q, prev); };
 
   function answer(q, source) {
     var prev = lastUserText();

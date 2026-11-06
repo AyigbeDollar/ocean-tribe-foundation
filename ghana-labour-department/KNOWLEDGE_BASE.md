@@ -327,9 +327,9 @@ Your contract may give longer notice.
 
 **Buttons:** Workers' rights (`/workers-rights`) | File a complaint (`/services#complaints`)
 
-### 23. My boss sacked me without notice
+### 23. My boss sacked me for no reason
 
-**Example questions:** "my boss sacked me without notice", "i was fired unfairly", "unfair dismissal", "they sacked me because i am pregnant", "dismissed for joining a union", "wrongful termination"
+**Example questions:** "my boss sacked me for no reason", "i was fired unfairly", "unfair dismissal", "they sacked me because i am pregnant", "dismissed for joining a union", "wrongful termination"
 
 **Answer:**
 

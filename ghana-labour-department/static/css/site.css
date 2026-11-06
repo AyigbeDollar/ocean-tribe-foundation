@@ -942,3 +942,10 @@ tbody tr:nth-child(even) td { background: var(--panel); }
 .brand-youtube svg { color: #FF0000 !important; }
 .brand-whatsapp svg { color: #25D366 !important; }
 :root[data-theme="dark"] .brand-xlogo svg, :root[data-theme="dark"] .brand-tiktok svg { color: #fff !important; }
+
+/* Accessible text shades of brand red: small red text meets 4.5:1 on white, panel and dark backgrounds */
+:root { --red-text: #c0231a; }
+:root[data-theme="dark"] { --red-text: #ff8a7e; }
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) { --red-text: #ff8a7e; } }
+.eyebrow, .leader .role, .post-meta { color: var(--red-text); }
+.hero .eyebrow, .page-hero .eyebrow { color: var(--yellow); }

@@ -1,4 +1,3 @@
 {
-  "_comment": "Generated image fetched at build time into dist/img/photos/. All other site photos are real Department photos in static/img/photos/. child-hands stays generated so no identifiable child is shown.",
-  "img/photos/child-hands.png": "https://d2ol7oe51mr4n9.cloudfront.net/user_3FkExudndKk4z130QPYP9h3Uw3z/89da6164-3dfb-4ce2-b726-8434e67ffcb7.png"
+  "_comment": "All site photos now live in static/img/photos/. child-hands.jpg is a generated image kept on purpose so no identifiable child is shown."
 }

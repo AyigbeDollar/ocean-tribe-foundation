@@ -246,8 +246,8 @@ if (posts.length) {
     path: "/blog",
     outFile: "blog.html",
     meta: {
-      title: "News and Guides | Jobs, Rights and Labour Updates | Ghana Labour Department",
-      description: "Plain-language guides and news from the Ghana Labour Department: finding work on GLMIS, your rights under the Labour Act, 2003 (Act 651), and how to stay safe from job scams.",
+      title: "News and Guides | Ghana Labour Department",
+      description: "Plain-language guides and news from the Ghana Labour Department: finding work on GLMIS, your rights at work and how to avoid job scams.",
       crumb: "Blog",
       jsonld: [{ "@context": "https://schema.org", "@type": "Blog", name: "Ghana Labour Department news and guides", url: `${SITE}/blog`,
         blogPost: posts.map((p) => ({ "@type": "BlogPosting", headline: p.title, url: p.url, datePublished: p.date })) }],
@@ -261,6 +261,7 @@ if (posts.length) {
 </section>
 <section class="section">
   <div class="container">
+    <h2 class="sr-only">All posts</h2>
     <div class="blog-filters" role="group" aria-label="Filter posts by topic">
       <button type="button" aria-pressed="true" data-filter="all">All posts</button>
       ${pillars.map((p) => `<button type="button" aria-pressed="false" data-filter="${esc(p)}">${esc(p)}</button>`).join("\n      ")}
