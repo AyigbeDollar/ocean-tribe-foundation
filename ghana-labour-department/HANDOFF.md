@@ -18,7 +18,7 @@ This folder holds the full source of the Ghana Labour Department website. Use th
 
 - **Pages:**
   - Home, with the WebGL 3D globe hero
-  - About and Management (the Chief Labour Officer, Dawuda Ibrahim Braimah, is the only person shown)
+  - About and Management (the Chief Labour Officer, Dawuda Ibrahim Braimah, known as Mr Dawuda, is the only person shown)
   - Services
   - Workers' Rights
   - Employers
@@ -79,7 +79,7 @@ This folder holds the full source of the Ghana Labour Department website. Use th
 - No individual phone numbers or emails were in the document. Until officers add them in the CMS, Call uses 0800 600 300 and Email uses info@labourdepartment.gov.gh.
 - Map pins are at town level (GeoNames and Wikipedia coordinates). Directions search Google Maps for the office by name and town; adding a street address in the CMS makes them exact.
 - Kojo answers "office in <town>" and "offices in <region>" from the same data.
-- The document's summary says 93 offices and 41 PECs; its table lists 94 offices and 42 PEC sites (Bono East Regional Office/PEC included). The website counts from the table.
+- Confirmed by the Department: 94 offices and 42 PEC sites (plus the Head Office). The website counts these automatically from `content/offices.json`.
 
 ## Content rules agreed with the client
 
