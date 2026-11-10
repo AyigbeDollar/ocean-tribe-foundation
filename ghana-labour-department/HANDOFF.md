@@ -71,6 +71,16 @@ This folder holds the full source of the Ghana Labour Department website. Use th
    - Register the chatbot's data processing with the Data Protection Commission (Act 843).
    - Review `KNOWLEDGE_BASE.md`.
 
+
+## Office directory (/offices)
+
+- Source: "Offices of the Labour Department" document (94 offices in its table, plus the Head Office). Data in `content/offices.json`, editable in the CMS under **Offices**.
+- Corrections made to the source table: Ashanti offices placed in their own towns (Konongo, Obuasi, Bekwai, Offinso, Mampong, Tepa) instead of all "Kumasi"; Oti Regional Office in Dambai; Odumase PEC (Sunyani West); Ellembelle PEC at Nkroful; spelling fixes (Savannah, Sogakope, Cape Coast).
+- No individual phone numbers or emails were in the document. Until officers add them in the CMS, Call uses 0800 600 300 and Email uses info@labourdepartment.gov.gh.
+- Map pins are at town level (GeoNames and Wikipedia coordinates). Directions search Google Maps for the office by name and town; adding a street address in the CMS makes them exact.
+- Kojo answers "office in <town>" and "offices in <region>" from the same data.
+- The document's summary says 93 offices and 41 PECs; its table lists 94 offices and 42 PEC sites (Bono East Regional Office/PEC included). The website counts from the table.
+
 ## Content rules agreed with the client
 
 - Do not mention the National Labour Commission or Labour Compliance Officers anywhere.

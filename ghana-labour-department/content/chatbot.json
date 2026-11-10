@@ -419,7 +419,7 @@
         },
         {
           "label": "Find an office",
-          "url": "/contact",
+          "url": "/offices",
           "glmis": false
         }
       ]
@@ -523,11 +523,11 @@
         "ahafo",
         "near me"
       ],
-      "answer": "**Public Employment Centres (PECs)** are Labour Department offices in all 16 regions, for example at Odomase (Bono Region) and Goaso (Ahafo Region). Their services are **free**:\n\n-   Job matching and placement\n-   Job counselling and career guidance\n-   Help registering on GLMIS\n-   Labour complaints and mediation",
+      "answer": "We have **{{pecCount}} Public Employment Centres (PECs)** across all 16 regions. Use the office finder to see the one nearest you. Their services are **free**:\n\n-   Job matching and placement\n-   Job counselling and career guidance\n-   Help registering on GLMIS\n-   Labour complaints and mediation",
       "links": [
         {
-          "label": "Find an office",
-          "url": "/contact",
+          "label": "Find my nearest PEC",
+          "url": "/offices",
           "glmis": false
         },
         {
@@ -655,7 +655,7 @@
         },
         {
           "label": "Find an office",
-          "url": "/contact",
+          "url": "/offices",
           "glmis": false
         }
       ]
@@ -980,7 +980,7 @@
         },
         {
           "label": "Find an office",
-          "url": "/contact",
+          "url": "/offices",
           "glmis": false
         }
       ]
@@ -1165,7 +1165,7 @@
         },
         {
           "label": "Find an office",
-          "url": "/contact",
+          "url": "/offices",
           "glmis": false
         }
       ]
@@ -1680,6 +1680,41 @@
           "label": "Create a GLMIS profile",
           "url": "https://www.glmis.gov.gh/Identity/Account/Register",
           "glmis": true
+        }
+      ]
+    },
+    {
+      "id": "find_office",
+      "questions": [
+        "where is the nearest labour office",
+        "labour department office near me",
+        "is there a labour office in my district",
+        "list of labour offices"
+      ],
+      "keywords": [
+        "office near me",
+        "nearest office",
+        "labour office",
+        "district office",
+        "regional office",
+        "office location",
+        "offices",
+        "branch",
+        "find an office",
+        "where is your office in",
+        "near me",
+        "closest office",
+        "my district"
+      ],
+      "answer": "We have {{officeCount}} offices across all {{regionCount}} regions, including {{pecCount}} Public Employment Centres (PECs). Use our **office finder** to search your town, see it on a map and call or get directions in one tap.\n\nYou can also tell me your town, for example *office in Ho*.",
+      "links": [
+        {
+          "label": "Find my nearest office",
+          "url": "/offices"
+        },
+        {
+          "label": "Call 0800 600 300",
+          "url": "tel:0800600300"
         }
       ]
     }

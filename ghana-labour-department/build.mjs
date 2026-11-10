@@ -23,6 +23,7 @@ const leadership = readJson("content/leadership.json");
 const announcement = readJson("content/announcement.json");
 const faqs = readJson("content/faqs.json");
 const chatbot = readJson("content/chatbot.json");
+const officesData = existsSync(join(root, "content/offices.json")) ? readJson("content/offices.json") : { offices: [] };
 marked.setOptions({ gfm: true, breaks: false });
 const md = (s = "") => marked.parse(String(s));
 const mdInline = (s = "") => marked.parseInline(String(s));
@@ -183,7 +184,7 @@ const faqLd = { "@context": "https://schema.org", "@type": "FAQPage", mainEntity
 // ---------- Page renderer ----------
 const NAV = [
   ["/about", "About"], ["/services", "Services"], ["/workers-rights", "Workers' Rights"],
-  ["/employers", "Employers"], ["/glmis", "GLMIS Jobs"], ["/blog", "Blog"], ["/contact", "Contact"],
+  ["/employers", "Employers"], ["/glmis", "GLMIS Jobs"], ["/offices", "Offices"], ["/blog", "Blog"], ["/contact", "Contact"],
 ];
 const urls = [];
 
@@ -223,7 +224,8 @@ function render({ meta, body, path, outFile }) {
       .replace("<!--latest-posts-->", latestPosts)
       .replace("<!--follow-links-->", followLinks)
       .replace("<!--share-site-->", shareBar(SITE + path, meta.shareText || meta.title, "site" + (path === "/" ? "-home" : path.replace(/\//g, "-"))))
-      .replace("<!--faq-groups-->", faqGroups))
+      .replace("<!--faq-groups-->", faqGroups)
+      .replace("<!--office-finder-->", officeFinder))
     .replaceAll("{{year}}", String(new Date().getFullYear()))
     .replace("<!--announcement-->", announcementBar));
   mkdirSync(dirname(join(out, outFile)), { recursive: true });
@@ -231,11 +233,84 @@ function render({ meta, body, path, outFile }) {
   if (!noindex) urls.push({ loc: canonical, lastmod: meta.reviewed || meta.date || today, priority: meta.priority || (path === "/" ? "1.0" : "0.8") });
 }
 
+// ---------- Office finder (content/offices.json -> /offices) ----------
+const OFFICE_TYPES = {
+  head: { label: "Head Office", short: "Head Office" },
+  regional: { label: "Regional office", short: "Regional" },
+  district: { label: "District or municipal office", short: "District" },
+  pec: { label: "Public Employment Centre", short: "PEC" },
+  "office-pec": { label: "Office and Public Employment Centre", short: "Office + PEC" },
+};
+const slugify = (t) => String(t).toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "");
+const TOLL = (config.tollFree && config.tollFree[0]) || "0800 600 300";
+const offices = (officesData.offices || []).map((o, i) => {
+  const phone = (o.phone || "").trim();
+  const email = (o.email || "").trim();
+  const query = o.address ? `${o.address}, ${o.town}, Ghana` : `Labour Department ${o.name.replace(/\s*\(.*\)/, "")}, ${o.town}, Ghana`;
+  return { ...o, id: `office-${slugify(o.name)}-${i}`, phoneShown: phone || TOLL, tel: (phone || TOLL).replace(/[^0-9+]/g, ""),
+    emailShown: email || config.email, hasOwnPhone: !!phone, hasOwnEmail: !!email,
+    maps: `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(query)}` };
+});
+const REGIONS = [...new Set(offices.map((o) => o.region))].sort();
+const officeCount = offices.filter((o) => o.type !== "head").length;
+const pecCount = offices.filter((o) => o.type === "pec" || o.type === "office-pec" || /PEC/.test(o.name)).length;
+const officeCard = (o) => {
+  const t = OFFICE_TYPES[o.type] || OFFICE_TYPES.district;
+  const waText = encodeURIComponent(`${o.name}, ${o.town} (${o.region} Region). Ghana Labour Department. Call ${o.phoneShown}. Directions: ${o.maps}`);
+  const mailHref = `mailto:${o.emailShown}?subject=${encodeURIComponent(`Enquiry for ${o.name}, ${o.town}`)}`;
+  return `<li class="office-card" id="${o.id}" data-type="${o.type}" data-region="${esc(o.region)}" data-town="${esc(o.town)}" data-search="${esc((o.name + " " + o.town + " " + o.region + " " + (o.address || "")).toLowerCase())}" data-lat="${o.lat}" data-lng="${o.lng}">
+  <div class="oc-head">
+    <span class="oc-badge t-${o.type}">${t.short}</span>
+    <h3>${esc(o.name)}</h3>
+    <p class="oc-loc">${icon("pin", 16)}${esc(o.address ? `${o.address}, ${o.town}` : o.town)} <span>&middot; ${esc(o.region)} Region</span><span class="oc-dist" hidden></span></p>
+    <p class="oc-phone">${icon("phone", 16)}${o.hasOwnPhone ? esc(o.phoneShown) : `Toll-free ${esc(o.phoneShown)}`}${o.note ? ` <span class="muted">&middot; ${esc(o.note)}</span>` : ""}</p>
+  </div>
+  <div class="oc-actions">
+    <a class="oc-btn oc-call" href="tel:${o.tel}" data-track="office_call" aria-label="Call ${esc(o.name)}">${icon("phone", 18)}<span>Call</span></a>
+    <a class="oc-btn oc-dir" href="${o.maps}" target="_blank" rel="noopener" data-track="office_directions" aria-label="Directions to ${esc(o.name)}">${icon("pin", 18)}<span>Directions</span></a>
+    <a class="oc-btn oc-mail" href="${mailHref}" data-track="office_email" aria-label="Email about ${esc(o.name)}">${icon("mail", 18)}<span>Email</span></a>
+    <a class="oc-btn oc-wa" href="https://wa.me/?text=${waText}" target="_blank" rel="noopener" data-track="office_share" aria-label="Share ${esc(o.name)} on WhatsApp">${icon("whatsapp", 18)}<span>Share</span></a>
+    <button class="oc-btn oc-map" type="button" data-show-on-map aria-label="Show ${esc(o.name)} on the map">${icon("globe", 18)}<span>Map</span></button>
+  </div>
+</li>`;
+};
+const officeFinder = `<div class="office-finder" data-office-finder>
+  <div class="of-controls" role="search" aria-label="Find a Labour Department office">
+    <label class="of-search"><span class="sr-only">Search by town, district or office</span>${icon("search", 20)}<input type="search" placeholder="Search by town, district or office" autocomplete="off" data-of-search></label>
+    <label class="of-select"><span class="sr-only">Region</span><select data-of-region><option value="">All 16 regions</option>${REGIONS.map((r) => `<option value="${esc(r)}">${esc(r)}</option>`).join("")}</select></label>
+    <button class="btn btn-yellow of-near" type="button" data-of-near>${icon("pin", 18)}Find my nearest office</button>
+  </div>
+  <div class="of-types" role="group" aria-label="Filter by type of office">
+    <button type="button" aria-pressed="true" data-of-type="all">All offices</button>
+    <button type="button" aria-pressed="false" data-of-type="pec"><i class="dot t-pec"></i>Public Employment Centres</button>
+    <button type="button" aria-pressed="false" data-of-type="district"><i class="dot t-district"></i>District and municipal</button>
+    <button type="button" aria-pressed="false" data-of-type="regional"><i class="dot t-regional"></i>Regional and head office</button>
+  </div>
+  <p class="of-count" aria-live="polite" data-of-count>Showing all ${offices.length} offices</p>
+  <div class="of-layout">
+    <div class="of-map-wrap"><div class="of-map" data-of-map role="region" aria-label="Map of Labour Department offices"><p class="of-map-msg">Loading the map&hellip;</p></div></div>
+    <ul class="of-list" data-of-list>
+${offices.map(officeCard).join("\n")}
+    </ul>
+  </div>
+  <p class="of-empty" hidden data-of-empty>No office matches your search. Try another town or <a href="/offices">show all offices</a>, or call us free on ${esc(TOLL)}.</p>
+  <script type="application/json" id="offices-data">${JSON.stringify(offices.map((o) => ({ id: o.id, n: o.name, t: o.type, town: o.town, r: o.region, lat: o.lat, lng: o.lng, tel: o.tel, ph: o.phoneShown, maps: o.maps })))}</script>
+</div>`;
+const officesLd = { "@context": "https://schema.org", "@type": "ItemList", name: "Ghana Labour Department offices", numberOfItems: offices.length,
+  itemListElement: offices.map((o, i) => ({ "@type": "ListItem", position: i + 1, item: { "@type": "GovernmentOffice", name: `${o.name}, Ghana Labour Department`,
+    address: { "@type": "PostalAddress", addressLocality: o.town, addressRegion: `${o.region} Region`, addressCountry: "GH", ...(o.address ? { streetAddress: o.address } : {}) },
+    geo: { "@type": "GeoCoordinates", latitude: o.lat, longitude: o.lng }, telephone: o.phoneShown, ...(o.hasOwnEmail ? { email: o.emailShown } : {}),
+    parentOrganization: { "@id": `${SITE}/#organization` } } })) };
+TOKENS["{{officeCount}}"] = String(officeCount);
+TOKENS["{{pecCount}}"] = String(pecCount);
+TOKENS["{{regionCount}}"] = String(REGIONS.length);
+
 // Static pages
 for (const file of readdirSync(join(root, "src/pages")).filter((f) => f.endsWith(".html"))) {
   const { meta, body } = readMeta(readFileSync(join(root, "src/pages", file), "utf8"), file);
   const slug = file === "index.html" ? "" : file.replace(/\.html$/, "");
   if (body.includes("<!--faq-groups-->")) meta.jsonld = [...(meta.jsonld || []), faqLd];
+  if (body.includes("<!--office-finder-->")) meta.jsonld = [...(meta.jsonld || []), officesLd];
   render({ meta, body, path: slug ? `/${slug}` : "/", outFile: file });
 }
 
@@ -435,6 +510,7 @@ writeFileSync(join(out, "js/knowledge.js"), `/* Generated by build.mjs from cont
 window.LD_KB = ${JSON.stringify(kb)};
 window.LD_KB_FALLBACK = ${JSON.stringify({ id: "fallback", a: applyTokens(md(chatbot.fallback?.answer || "")).trim(), links: (chatbot.fallback?.links || []).map(kbLink) })};
 window.LD_KB_FACTS = ${JSON.stringify(applyTokens((chatbot.facts || []).join("\n")))};
+window.LD_OFFICES = ${JSON.stringify(offices.map((o) => ({ n: o.name, t: o.type, town: o.town, r: o.region, ph: o.phoneShown, tel: o.tel, maps: o.maps })))};
 `);
 
 // ---------- Sitemap and robots ----------

@@ -175,6 +175,32 @@ collections:
                   - { label: Question, name: q, widget: string }
                   - { label: Answer, name: a, widget: text, hint: "Plain language. Links: [link text](/page). Use {{minWage}} for the current minimum wage." }
 
+  # ------------------------------------------------------------------ Offices
+  - name: offices
+    label: Offices
+    description: "Every office on the /offices map and in Kojo. Add each office's own phone, email and street address when known. Empty phone or email falls back to the toll-free line and main email."
+    editor: { preview: false }
+    files:
+      - name: offices
+        label: Office directory
+        file: ghana-labour-department/content/offices.json
+        fields:
+          - label: Offices
+            name: offices
+            widget: list
+            summary: "{{fields.name}} ({{fields.town}}, {{fields.region}})"
+            fields:
+              - { label: Office name, name: name, widget: string }
+              - { label: Type, name: type, widget: select, options: [{ label: "Head Office", value: head }, { label: "Regional office", value: regional }, { label: "District or municipal office", value: district }, { label: "Public Employment Centre (PEC)", value: pec }, { label: "Office and PEC", value: office-pec }] }
+              - { label: Town, name: town, widget: string }
+              - { label: Region, name: region, widget: select, options: ["Ahafo", "Ashanti", "Bono", "Bono East", "Central", "Eastern", "Greater Accra", "North East", "Northern", "Oti", "Savannah", "Upper East", "Upper West", "Volta", "Western", "Western North"] }
+              - { label: Phone, name: phone, widget: string, required: false, hint: "Office line, for example 030 222 1234. Leave empty to use 0800 600 300." }
+              - { label: Email, name: email, widget: string, required: false, hint: "Leave empty to use info@labourdepartment.gov.gh." }
+              - { label: Street address or landmark, name: address, widget: string, required: false, hint: "Helps Directions find the exact building, for example: Near the District Assembly." }
+              - { label: Latitude, name: lat, widget: number, value_type: float, hint: "Town position for the map pin. Right-click the spot in Google Maps to copy it." }
+              - { label: Longitude, name: lng, widget: number, value_type: float }
+              - { label: Note, name: note, widget: string, required: false }
+
   # ------------------------------------------------------------------ Chatbot
   - name: chatbot
     label: Kojo answers

@@ -268,7 +268,7 @@
     who: "bot",
     html: "<p>I'll point you to a person. A Labour Officer can help you by phone or at your nearest office.</p>" +
       "<ul><li>Call free on <strong>0800 600 300</strong> or <strong>0800 600 400</strong>, Monday to Friday, 8:00 am to 5:00 pm</li><li>Visit your nearest Public Employment Centre (PEC)</li><li>Email <strong>info@labourdepartment.gov.gh</strong></li></ul>",
-    links: [{ href: "tel:0800600300", label: "Call 0800 600 300" }, { href: "/contact", label: "Find a PEC" }]
+    links: [{ href: "tel:0800600300", label: "Call 0800 600 300" }, { href: "/offices", label: "Find an office" }]
   };
   var misses = 0;
 
@@ -483,8 +483,57 @@
     }).then(function (r) { clearTimeout(timer); return r; });
   }
 
+
+  /* ---------- Office lookup: "office in Ho", "PEC Kumasi", "offices in Volta" ---------- */
+  var OFFICE_WORD_RE = /\b(office|offices|pec|pecs|centre|center|branch|labour|labor|department|where|located|location|address|directions?|contact|phone|number|near|nearest|close|closest|visit|find)\b/i;
+  var TOWN_ALIASES = { "swedru": "Agona Swedru", "dunkwa": "Dunkwa-on-Offin", "oda": "Akim Oda", "dormaa": "Dormaa Ahenkro", "wiawso": "Sefwi Wiawso", "sefwi": "Sefwi Wiawso",
+    "hemang": "Twifo Hemang", "twifo": "Twifo Hemang", "assini": "Half Assini", "kpandu": "Kpando", "sogakofe": "Sogakope", "kyebi": "Kibi", "sekondi": "Takoradi",
+    "ellembelle": "Nkroful", "odumasi": "Odumase", "fosu": "Assin Fosu", "duayaw": "Duayaw Nkwanta", "cape": "Cape Coast", "capecoast": "Cape Coast" };
+  function officeLookup(q) {
+    var list = w.LD_OFFICES || [];
+    if (!list.length) return null;
+    var text = " " + normalise(q) + " ";
+    var words = text.trim().split(" ");
+    var towns = {}, regions = {};
+    list.forEach(function (o) { towns[o.town.toLowerCase()] = o.town; regions[o.r.toLowerCase()] = o.r; });
+    var found = null, kind = "town";
+    // Longest names first so "cape coast" wins over "cape"
+    Object.keys(towns).sort(function (a, b) { return b.length - a.length; }).some(function (t) {
+      var n = normalise(t);
+      if ((" " + text + " ").indexOf(" " + n + " ") >= 0) { found = towns[t]; return true; }
+      return false;
+    });
+    if (!found) words.some(function (wd) { if (TOWN_ALIASES[wd]) { found = TOWN_ALIASES[wd]; return true; } return false; });
+    if (!found) {
+      Object.keys(regions).sort(function (a, b) { return b.length - a.length; }).some(function (r) {
+        if ((" " + text + " ").indexOf(" " + normalise(r) + " ") >= 0) { found = regions[r]; kind = "region"; return true; }
+        return false;
+      });
+    }
+    if (!found) return null;
+    // Only answer with offices when the question is about offices, or is just the place name.
+    // "Swedru" or "Ho office" alone counts; "I need a job in Tema" is a job question, not an office one.
+    var placeToks = tokens(found);
+    var rest = content(tokens(q)).filter(function (t) { return placeToks.indexOf(t) < 0 && !TOWN_ALIASES[t]; });
+    var shortQ = rest.length === 0;
+    if (!OFFICE_WORD_RE.test(q) && !shortQ) return null;
+    var hits = list.filter(function (o) { return kind === "town" ? o.town === found : o.r === found; });
+    if (!hits.length) return null;
+    var LABEL = { head: "Head Office", regional: "Regional office", district: "District office", pec: "Public Employment Centre", "office-pec": "Office and PEC" };
+    var shown = hits.slice(0, kind === "town" ? 6 : 5);
+    var html = "<p>" + (kind === "town"
+      ? "We have " + (hits.length === 1 ? "one office" : hits.length + " offices") + " in <strong>" + esc(found) + "</strong>:"
+      : "The " + esc(found) + " Region has " + hits.length + " offices. Here are the main ones:") + "</p><ul class=\"office-hits\">" +
+      shown.map(function (o) {
+        return "<li><strong>" + esc(o.n) + "</strong><br><span class=\"muted\">" + LABEL[o.t] + (kind === "region" ? ", " + esc(o.town) : "") + "</span><br>" +
+          "<a href=\"tel:" + esc(o.tel) + "\">Call " + esc(o.ph) + "</a> &middot; <a href=\"" + esc(o.maps) + "\" target=\"_blank\" rel=\"noopener\">Directions</a></li>";
+      }).join("") + "</ul><p>Offices are open Monday to Friday, 8:00 am to 5:00 pm. Our services are free.</p>";
+    var qs = kind === "town" ? "q=" + encodeURIComponent(found) : "region=" + encodeURIComponent(found);
+    return { id: "office_lookup", html: html, links: [{ href: "/offices?" + qs, label: kind === "town" ? "See " + found + " on the map" : "All " + found + " offices" }, { href: "/offices", label: "Find my nearest office" }] };
+  }
+
   // Test hook for quality checks: open any page with ?kojo-debug to call window.__kojoMatch(question).
-  if (/[?&]kojo-debug/.test(location.search)) w.__kojoMatch = function (q, prev) { return match(q, prev); };
+  if (/[?&]kojo-debug/.test(location.search)) w.__kojoMatch = function (q, prev) { return match(q, prev); }; w.__kojoOffice = officeLookup;
 
   function answer(q, source) {
     var prev = lastUserText();
@@ -494,6 +543,13 @@
       return sleep(350).then(function () {
         push({ who: "bot", html: script.html, links: script.links, src: "script" });
         track({ event: "chat_question", chat_intent: script === SAFETY ? "safety_script" : "handover", chat_trigger: source || "typed" });
+      });
+    }
+    var office = officeLookup(q);
+    if (office) {
+      return sleep(350).then(function () {
+        push({ who: "bot", html: office.html, links: office.links, src: "offices" });
+        track({ event: "chat_question", chat_intent: "office_lookup", chat_trigger: source || "typed" });
       });
     }
     var local = match(q, prev);

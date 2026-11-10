@@ -2,7 +2,7 @@
 
 Generated from `content/chatbot.json` by `node scripts/export-kb.mjs`. Officers edit answers in the CMS at /admin under **Kojo answers**.
 
-41 topics. For each topic: the example questions it is trained on, the answer Kojo gives, and the buttons shown under the answer.
+42 topics. For each topic: the example questions it is trained on, the answer Kojo gives, and the buttons shown under the answer.
 
 ## Small talk
 
@@ -139,7 +139,7 @@ If you have trouble with GLMIS:
 
 - Visit your nearest **Public Employment Centre** or Labour Department office. Staff can help you register and update your profile for free
 
-**Buttons:** [Get GLMIS help](https://www.glmis.gov.gh/Support) | Find an office (`/contact`)
+**Buttons:** [Get GLMIS help](https://www.glmis.gov.gh/Support) | Find an office (`/offices`)
 
 ### 10. Where can i find labour market data
 
@@ -179,7 +179,7 @@ For free one-on-one career guidance, visit a **Public Employment Centre**.
 
 **Answer:**
 
-**Public Employment Centres (PECs)** are Labour Department offices in all 16 regions, for example at Odomase (Bono Region) and Goaso (Ahafo Region). Their services are **free**:
+We have **42 Public Employment Centres (PECs)** across all 16 regions. Use the office finder to see the one nearest you. Their services are **free**:
 
 - Job matching and placement
 
@@ -189,7 +189,7 @@ For free one-on-one career guidance, visit a **Public Employment Centre**.
 
 - Labour complaints and mediation
 
-**Buttons:** Find an office (`/contact`) | Services (`/services`) | [Public Employment Centres on GLMIS](https://www.glmis.gov.gh/employmentagencies)
+**Buttons:** Find my nearest PEC (`/offices`) | Services (`/services`) | [Public Employment Centres on GLMIS](https://www.glmis.gov.gh/employmentagencies)
 
 ### 13. Do you offer job counselling
 
@@ -231,7 +231,7 @@ Your employer must pay your wages in full and on time, as agreed in your contrac
 
 - The Labour Officer will invite your employer and help you both reach a settlement
 
-**Buttons:** File a complaint (`/services#complaints`) | Find an office (`/contact`)
+**Buttons:** File a complaint (`/services#complaints`) | Find an office (`/offices`)
 
 ### 16. How many days annual leave
 
@@ -361,7 +361,7 @@ How to resolve a workplace problem:
 
 Bring your contract, payslips and any letters.
 
-**Buttons:** Complaint steps (`/services#complaints`) | Find an office (`/contact`)
+**Buttons:** Complaint steps (`/services#complaints`) | Find an office (`/offices`)
 
 ## Child labour
 
@@ -431,7 +431,7 @@ Under the **Workmen&#39;s Compensation Law, 1987 (PNDCL 187)**, a worker injured
 
 Get medical care first, then contact your nearest office.
 
-**Buttons:** [Report an accident on GLMIS](https://www.glmis.gov.gh/accidents) | Compensation claims (`/services#compensation`) | Find an office (`/contact`)
+**Buttons:** [Report an accident on GLMIS](https://www.glmis.gov.gh/accidents) | Compensation claims (`/services#compensation`) | Find an office (`/offices`)
 
 ### 29. My workplace is not safe
 
@@ -622,6 +622,18 @@ Our offices are open **Monday to Friday, 8:00am to 5:00pm** (closed on public ho
 Our **News and guides** page has plain-language guides on finding work, your rights and job fairs. You can share any guide straight to WhatsApp or Facebook.
 
 **Buttons:** News and guides (`/blog`) | [Create a GLMIS profile](https://www.glmis.gov.gh/Identity/Account/Register)
+
+### 42. Where is the nearest labour office
+
+**Example questions:** "where is the nearest labour office", "labour department office near me", "is there a labour office in my district", "list of labour offices"
+
+**Answer:**
+
+We have 94 offices across all 16 regions, including 42 Public Employment Centres (PECs). Use our **office finder** to search your town, see it on a map and call or get directions in one tap.
+
+You can also tell me your town, for example office in Ho.
+
+**Buttons:** Find my nearest office (`/offices`) | Call 0800 600 300 (`tel:0800600300`)
 
 ## When Kojo does not understand
 

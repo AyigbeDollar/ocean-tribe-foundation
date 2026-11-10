@@ -1,0 +1,41 @@
+<!--meta
+{
+  "title": "Find a Labour Department Office Near You | Ghana",
+  "description": "Map and contacts for all Ghana Labour Department offices: regional offices, district offices and Public Employment Centres in all 16 regions.",
+  "crumb": "Offices",
+  "shareText": "Find your nearest Labour Department office or Public Employment Centre in Ghana"
+}
+-->
+<section class="page-hero">
+  <div class="container">
+    <div class="hero-anim">
+      <nav class="crumbs" aria-label="Breadcrumb"><a href="/">Home</a> / Offices</nav>
+      <h1>Find an office near you</h1>
+      <p>The Ghana Labour Department has {{officeCount}} offices across all {{regionCount}} regions, plus our Head Office in Accra. Search for your town, see it on the map, and call or get directions in one tap. Our services are free.</p>
+    </div>
+    <div class="of-stats hero-anim" aria-label="Our network">
+      <div><strong>{{officeCount}}</strong><span>Offices nationwide</span></div>
+      <div><strong>{{pecCount}}</strong><span>Public Employment Centres</span></div>
+      <div><strong>{{regionCount}}</strong><span>Regions covered</span></div>
+      <div><strong>Free</strong><span>Toll-free 0800 600 300</span></div>
+    </div>
+  </div>
+</section>
+
+<section class="section" aria-labelledby="finder-title">
+  <div class="container">
+    <h2 id="finder-title" class="sr-only">Office finder</h2>
+    <!--office-finder-->
+    <script src="/js/offices.js" defer></script>
+    <div class="callout reveal" style="margin-top:32px">
+      <svg width="22" height="22" aria-hidden="true"><use href="/img/icons.svg#clock"/></svg>
+      <p><strong>Opening hours:</strong> {{officeHours}}, closed on public holidays. Each office is led by an Officer-in-charge who also serves as the Migration Desk Officer for people seeking safe work abroad. If an office line does not go through, call our toll-free lines <a href="tel:0800600300">0800 600 300</a> or <a href="tel:0800600400">0800 600 400</a>.</p>
+    </div>
+  </div>
+</section>
+
+<section class="section-tight" aria-label="Share">
+  <div class="container">
+    <!--share-site-->
+  </div>
+</section>
