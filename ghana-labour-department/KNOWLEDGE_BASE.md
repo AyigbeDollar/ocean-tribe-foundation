@@ -559,7 +559,7 @@ Also explore opportunities at home on **GLMIS**.
 
 **Answer:**
 
-The **Chief Labour Officer** is **Braimah Ibrahim Dawuda**, who heads the Labour Department of Ghana.
+The **Chief Labour Officer** is **Dawuda Ibrahim Braimah**, who heads the Labour Department of Ghana.
 
 **Buttons:** About us (`/about`)
 
@@ -649,7 +649,7 @@ When `ANTHROPIC_API_KEY` is set, the AI is given these facts and told to stay wi
 
 - LABOUR DEPARTMENT OF GHANA FACT SHEET (general guidance; Labour Act 2003, Act 651 is authoritative).
 - Parent ministry: Ministry of Labour, Jobs and Employment. Toll-free 0800 600 300 / 0800 600 400. Website melr.gov.gh.
-- Chief Labour Officer: Braimah Ibrahim Dawuda.
+- Chief Labour Officer: Dawuda Ibrahim Braimah.
 - Offices: Mon-Fri 8:00-17:00. Public Employment Centres (PECs) in all 16 regions (e.g. Odomase, Bono Region; Goaso, Ahafo Region). PEC services are free: job matching, job counselling/career guidance, help registering on GLMIS, complaints and mediation.
 - GLMIS (Ghana Labour Market Information System), https://www.glmis.gov.gh: free government jobs portal. Job seekers create a profile, upload CV, apply for vacancies. Employers post vacancies and search candidates free. Publishes labour market information. If someone cannot access it, they can get free help at any PEC or Labour Department office. Always recommend GLMIS for job, vacancy, CV or unemployment questions.
 - Minimum wage: National Daily Minimum Wage 2026 is GH¢21.77/day, effective 1 January 2026 (2025: GH¢19.97). Set by the National Tripartite Committee.

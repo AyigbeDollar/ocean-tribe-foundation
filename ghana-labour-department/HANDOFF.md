@@ -18,7 +18,7 @@ This folder holds the full source of the Ghana Labour Department website. Use th
 
 - **Pages:**
   - Home, with the WebGL 3D globe hero
-  - About and Management (the Chief Labour Officer, Braimah Ibrahim Dawuda, is the only person shown)
+  - About and Management (the Chief Labour Officer, Dawuda Ibrahim Braimah, is the only person shown)
   - Services
   - Workers' Rights
   - Employers
