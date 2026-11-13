@@ -14,6 +14,7 @@ import {
   DialogTrigger,
 } from "@/components/ui/dialog";
 import { Heart } from "lucide-react";
+import { fail, recordEvent, withSpan } from "@/lib/telemetry";
 
 const PAYSTACK_PUBLIC_KEY = import.meta.env.VITE_PAYSTACK_PUBLIC_KEY as string | undefined;
 
@@ -44,21 +45,30 @@ const DonateDialog = ({ trigger }: DonateDialogProps) => {
 
     if (!email.trim() || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email.trim())) {
       toast.error("Please enter a valid email address for your receipt.");
+      recordEvent("donation.rejected", { "app.donation.reject_reason": "invalid_email" });
       return;
     }
     if (!parsedAmount || parsedAmount < 1) {
       toast.error("Please enter a donation amount of at least GHS 1.");
+      recordEvent("donation.rejected", { "app.donation.reject_reason": "invalid_amount" });
       return;
     }
     if (!PAYSTACK_PUBLIC_KEY) {
       toast.error(
         "Donations are not configured yet. Please set VITE_PAYSTACK_PUBLIC_KEY."
       );
+      recordEvent("donation.rejected", { "app.donation.reject_reason": "not_configured", error: true });
       return;
     }
 
+    const donationAttrs = {
+      "app.donation.amount_ghs": parsedAmount,
+      "app.donation.anonymous": !name.trim(),
+    };
+
     try {
       setProcessing(true);
+      recordEvent("donation.payment_opened", donationAttrs);
       const paystack = new PaystackPop();
       paystack.newTransaction({
         key: PAYSTACK_PUBLIC_KEY,
@@ -86,9 +96,18 @@ const DonateDialog = ({ trigger }: DonateDialogProps) => {
           // and records it; the client alone is never trusted.
           const toastId = toast.loading("Confirming your donation…");
           try {
-            const { data, error } = await supabase.functions.invoke(
-              "verify-donation",
-              { body: { reference: transaction.reference } }
+            const { data, error } = await withSpan(
+              "donation.verify",
+              donationAttrs,
+              async (span) => {
+                const res = await supabase.functions.invoke("verify-donation", {
+                  body: { reference: transaction.reference },
+                });
+                if (res.error) fail(span, "donation.verify.error", res.error.message);
+                else if (!res.data?.verified) fail(span, "donation.verify.unverified");
+                span.setAttribute("app.donation.verified", Boolean(res.data?.verified));
+                return res;
+              }
             );
             if (error || !data?.verified) {
               toast.error(
@@ -115,6 +134,7 @@ const DonateDialog = ({ trigger }: DonateDialogProps) => {
           }
         },
         onCancel: () => {
+          recordEvent("donation.payment_closed", donationAttrs);
           setProcessing(false);
           toast.info("Donation cancelled. You can try again anytime.");
         },
@@ -122,6 +142,7 @@ const DonateDialog = ({ trigger }: DonateDialogProps) => {
     } catch (error) {
       setProcessing(false);
       console.error("Paystack error:", error);
+      recordEvent("donation.paystack_error", { ...donationAttrs, error: true });
       toast.error("Something went wrong starting your donation. Please try again.");
     }
   };
