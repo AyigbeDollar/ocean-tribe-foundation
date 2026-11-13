@@ -16,5 +16,9 @@ export const supabase = createClient<Database>(SUPABASE_URL, SUPABASE_PUBLISHABL
     storage: localStorage,
     persistSession: true,
     autoRefreshToken: true,
-  }
+  },
+  // Look up window.fetch on every call (supabase-js otherwise keeps the
+  // reference from load time) so request tracing in src/lib/telemetry.ts sees it.
+  // Keep this option if this file is regenerated.
+  global: { fetch: (...args: Parameters<typeof fetch>) => fetch(...args) },
 });

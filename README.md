@@ -71,3 +71,19 @@ Yes, you can!
 To connect a domain, navigate to Project > Settings > Domains and click Connect Domain.
 
 Read more here: [Setting up a custom domain](https://docs.lovable.dev/tips-tricks/custom-domain#step-by-step-guide)
+
+## Observability (OpenTelemetry → Honeycomb)
+
+Browser tracing is off until `VITE_HONEYCOMB_API_KEY` is set (see `.env.example`);
+without it the tracing SDK isn't bundled. Use a Honeycomb **ingest key** limited
+to "Send events", because browser keys are public.
+
+Recorded: page loads, Core Web Vitals, uncaught errors, every Supabase call
+(named e.g. `supabase rest gallery`, `supabase functions verify-donation`, with
+query strings removed), and the donation journey: `donation.rejected`
+(with `app.donation.reject_reason`), `donation.payment_opened`,
+`donation.payment_closed`, `donation.verify` and `donation.paystack_error`.
+Donor names and emails are never put in traces.
+
+Code: `src/lib/telemetry.ts` and `src/lib/telemetry-sdk.ts`. If Lovable
+regenerates `src/integrations/supabase/client.ts`, keep its `global.fetch` option.
