@@ -1717,6 +1717,43 @@
           "url": "tel:0800600300"
         }
       ]
+    },
+    {
+      "id": "job_alerts",
+      "questions": [
+        "how do i get job alerts",
+        "can you send me new jobs",
+        "subscribe to your newsletter",
+        "i want vacancies on whatsapp",
+        "notify me when there is a job"
+      ],
+      "keywords": [
+        "job alerts",
+        "job alert",
+        "alerts",
+        "newsletter",
+        "subscribe",
+        "sign up for updates",
+        "notify me",
+        "send me jobs",
+        "jobs on whatsapp",
+        "vacancies on whatsapp",
+        "updates",
+        "mailing list",
+        "first pick"
+      ],
+      "answer": "Get **first pick of new jobs and opportunities** for free. Sign up with your WhatsApp number or email and we will send you new vacancies, job fairs and free training in your region. You can stop at any time.",
+      "links": [
+        {
+          "label": "Get free job alerts",
+          "url": "/subscribe"
+        },
+        {
+          "label": "Create a GLMIS profile",
+          "url": "https://www.glmis.gov.gh/Identity/Account/Register",
+          "glmis": true
+        }
+      ]
     }
   ]
 }

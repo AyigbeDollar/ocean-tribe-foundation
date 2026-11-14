@@ -40,5 +40,9 @@
     "agencies": "https://www.glmis.gov.gh/employmentagencies",
     "trainingProviders": "https://www.glmis.gov.gh/trainingproviders/index",
     "support": "https://www.glmis.gov.gh/Support"
+  },
+  "newsletter": {
+    "supabaseUrl": "https://cdkgdxyaiqqkagshhxkz.supabase.co",
+    "publishableKey": "sb_publishable_psVZWDNAw10eGtjfaXZByA_nOSS8FdN"
   }
 }

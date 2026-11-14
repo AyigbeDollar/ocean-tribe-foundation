@@ -210,3 +210,67 @@
     window.addEventListener("resize", onScroll);
   }
 })();
+
+// "First pick" job alerts signup: one field takes a WhatsApp number or an email.
+(function () {
+  var forms = document.querySelectorAll("[data-newsletter]");
+  if (!forms.length) return;
+  var DONE_KEY = "ld-nl-done";
+  function done() { try { return localStorage.getItem(DONE_KEY) === "1"; } catch (e) { return false; } }
+  function success(form, already) {
+    var share = "https://wa.me/?text=" + encodeURIComponent("Get first pick of new jobs and opportunities from the Ghana Labour Department, free on WhatsApp or email: " + location.origin + "/subscribe?utm_source=whatsapp&utm_medium=referral&utm_campaign=job-alerts");
+    form.innerHTML = '<div class="nl-done" role="status" tabindex="-1"><strong>' + (already ? "You are already on the list." : "You are in! Welcome aboard.") + "</strong>" +
+      "<p>We will send new jobs and opportunities to you. Meanwhile, create your free GLMIS profile so employers can find you.</p>" +
+      '<p class="nl-done-actions"><a class="btn btn-primary btn-sm" href="https://www.glmis.gov.gh/Identity/Account/Register" target="_blank" rel="noopener" data-track="glmis_after_signup">Create my GLMIS profile</a>' +
+      '<a class="btn btn-ghost btn-sm" href="' + share + '" target="_blank" rel="noopener" data-track="share_job_alerts">Tell a friend on WhatsApp</a></p></div>';
+    var box = form.querySelector(".nl-done"); if (box) box.focus();
+  }
+  forms.forEach(function (form) {
+    if (done() && !form.classList.contains("nl-full")) { success(form, true); return; }
+    var msg = form.querySelector(".nl-msg");
+    var btn = form.querySelector(".nl-submit");
+    var contact = form.querySelector('[name="contact"]');
+    form.addEventListener("submit", function (e) {
+      e.preventDefault();
+      msg.textContent = ""; msg.className = "nl-msg";
+      contact.removeAttribute("aria-invalid");
+      var raw = contact.value.trim();
+      var isEmail = raw.indexOf("@") > 0;
+      var digits = raw.replace(/[^\d]/g, "");
+      if (!raw || (isEmail && !/^[^\s@]+@[^\s@]+\.[a-z]{2,}$/i.test(raw)) || (!isEmail && (digits.length < 9 || digits.length > 15))) {
+        msg.textContent = "Please enter a WhatsApp number (for example 024 123 4567) or an email address.";
+        msg.className = "nl-msg is-error"; contact.setAttribute("aria-invalid", "true"); contact.focus(); return;
+      }
+      if (!form.querySelector('[name="consent"]').checked) {
+        msg.textContent = "Please tick the box so we can send you updates.";
+        msg.className = "nl-msg is-error"; form.querySelector('[name="consent"]').focus(); return;
+      }
+      var payload = {
+        email: isEmail ? raw : "", whatsapp: isEmail ? "" : raw,
+        name: (form.querySelector('[name="name"]') || {}).value || "",
+        region: (form.querySelector('[name="region"]') || {}).value || "",
+        interests: [].map.call(form.querySelectorAll('[name="interests"]:checked'), function (c) { return c.value; }),
+        consent: true, website: form.querySelector('[name="website"]').value, source: form.getAttribute("data-source") || "website"
+      };
+      btn.disabled = true; var label = btn.querySelector("span"); var old = label.textContent; label.textContent = "Signing you up…";
+      fetch("/api/subscribe", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify(payload) })
+        .then(function (r) { return r.json().catch(function () { return { ok: false }; }).then(function (j) { return { status: r.status, j: j }; }); })
+        .then(function (res) {
+          if (res.j && res.j.ok) {
+            try { localStorage.setItem(DONE_KEY, "1"); } catch (e) {}
+            (window.dataLayer = window.dataLayer || []).push({ event: "newsletter_signup", channel: isEmail ? "email" : "whatsapp", region: payload.region || "none", source: payload.source });
+            success(form, res.j.already);
+            return;
+          }
+          var errs = (res.j && res.j.errors) || {};
+          msg.textContent = errs.email || errs.whatsapp || errs.consent || (res.j && res.j.message) || "Sorry, we could not sign you up just now. Please try again, or call free on 0800 600 300.";
+          msg.className = "nl-msg is-error";
+          btn.disabled = false; label.textContent = old;
+        })
+        .catch(function () {
+          msg.textContent = "You seem to be offline. Please check your connection and try again.";
+          msg.className = "nl-msg is-error"; btn.disabled = false; label.textContent = old;
+        });
+    });
+  });
+})();

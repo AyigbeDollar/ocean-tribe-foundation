@@ -188,6 +188,43 @@ const NAV = [
 ];
 const urls = [];
 
+// ---------- "First pick" newsletter signup (posts to /api/subscribe) ----------
+const NL_REGIONS = ["Ahafo", "Ashanti", "Bono", "Bono East", "Central", "Eastern", "Greater Accra", "North East", "Northern", "Oti", "Savannah", "Upper East", "Upper West", "Volta", "Western", "Western North"];
+const NL_INTERESTS = [["jobs", "New vacancies"], ["job-fairs", "Job fairs and recruitment drives"], ["training", "Free training and skills programmes"], ["work-abroad", "Safe work abroad and scam alerts"], ["rights", "Rights at work updates"]];
+let nlCount = 0;
+function newsletterForm(variant, source) {
+  const id = `nl-${++nlCount}`;
+  const full = variant === "full" || variant === "band";
+  const region = `<label class="nl-field"><span>Your region</span><select name="region"><option value="">Choose your region</option>${NL_REGIONS.map((r) => `<option>${r}</option>`).join("")}</select></label>`;
+  const interests = full ? `<fieldset class="nl-interests"><legend>Send me</legend>${NL_INTERESTS.map(([v, l]) => `<label><input type="checkbox" name="interests" value="${v}" checked><span>${l}</span></label>`).join("")}</fieldset>` : "";
+  return `<form class="nl-form nl-${variant}" data-newsletter data-source="${esc(source)}" novalidate>
+  <div class="nl-row">
+    <label class="nl-field nl-contact"><span>WhatsApp number or email</span><input name="contact" type="text" inputmode="email" autocomplete="email" placeholder="024 123 4567 or you@example.com" required aria-describedby="${id}-err"></label>
+    ${full ? `<label class="nl-field"><span>First name <em>(optional)</em></span><input name="name" type="text" autocomplete="given-name" maxlength="80"></label>` : ""}
+    ${region}
+  </div>
+  ${interests}
+  <label class="nl-consent"><input type="checkbox" name="consent" required><span>Yes, send me new jobs and opportunities from the Ghana Labour Department. I can unsubscribe at any time. <a href="/privacy#newsletter">How we use your details</a>.</span></label>
+  <div class="nl-hp" aria-hidden="true"><label>Leave this empty<input name="website" type="text" tabindex="-1" autocomplete="off"></label></div>
+  <button class="btn btn-yellow nl-submit" type="submit">${icon("bell", 18)}<span>Get first pick</span></button>
+  <p class="nl-msg" id="${id}-err" role="status" aria-live="polite"></p>
+</form>`;
+}
+const NL_BENEFITS = [["briefcase", "New vacancies", "Fresh jobs from GLMIS and our Public Employment Centres, every week."], ["calendar", "Job fairs near you", "Recruitment drives and the JOBS roadshow in your region."], ["student", "Free training", "Skills programmes, apprenticeships and internships."], ["shield", "Scam alerts", "Fake recruiters and visa scams to avoid. We never charge for jobs."]];
+const newsletterBand = (source) => `<section class="section nl-section" aria-labelledby="nl-title-${source}">
+  <div class="container">
+    <div class="nl-card reveal">
+      <div class="nl-pitch">
+        <p class="nl-kicker">${icon("bell", 16)}Free job alerts</p>
+        <h2 id="nl-title-${source}">Get first pick of new jobs and opportunities</h2>
+        <p>Be among the first to hear about new vacancies, job fairs and free training in your region. Straight to your WhatsApp or email. No spam, and you can stop any time.</p>
+        <ul class="nl-benefits">${NL_BENEFITS.map(([ic, h, t]) => `<li>${icon(ic, 22)}<span><strong>${h}</strong>${t}</span></li>`).join("")}</ul>
+      </div>
+      <div class="nl-signup">${newsletterForm("band", source)}</div>
+    </div>
+  </div>
+</section>`;
+
 function render({ meta, body, path, outFile }) {
   const canonical = SITE + (path === "/" ? "/" : path);
   const section = "/" + path.split("/")[1];
@@ -225,9 +262,12 @@ function render({ meta, body, path, outFile }) {
       .replace("<!--follow-links-->", followLinks)
       .replace("<!--share-site-->", shareBar(SITE + path, meta.shareText || meta.title, "site" + (path === "/" ? "-home" : path.replace(/\//g, "-"))))
       .replace("<!--faq-groups-->", faqGroups)
-      .replace("<!--office-finder-->", officeFinder))
+      .replace("<!--office-finder-->", officeFinder)
+      .replace("<!--newsletter-->", newsletterBand(path === "/" ? "home" : path.replace(/\W+/g, "") || "page"))
+      .replace("<!--newsletter-full-->", newsletterForm("full", "subscribe-page")))
     .replaceAll("{{year}}", String(new Date().getFullYear()))
-    .replace("<!--announcement-->", announcementBar));
+    .replace("<!--announcement-->", announcementBar)
+    .replace("<!--newsletter-footer-->", newsletterForm("compact", "footer")));
   mkdirSync(dirname(join(out, outFile)), { recursive: true });
   writeFileSync(join(out, outFile), html.replaceAll("/img/icons.svg#", `/img/icons.svg?v=${ICONS_V}#`));
   if (!noindex) urls.push({ loc: canonical, lastmod: meta.reviewed || meta.date || today, priority: meta.priority || (path === "/" ? "1.0" : "0.8") });
@@ -346,6 +386,7 @@ ${posts.map((p, i) => postCard(p, i === 0)).join("\n")}
     </div>
   </div>
 </section>
+${newsletterBand("blog")}
 <section class="section section-alt">
   <div class="container">
     <div class="share-head reveal">
@@ -419,6 +460,11 @@ ${p.body}
         <h2>Looking for work?</h2>
         <p>Register free on the Ghana Labour Market Information System and get matched to vacancies.</p>
         <a class="btn btn-yellow btn-sm" href="${config.glmisLinks.register}" target="_blank" rel="noopener" data-track="glmis_post_aside">Register on GLMIS</a>
+      </div>
+      <div class="aside-card nl-aside">
+        <h2>Get first pick of new jobs</h2>
+        <p>New vacancies, job fairs and free training, sent to your WhatsApp or email.</p>
+        ${newsletterForm("compact", `post-${p.slug}`)}
       </div>
       <div class="aside-card">
         <h2>Have a question?</h2>
