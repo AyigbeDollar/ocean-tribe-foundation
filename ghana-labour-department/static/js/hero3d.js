@@ -17,6 +17,14 @@ function init(host) {
   } catch (e) {
     return; // No WebGL: the CSS gradient hero remains.
   }
+  // Software rendering (no graphics chip: test bots, some old phones) gets one still frame, not animation.
+  let softwareGL = false;
+  try {
+    const gl = renderer.getContext();
+    const dbg = gl.getExtension("WEBGL_debug_renderer_info");
+    const name = dbg ? String(gl.getParameter(dbg.UNMASKED_RENDERER_WEBGL)) : "";
+    softwareGL = /swiftshader|llvmpipe|software|basic render/i.test(name);
+  } catch (e) {}
   renderer.setPixelRatio(Math.min(window.devicePixelRatio, window.innerWidth < 900 ? 1.25 : 1.5));
   host.appendChild(renderer.domElement);
   renderer.domElement.setAttribute("aria-hidden", "true");
@@ -122,8 +130,8 @@ function init(host) {
   }
 
   let visible = true;
-  new IntersectionObserver((en) => { visible = en[0].isIntersecting; if (visible && !reduce) loop(); }).observe(host);
-  document.addEventListener("visibilitychange", () => { if (!document.hidden && visible && !reduce) loop(); });
+  new IntersectionObserver((en) => { visible = en[0].isIntersecting; if (visible && !reduce && !softwareGL) loop(); }).observe(host);
+  document.addEventListener("visibilitychange", () => { if (!document.hidden && visible && !reduce && !softwareGL) loop(); });
 
   const clock = new THREE.Clock();
   let running = false;
@@ -153,6 +161,6 @@ function init(host) {
     };
     requestAnimationFrame(tick);
   }
-  if (reduce) frame(0); else loop();
+  if (reduce || softwareGL) frame(0); else loop();
   host.classList.add("is-ready");
 }
